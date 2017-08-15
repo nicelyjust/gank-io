@@ -20,7 +20,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
     @BindView(R.id.add)
     Button mAdd;
-    private 生成 m生成;
 
     @Override
     protected int getContentView() {
@@ -34,15 +33,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.add:
-                if (m生成 == null) {
-                    m生成 = new 生成(1280, 720, "");
-                    m生成.generate();
-                }
-                break;
-            default:
-                 break;
-        }
     }
 }
