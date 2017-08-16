@@ -9,11 +9,6 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="50dp">
-        <Button
-            android:id="@+id/add"
-            tools:text="首页"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
     </LinearLayout>
     <FrameLayout
         android:layout_above="@id/rg"
