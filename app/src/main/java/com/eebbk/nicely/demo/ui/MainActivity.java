@@ -1,12 +1,9 @@
 package com.eebbk.nicely.demo.ui;
 
 import android.view.View;
-import android.widget.Button;
 
 import com.eebbk.nicely.demo.R;
 import com.eebbk.nicely.demo.base.activities.BaseActivity;
-
-import butterknife.BindView;
 
 /*
  *  @项目名：  Demo 
@@ -18,8 +15,6 @@ import butterknife.BindView;
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
-    @BindView(R.id.add)
-    Button mAdd;
 
     @Override
     protected int getContentView() {
@@ -28,7 +23,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initWidget() {
-        mAdd.setOnClickListener(this);
+
     }
 
     @Override
