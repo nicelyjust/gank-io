@@ -2,9 +2,14 @@ package com.eebbk.nicely.demo.utils;
 
 import android.content.Context;
 
-/**
- * author：
- *
+/*
+ *  @项目名：  ${PROJECT_NAME}
+ *  @包名：    ${PACKAGE_NAME}
+ *  @文件名:   ${NAME}
+ *  @创建者:   lz
+ *  @创建时间:  ${DATE} ${TIME}
+ *  @修改时间:  ${USER} ${DATE} ${TIME}
+ *  @描述：    TODO
  */
 public class DimentionUtils {
 	/**
