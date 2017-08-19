@@ -4,4 +4,9 @@
         <attr name="color" format="color"/>
         <attr name="text" format="string"/>
     </declare-styleable>
+    <declare-styleable name="Spider">
+        <attr name="popupHeight" format="dimension" />
+        <attr name="popupTxtColor" format="color" />
+        <attr name="popupTxtColored" format="color" />
+    </declare-styleable>
 </resources>

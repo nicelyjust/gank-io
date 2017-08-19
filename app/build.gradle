@@ -29,4 +29,5 @@ dependencies {
         exclude module: 'support-annotations'
     }
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

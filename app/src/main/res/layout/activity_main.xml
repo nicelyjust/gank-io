@@ -2,13 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:orientation="horizontal"
         android:id="@+id/rg"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
+        <com.eebbk.nicely.demo.view.Spider
+            app:popupTxtColor="#ffffff"
+            app:popupTxtColored="#00c3c7"
+            android:id="@+id/subject_spider"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"/>
     </LinearLayout>
     <FrameLayout
         android:layout_above="@id/rg"
