@@ -21,15 +21,6 @@ public final class SpUtil {
     /**
      * 获取SP实例
      *
-     * @return {@link SpUtil}
-     */
-    public static SpUtil getInstance() {
-        return getInstance("");
-    }
-
-    /**
-     * 获取SP实例
-     *
      * @param spName sp名
      * @return {@link SpUtil}
      */

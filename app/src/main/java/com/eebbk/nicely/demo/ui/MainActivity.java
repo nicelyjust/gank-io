@@ -13,6 +13,7 @@ import com.eebbk.nicely.demo.utils.L;
 import com.eebbk.nicely.demo.view.Spider;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,7 +34,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     LinearLayout mRg;
     @BindView(R.id.main_container)
     FrameLayout  mMainContainer;
-    private List<MockBean> mBeanList;
+    private List<MockBean> mBeanList = new ArrayList<>();
     private MyHandler mHandler;
 
     @Override
@@ -52,18 +53,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     mockData();
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        });
+        }).start();
     }
 
     private void mockData() {
-        mBeanList.clear();
+        if (mBeanList != null) {
+            mBeanList.clear();
+        }
         for (int i = 0; i < 10; i++) {
             mBeanList.add(new MockBean("科目"+ i  , i));
         }
@@ -95,7 +98,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
             mWeakReference.get().upData();
         }
     }

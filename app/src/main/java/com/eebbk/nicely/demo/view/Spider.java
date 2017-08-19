@@ -67,10 +67,10 @@ public class Spider extends LinearLayout implements View.OnClickListener {
         super(context, attrs, defStyleAttr);
         mContext = context;
 
-        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.Spider);
-        mPopupTxtColor = typedArray.getColor(R.styleable.Spider_popupTxtColor, Color.WHITE);
-        mPopupTxtColored = typedArray.getColor(R.styleable.Spider_popupTxtColored, Color.BLUE);
-        float      dimPx  = typedArray.getDimension(R.styleable.Spider_popupHeight, 250);
+        TypedArray typedArray = context.obtainStyledAttributes(R.styleable.Spinner);
+        mPopupTxtColor = typedArray.getColor(R.styleable.spinner_popupTxtColor, Color.WHITE);
+        mPopupTxtColored = typedArray.getColor(R.styleable.spinner_popupTxtColored, Color.BLUE);
+        float      dimPx  = typedArray.getDimension(R.styleable.spinner_popupHeight, 250);
         mPopupHeight = DimentionUtils.dip2px(mContext , dimPx);
         typedArray.recycle();
 
@@ -84,7 +84,7 @@ public class Spider extends LinearLayout implements View.OnClickListener {
 
     private void initView() {
         mLayoutInflater = LayoutInflater.from(mContext);
-        View view = mLayoutInflater.inflate(R.layout.spider, null);
+        View view = mLayoutInflater.inflate(R.layout.spider, this);
         mRoot = (LinearLayout) view.findViewById(R.id.spider_root);
         mTxtView = (TextView) view.findViewById(R.id.spider_txt);
         mArrow = (ImageView) view.findViewById(R.id.spider_arrow);
@@ -95,7 +95,7 @@ public class Spider extends LinearLayout implements View.OnClickListener {
 
     private void initPopupWindow() {
         LayoutInflater inflater  = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View    viewPopup = inflater.inflate(R.layout.spider_popup, null);
+        View    viewPopup = inflater.inflate(R.layout.spider_popup, null ,false);
 
         mPopupRoot = (RelativeLayout) viewPopup.findViewById(R.id.spider_popup_root);
         mRecyclerView = (RecyclerView)viewPopup.findViewById(R.id.spider_popup_rv);
@@ -126,7 +126,7 @@ public class Spider extends LinearLayout implements View.OnClickListener {
 
     private void initPopupParams(View view) {
         if (mPopupWindow == null) {
-            mPopupWindow = new PopupWindow(view, mRoot.getWidth(), mPopupHeight);
+            mPopupWindow = new PopupWindow(view, 300, mPopupHeight);
             mDw = new ColorDrawable(0x000000);
         }
         mPopupWindow.setFocusable(false);
