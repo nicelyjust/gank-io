@@ -165,12 +165,12 @@ public class Spider extends LinearLayout implements View.OnClickListener {
         }
     }
 
-    public void PopupWindowIn(){
+    private void PopupWindowIn(){
         mPopupWindow.getContentView().animate().translationY(0).setDuration(TIME_POPWINDOW);
         mArrow.animate().rotation(180).setDuration(TIME_GRADING);
     }
 
-    public void popupWindowBack(){
+    private void popupWindowBack(){
         mArrow.animate().rotation(360).setDuration(TIME_GRADING);
         mPopupWindow.getContentView().animate().translationY(-mPopupHeight).setDuration(TIME_POPWINDOW);
         mArrow.postDelayed(new Runnable() {
@@ -179,6 +179,15 @@ public class Spider extends LinearLayout implements View.OnClickListener {
                 mPopupWindow.dismiss();
             }
         }, TIME_POPWINDOW );
+    }
+
+    public void setPopupWindow(PopupWindow popupWindow) {
+        mPopupWindow = popupWindow;
+    }
+
+    public PopupWindow getPopupWindow() {
+        return mPopupWindow;
+
     }
 
     private class SpiderAdapter extends RecyclerView.Adapter<SpiderHolder> {
@@ -193,6 +202,7 @@ public class Spider extends LinearLayout implements View.OnClickListener {
         @Override
         public void onBindViewHolder(SpiderHolder holder,  int position) {
             BaseSpiderBean spiderBean = mList.get(position);
+            holder.mTxtView.setText(spiderBean.getSpiderName());
             if (spiderBean.getIsSelectState()) {
                 holder.mTxtView.setTextColor(mPopupTxtColored);
             } else {
@@ -203,22 +213,24 @@ public class Spider extends LinearLayout implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     int pos = (int) v.getTag();
+                    if (mOnOnSpiderListener != null) {
+                        mOnOnSpiderListener.onItemClick(pos);
+                    }
                     if (mLastPos != pos) {
                         mList.get(mLastPos).setSelectState(!mList.get(mLastPos).getIsSelectState());
                         mList.get(pos).setSelectState(!mList.get(pos).getIsSelectState());
-                        notifyItemChanged(mLastPos);
-                        notifyItemChanged(pos);
+
                         mCurTxt = mList.get(pos).getSpiderName();
                         if (mTxtView != null) {
                             mTxtView.setText(mCurTxt);
                         }
+                        notifyItemChanged(mLastPos);
+                        notifyItemChanged(pos);
                         mLastPos = pos;
+
                     }
                     if (mPopupWindow != null) {
-                        mPopupWindow.dismiss();
-                    }
-                    if (mOnOnSpiderListener != null) {
-                        mOnOnSpiderListener.onItemClick(pos);
+                        popupWindowBack();
                     }
                 }
             });

@@ -5,6 +5,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.eebbk.nicely.demo.R;
 import com.eebbk.nicely.demo.base.activities.BaseActivity;
@@ -36,7 +37,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     FrameLayout  mMainContainer;
     private List<MockBean> mBeanList = new ArrayList<>();
     private MyHandler mHandler;
+    private static class MyHandler extends Handler {
 
+        private  WeakReference<MainActivity> mWeakReference;
+
+        public MyHandler(MainActivity mainActivity) {
+            this.mWeakReference = new WeakReference<>(mainActivity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            mWeakReference.get().upData();
+        }
+    }
     @Override
     protected int getContentView() {
         return R.layout.activity_main;
@@ -88,23 +101,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         L.d(TAG , "点击了" + position);
     }
 
-    private static class MyHandler extends Handler {
-
-        private  WeakReference<MainActivity> mWeakReference;
-
-        public MyHandler(MainActivity mainActivity) {
-            this.mWeakReference = new WeakReference<>(mainActivity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            mWeakReference.get().upData();
-        }
-    }
-
     private void upData() {
         mSubjectSpider.setEnabled(true);
         mSubjectSpider.setData(mBeanList);
         mSubjectSpider.setOnSpiderListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PopupWindow popupWindow = mSubjectSpider.getPopupWindow();
+        if ( popupWindow!= null) {
+            popupWindow.dismiss();
+            mSubjectSpider.setPopupWindow(null);
+        }
     }
 }
