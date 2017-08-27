@@ -10,7 +10,6 @@ import android.widget.PopupWindow;
 import com.eebbk.nicely.demo.R;
 import com.eebbk.nicely.demo.base.activities.BaseActivity;
 import com.eebbk.nicely.demo.bean.MockBean;
-import com.eebbk.nicely.demo.utils.L;
 import com.eebbk.nicely.demo.view.Spider;
 
 import java.lang.ref.WeakReference;
@@ -93,12 +92,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onDismiss() {
-        L.d(TAG , "popupwindow消失");
     }
 
     @Override
     public void onItemClick(int position) {
-        L.d(TAG , "点击了" + position);
     }
 
     private void upData() {
