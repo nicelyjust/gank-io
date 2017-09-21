@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:tools="http://schemas.android.com/tools"
+             tools:context=".ui.AnimateActivity"
+             android:fitsSystemWindows="true">
+
+
+    <View
+        android:id="@+id/ll_login_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@color/black_alpha_128"/>
+
+    <LinearLayout
+        android:id="@+id/ll_login_pull"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_login_thirdpart"
+        android:orientation="vertical"
+        android:translationY="80dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_12"
+            android:gravity="center"
+            android:text="@string/login_other_hint"
+            android:textColor="@color/login_other_color"
+            android:textSize="14sp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_login_options"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/ib_login_weibo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_material"
+                android:contentDescription="@null"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_login_3party_weibo"/>
+
+            <ImageView
+                android:id="@+id/ib_login_wx"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_material"
+                android:contentDescription="@null"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_login_3party_wechat"/>
+
+            <ImageView
+                android:id="@+id/ib_login_qq"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_material"
+                android:contentDescription="@null"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_login_3party_qq"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

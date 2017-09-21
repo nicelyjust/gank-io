@@ -30,4 +30,5 @@ dependencies {
     }
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.bilibili:magicasakura:0.1.7@aar'
 }

@@ -18,6 +18,12 @@
         </activity>
         <activity android:name=".ui.WelcomeActivity"
             android:theme="@style/App.Theme.Launch">
+
+        </activity>
+        <activity android:name=".ui.DemoActivity"
+                  android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".ui.AnimateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
