@@ -1,6 +1,9 @@
 package com.eebbk.nicely.demo.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
 
 /*
  *  @项目名：  ${PROJECT_NAME}
@@ -11,7 +14,7 @@ import android.content.Context;
  *  @修改时间:  ${USER} ${DATE} ${TIME}
  *  @描述：    TODO
  */
-public class DimentionUtils {
+public class TDevice {
 	/**
 	 * 将px值转换为dip或dp值，保证尺寸大小不变
 	 *
@@ -58,5 +61,28 @@ public class DimentionUtils {
 	public static int sp2px(Context context, float spValue) {
 		final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
 		return (int) (spValue * fontScale + 0.5f);
+	}
+	/*------------ 获得机器像素以及DPI -------------*/
+	public static DisplayMetrics getDisplayMetrics() {
+		return UiUtils.getApp().getResources().getDisplayMetrics();
+	}
+
+	public static float getScreenHeight() {
+		return getDisplayMetrics().heightPixels;
+	}
+
+	public static float getScreenWidth() {
+		return getDisplayMetrics().widthPixels;
+	}
+
+	public static float getScreenDPI() {
+		return getDisplayMetrics().densityDpi;
+	}
+
+	public static boolean hasInternet() {
+		ConnectivityManager cm = (ConnectivityManager) UiUtils.getApp()
+																	  .getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = cm.getActiveNetworkInfo();
+		return info != null && info.isAvailable() && info.isConnected();
 	}
 }

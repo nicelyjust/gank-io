@@ -10,7 +10,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.eebbk.nicely.demo.utils.DimentionUtils;
+import com.eebbk.nicely.demo.utils.TDevice;
 
 /*
  *  @项目名：  Demo 
@@ -26,9 +26,9 @@ public class PaintView extends View {
     private Paint mTxtPaint;
     private Path mPath;
     private String mDrawText= "辅";
-    private int mTextSize = DimentionUtils.dip2px(getContext(), 50);
-    private int mHeight = DimentionUtils.dip2px(getContext(), 100);
-    private int mWidth = DimentionUtils.dip2px(getContext(), 100);
+    private int mTextSize = TDevice.dip2px(getContext(), 50);
+    private int mHeight = TDevice.dip2px(getContext(), 100);
+    private int mWidth = TDevice.dip2px(getContext(), 100);
     private Rect mRect;
     private int mColor;
 

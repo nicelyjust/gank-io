@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.eebbk.nicely.demo.R;
-import com.eebbk.nicely.demo.utils.DimentionUtils;
+import com.eebbk.nicely.demo.utils.TDevice;
 
 /*
  *  @项目名：  Demo 
@@ -31,9 +31,9 @@ public class LoadingView extends View {
     private Path mPath ;
     private String mDrawText;
     private int mColor ;
-    private int mWidth = DimentionUtils.dip2px(getContext(), 100);
-    private int mHeight = DimentionUtils.dip2px(getContext(), 100);
-    private int mTextSize = DimentionUtils.sp2px(getContext(), 50);
+    private int mWidth = TDevice.dip2px(getContext(), 100);
+    private int mHeight = TDevice.dip2px(getContext(), 100);
+    private int mTextSize = TDevice.sp2px(getContext(), 50);
     private Rect mRect;
     private float currentPercent;
 

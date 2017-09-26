@@ -6,7 +6,8 @@
     <color name="primary_bar_txt">#6c6c6c</color>
     <color name="user_info_message_notice">#E25B5A</color>
     <color name="white">#ffffff</color>
-
+    <color name="main_green">#24cf5f</color>
+    <color name="actionbar_background">@color/main_green</color>
     <color name="black_alpha_112">#70000000</color>
     <color name="black_alpha_128">#80000000</color>
     <color name="black_alpha_144">#90000000</color>

@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eebbk.nicely.demo.R;
-import com.eebbk.nicely.demo.utils.DimentionUtils;
+import com.eebbk.nicely.demo.utils.TDevice;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class Spider extends LinearLayout implements View.OnClickListener {
         mPopupTxtColor = typedArray.getColor(R.styleable.spinner_popupTxtColor, Color.WHITE);
         mPopupTxtColored = typedArray.getColor(R.styleable.spinner_popupTxtColored, Color.BLUE);
         float      dimPx  = typedArray.getDimension(R.styleable.spinner_popupHeight, 250);
-        mPopupHeight = DimentionUtils.dip2px(mContext , dimPx);
+        mPopupHeight = TDevice.dip2px(mContext , dimPx);
         typedArray.recycle();
 
         initView();

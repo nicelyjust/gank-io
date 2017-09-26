@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/actionbar_background"
+        android:paddingTop="1dp">
+
+        <ImageView
+            android:id="@+id/icon_back"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:clickable="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/btn_back_normal"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp">
+
+            <ImageView
+                android:id="@+id/iv_title_select"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="right|center_vertical"
+                android:paddingRight="4dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_arrow_bottom"/>
+
+            <Button
+                android:id="@+id/btn_title_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:maxWidth="128dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                android:text="选择图片"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+        </FrameLayout>
+    </RelativeLayout>
+
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/rv_img_select"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
+</LinearLayout>
