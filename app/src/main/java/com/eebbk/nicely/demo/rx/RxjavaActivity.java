@@ -1,10 +1,13 @@
 package com.eebbk.nicely.demo.rx;
 
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.TextView;
 
 import com.eebbk.nicely.demo.R;
 import com.eebbk.nicely.demo.base.activities.BaseActivity;
+import com.eebbk.nicely.demo.media.SelectImgActivity;
+import com.eebbk.nicely.demo.media.config.SelectOptions;
 import com.eebbk.nicely.demo.utils.L;
 
 import butterknife.BindView;
@@ -21,7 +24,7 @@ import io.reactivex.functions.Function;
  *  @修改时间:  Administrator 2017/9/25 9:15 
  *  @描述：
  */
-public class RxJavaActivity extends BaseActivity {
+public class RxJavaActivity extends BaseActivity implements View.OnClickListener, SelectOptions.Callback {
     private static final String TAG = "RxJavaActivity";
     @BindView(R.id.tv_show)
     TextView mTvShow;
@@ -99,6 +102,17 @@ public class RxJavaActivity extends BaseActivity {
                           mTvShow.setText(String.format("%d", integer));
                       }
                   });
+        mTvShow.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        SelectOptions options = new SelectOptions.Builder().setCallback(this).build();
+        SelectImgActivity.show(this , options);
+    }
+
+    @Override
+    public void doSelected(String[] images) {
+        // TODO: 2017/9/27 选择的image path回调
     }
 }

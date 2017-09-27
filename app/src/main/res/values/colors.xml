@@ -8,6 +8,9 @@
     <color name="white">#ffffff</color>
     <color name="main_green">#24cf5f</color>
     <color name="actionbar_background">@color/main_green</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+
     <color name="black_alpha_112">#70000000</color>
     <color name="black_alpha_128">#80000000</color>
     <color name="black_alpha_144">#90000000</color>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
 
 /*
  *  @项目名：  ${PROJECT_NAME}
@@ -67,11 +69,11 @@ public class TDevice {
 		return UiUtils.getApp().getResources().getDisplayMetrics();
 	}
 
-	public static float getScreenHeight() {
+	public static float getScreenHeightPX() {
 		return getDisplayMetrics().heightPixels;
 	}
 
-	public static float getScreenWidth() {
+	public static float getScreenWidthPX() {
 		return getDisplayMetrics().widthPixels;
 	}
 
@@ -84,5 +86,27 @@ public class TDevice {
 																	  .getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = cm.getActiveNetworkInfo();
 		return info != null && info.isAvailable() && info.isConnected();
+	}
+
+	/**
+	 * 获得屏幕的宽度
+	 * @param context context
+	 * @return width
+	 */
+	public static int getScreenWidth(Context context) {
+		WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display       display = manager.getDefaultDisplay();
+		return display.getWidth();
+	}
+
+	/**
+	 * 获得屏幕的高度
+	 * @param context context
+	 * @return height
+	 */
+	public static int getScreenHeight(Context context) {
+		WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = manager.getDefaultDisplay();
+		return display.getHeight();
 	}
 }

@@ -3,6 +3,9 @@ package com.eebbk.nicely.demo.base.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -34,4 +37,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return
      */
     protected abstract int getContentView();
+
+    protected RequestManager getImageLoader(){
+        return Glide.with(this);
+    }
 }
