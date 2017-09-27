@@ -113,6 +113,6 @@ public class RxJavaActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void doSelected(String[] images) {
-        // TODO: 2017/9/27 选择的image path回调
+        mTvShow.setText(images[0]);
     }
 }
