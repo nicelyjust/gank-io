@@ -9,4 +9,7 @@
         <attr name="popupTxtColor" format="color" />
         <attr name="popupTxtColored" format="color" />
     </declare-styleable>
+    <declare-styleable name="SquareLayout">
+        <attr name="oscAccordTo" format="integer" />
+        </declare-styleable>
 </resources>
