@@ -31,6 +31,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
     private ImageLoaderListener mListener;
     private LayoutInflater mInflater;
     private boolean isSingleSelect = true;
+    private OnClickListener mOnClickListener;
 
     public void setSingleSelect(boolean isSingleSelect) {
         this.isSingleSelect = isSingleSelect;
@@ -44,6 +45,14 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     public void setData(List<Image> image) {
         mImages = image;
+    }
+
+    public List<Image> getDatas() {
+        return mImages;
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
     }
 
     @Override
@@ -65,7 +74,15 @@ public class ImageAdapter extends RecyclerView.Adapter {
             mListener.displayImg(h.mImage , image.getPath());
             h.mIvGif.setVisibility(image.getPath().endsWith(".gif") ? View.VISIBLE : View.GONE);
             h.mCbSelected.setVisibility(isSingleSelect ? View.GONE : View.VISIBLE);
-
+            h.itemView.setTag(position);
+            h.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnClickListener != null) {
+                        mOnClickListener.onItemClickListener((int) v.getTag());
+                    }
+                }
+            });
         }
     }
 

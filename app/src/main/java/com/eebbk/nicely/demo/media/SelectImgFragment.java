@@ -1,5 +1,6 @@
 package com.eebbk.nicely.demo.media;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.eebbk.nicely.demo.R;
 import com.eebbk.nicely.demo.base.fragment.BaseFragment;
@@ -38,7 +40,7 @@ import butterknife.BindView;
  *  @修改时间:  Administrator 2017/9/26 11:22 
  *  @描述：    TODO
  */
-public class SelectImgFragment extends BaseFragment implements ImageLoaderListener {
+public class SelectImgFragment extends BaseFragment implements ImageLoaderListener, OnClickListener {
     private static final String TAG = "SelectImgFragment";
     private static SelectOptions mOptions;
     @BindView(R.id.icon_back)
@@ -69,15 +71,15 @@ public class SelectImgFragment extends BaseFragment implements ImageLoaderListen
 
     @Override
     protected void initWidget(View root) {
-        if(mOptions == null){
+        if (mOptions == null) {
             getActivity().finish();
             return;
         }
         mRv.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        mRv.addItemDecoration(new SpaceGridItemDecoration( TDevice.dip2px(UiUtils.getApp(), 1)));
+        mRv.addItemDecoration(new SpaceGridItemDecoration(TDevice.dip2px(UiUtils.getApp(), 1)));
         mAdapter = new ImageAdapter(getContext(), this);
         mAdapter.setSingleSelect(mOptions.getSelectCount() <= 1);
-
+        mAdapter.setOnClickListener(this);
         mRv.setAdapter(mAdapter);
     }
 
@@ -96,6 +98,38 @@ public class SelectImgFragment extends BaseFragment implements ImageLoaderListen
                 .centerCrop()
                 .error(R.mipmap.ic_split_graph)
                 .into(iv);
+    }
+
+    @Override
+    public void onItemClickListener(int pos) {
+        List<Image> datas = mAdapter.getDatas();
+        if (datas == null || datas.isEmpty()) {
+            return;
+        }
+        Image image = datas.get(pos);
+        int selectCount = mOptions.getSelectCount();
+        if (selectCount > 1) {
+            if (mSelectedImage == null) {
+                return;
+            }
+            if (image.isSelect()){
+                mSelectedImage.remove(image);
+                image.setSelect(false);
+                mAdapter.notifyItemChanged(pos);
+            } else if (selectCount <= mSelectedImage.size()) {
+                Toast.makeText(getActivity(), "最多只能选择 " + selectCount + " 张照片", Toast.LENGTH_SHORT).show();
+            } else {
+                mSelectedImage.add(image);
+                image.setSelect(true);
+                mAdapter.notifyItemChanged(pos);
+            }
+            // 多选
+
+        } else {
+            // todo 单选 要进入剪裁界面
+
+        }
+//        mOptions.getCallback().doSelected(new String[]{image.getPath()});
     }
 
     private class LoaderListener implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -189,5 +223,10 @@ public class SelectImgFragment extends BaseFragment implements ImageLoaderListen
         public void onLoaderReset(Loader<Cursor> loader) {
 
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
     }
 }

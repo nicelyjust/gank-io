@@ -107,7 +107,7 @@ public class RxJavaActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        SelectOptions options = new SelectOptions.Builder().setCallback(this).build();
+        SelectOptions options = new SelectOptions.Builder().setCallback(this).setSelectCount(6).build();
         SelectImgActivity.show(this , options);
     }
 
