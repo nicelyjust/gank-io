@@ -5,11 +5,51 @@
         <attr name="text" format="string"/>
     </declare-styleable>
     <declare-styleable name="spinner">
-        <attr name="popupHeight" format="dimension" />
-        <attr name="popupTxtColor" format="color" />
-        <attr name="popupTxtColored" format="color" />
+        <attr name="popupHeight" format="dimension"/>
+        <attr name="popupTxtColor" format="color"/>
+        <attr name="popupTxtColored" format="color"/>
     </declare-styleable>
     <declare-styleable name="SquareLayout">
-        <attr name="oscAccordTo" format="integer" />
-        </declare-styleable>
+        <attr name="oscAccordTo" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="TapeView">
+        <attr name="bgColor" format="color|reference"/>
+
+        <attr name="calibrationColor" format="color|reference"/>
+        <attr name="calibrationWidth" format="dimension|reference"/>
+        <attr name="calibrationShort" format="dimension|reference"/>
+        <attr name="calibrationLong" format="dimension|reference"/>
+
+        <attr name="triangleColor" format="color|reference"/>
+        <attr name="triangleHeight" format="dimension|reference"/>
+
+        <attr name="textColor" format="color|reference"/>
+        <attr name="textSize" format="dimension|reference"/>
+
+        <!--每一隔的所代表的数值-->
+        <attr name="per" format="float|reference"/>
+        <attr name="perCount" format="integer"/>
+        <attr name="gapWidth" format="dimension|reference"/>
+        <attr name="minValue" format="float"/>
+        <attr name="maxValue" format="float"/>
+        <attr name="value" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="RulerView">
+        <attr name="gap_width" format="dimension" />
+        <attr name="init_value" format="integer" />
+        <attr name="number_margin_top" format="dimension" />
+        <attr name="number_margin_bottom" format="dimension"/>
+        <attr name="tape_height" format="dimension" />
+        <attr name="tape_color" format="color" />
+        <attr name="indicator_color" format="color" />
+        <attr name="number_color" format="color" />
+        <attr name="tape_width" format="dimension"/>
+        <attr name="indicator_width" format="dimension"/>
+        <attr name="indicator_height" format="dimension"/>
+        <attr name="number_size" format="dimension"/>
+        <attr name="max_value" format="integer"/>
+        <attr name="min_value" format="integer"/>
+    </declare-styleable>
 </resources>

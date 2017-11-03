@@ -1,14 +1,11 @@
 package com.eebbk.nicely.demo.ui;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.eebbk.nicely.demo.R;
 import com.eebbk.nicely.demo.base.activities.BaseActivity;
+import com.eebbk.nicely.demo.view.Ruler;
+import com.eebbk.nicely.demo.view.TapeView;
 
 import butterknife.BindView;
 
@@ -19,16 +16,18 @@ import butterknife.BindView;
  *  @创建者:   lz
  *  @创建时间:  2017/9/20 19:55
  *  @修改时间:  Administrator 2017/9/20 19:55 
- *  @描述：    TODO
+ *  @描述：
  */
-public class DemoActivity extends BaseActivity {
+public class DemoActivity extends BaseActivity implements TapeView.OnValueChangeListener {
     private static final String TAG = "DemoActivity";
-    @BindView(R.id.rv_demo)
-    RecyclerView mRv;
-
-    private int[] imageRes = new int[]{R.mipmap.one ,R.mipmap.two ,R.mipmap.three ,R.mipmap.four, R.mipmap.one ,R.mipmap.two ,R.mipmap.three ,R.mipmap.four};
-    private LayoutInflater mLayoutInflater;
-
+    @BindView(R.id.tape_view)
+    TapeView mTapeView;
+    @BindView(R.id.ruler_view)
+//    RulerView mRuler;
+    Ruler    mRuler;
+    /*@BindView(R.id.pie_view)
+    PieView mPieView;
+    private List<PieVo> mPieVos = new ArrayList<>(6);*/
     @Override
     protected int getContentView() {
 
@@ -36,38 +35,22 @@ public class DemoActivity extends BaseActivity {
     }
 
     @Override
-    protected void initWidget() {
-        mLayoutInflater = LayoutInflater.from(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this ,LinearLayoutManager.HORIZONTAL , false);
-        mRv.setLayoutManager(linearLayoutManager);
-        MyAdapter adapter = new MyAdapter();
-        mRv.setAdapter(adapter);
+    protected void initData() {
+       /* PieVo pieVo = new PieVo(200 , 0.20f , "嘿嘿" );
+        pieVo.setColor(Color.parseColor("#E25B5A"));
+        PieVo pieVo1 = new PieVo(200 , 0.40f , "哈哈" );
+        pieVo1.setColor(Color.parseColor("#24cf5f"));
+        PieVo pieVo2 = new PieVo(200 , 0.40f , "嘻嘻" );
+        pieVo2.setColor(Color.BLUE);
+        mPieVos.add(pieVo);
+        mPieVos.add(pieVo1);
+        mPieVos.add(pieVo2);
+        mPieView.setPieList(mPieVos);*/
+        mTapeView.setOnValueChangeListener(this);
     }
 
-    class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View inflate = mLayoutInflater.inflate(R.layout.item_demo, parent, false);
-
-            return new MyViewHolder(inflate);
-        }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.imgView.setBackgroundResource(imageRes[position]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return imageRes.length;
-        }
-    }
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgView;
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            this.imgView = (ImageView) itemView.findViewById(R.id.iv_demo);
-        }
+    @Override
+    public void onChange(float value) {
+        Toast.makeText(this , "current value == " + value , Toast.LENGTH_SHORT).show();
     }
 }

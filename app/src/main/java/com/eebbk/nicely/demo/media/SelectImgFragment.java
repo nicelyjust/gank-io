@@ -22,8 +22,6 @@ import com.eebbk.nicely.demo.media.bean.ImageFolder;
 import com.eebbk.nicely.demo.media.config.ImageLoaderListener;
 import com.eebbk.nicely.demo.media.config.SelectOptions;
 import com.eebbk.nicely.demo.utils.L;
-import com.eebbk.nicely.demo.utils.TDevice;
-import com.eebbk.nicely.demo.utils.UiUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -76,7 +74,7 @@ public class SelectImgFragment extends BaseFragment implements ImageLoaderListen
             return;
         }
         mRv.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        mRv.addItemDecoration(new SpaceGridItemDecoration(TDevice.dip2px(UiUtils.getApp(), 1)));
+        mRv.addItemDecoration(new SpaceGridItemDecoration());
         mAdapter = new ImageAdapter(getContext(), this);
         mAdapter.setSingleSelect(mOptions.getSelectCount() <= 1);
         mAdapter.setOnClickListener(this);
