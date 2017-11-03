@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             xmlns:app="http://schemas.android.com/apk/res-auto">
+             android:layout_height="match_parent">
 
-   <!-- <com.eebbk.nicely.demo.view.PieView
-        android:id="@+id/pie_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+    <!-- <com.eebbk.nicely.demo.view.PieView
+         android:id="@+id/pie_view"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"/>-->
 
-    <com.eebbk.nicely.demo.view.TapeView
+    <!--<com.eebbk.nicely.demo.view.TapeView
         android:visibility="gone"
         android:id="@+id/tape_view"
         android:layout_width="wrap_content"
@@ -20,10 +20,14 @@
         android:layout_marginTop="@dimen/lay_12"
         android:id="@+id/ruler_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
     <!--<com.eebbk.nicely.demo.view.RulerView
         android:layout_marginTop="@dimen/lay_12"
         android:id="@+id/ruler_view"
         android:layout_width="100dp"
         android:layout_height="wrap_content"/>-->
+    <com.eebbk.nicely.demo.view.SpiderView
+        android:id="@+id/spider_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

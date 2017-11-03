@@ -4,7 +4,7 @@ import android.widget.Toast;
 
 import com.eebbk.nicely.demo.R;
 import com.eebbk.nicely.demo.base.activities.BaseActivity;
-import com.eebbk.nicely.demo.view.Ruler;
+import com.eebbk.nicely.demo.view.SpiderView;
 import com.eebbk.nicely.demo.view.TapeView;
 
 import butterknife.BindView;
@@ -19,15 +19,17 @@ import butterknife.BindView;
  *  @描述：
  */
 public class DemoActivity extends BaseActivity implements TapeView.OnValueChangeListener {
-    private static final String TAG = "DemoActivity";
+    /*private static final String TAG = "DemoActivity";
     @BindView(R.id.tape_view)
     TapeView mTapeView;
     @BindView(R.id.ruler_view)
 //    RulerView mRuler;
-    Ruler    mRuler;
+    Ruler    mRuler;*/
     /*@BindView(R.id.pie_view)
     PieView mPieView;
     private List<PieVo> mPieVos = new ArrayList<>(6);*/
+    @BindView(R.id.spider_view)
+    SpiderView mTapeView;
     @Override
     protected int getContentView() {
 
@@ -46,7 +48,7 @@ public class DemoActivity extends BaseActivity implements TapeView.OnValueChange
         mPieVos.add(pieVo1);
         mPieVos.add(pieVo2);
         mPieView.setPieList(mPieVos);*/
-        mTapeView.setOnValueChangeListener(this);
+//        mTapeView.setOnValueChangeListener(this);
     }
 
     @Override
