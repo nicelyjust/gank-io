@@ -2,14 +2,12 @@ package com.eebbk.nicely.demo.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-
-import static android.R.attr.centerX;
-import static android.R.attr.centerY;
 
 
 /*
@@ -18,18 +16,17 @@ import static android.R.attr.centerY;
  *  @文件名:   SpiderView
  *  @创建者:   Administrator
  *  @创建时间:  2017/11/3 17:27
- *  @描述：    TODO
+ *  @描述：
  */
 
 public class SpiderView extends View {
 
+    private static final int count = 6;
+    private Context mContext;
     private int mCenterX;
     private int mCenterY;
-    private Context mContext;
-
-    private int count = 6;                //数据个数
-    private float angle = (float) (Math.PI*2/count);
-    private float radius;                   //网格最大半径
+    private float angle = (float) (Math.PI * 2 / count);
+    private float radius = 200;                   //网格最大半径
     private String[] titles = {"a","b","c","d","e","f"};
     private double[] data = {100,60,60,60,100,50,10,20}; //各维度分值
     private float maxValue = 100;             //数据最大值
@@ -53,6 +50,9 @@ public class SpiderView extends View {
     }
      private void init() {
          mLPath = new Path();
+         mainPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+         mainPaint.setStyle(Paint.Style.STROKE);
+         mainPaint.setColor(Color.BLACK);
     }
 
     @Override
@@ -69,7 +69,6 @@ public class SpiderView extends View {
         float r = radius / (count - 1);
         for (int i = 1; i <= count; i++) {
             float curR = r*i;
-            mLPath.reset();
             mLPath.reset();
             for (int j = 0; j < count; j++) {
                 if (j == 0) {
