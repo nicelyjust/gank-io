@@ -21,14 +21,6 @@
             android:theme="@style/App.Theme.Launch">
 
         </activity>
-        <activity android:name=".ui.DemoActivity"
-                  android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
         <activity android:name=".ui.AnimateActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -42,11 +34,11 @@
         <activity android:name=".media.SelectImgActivity"
                   android:configChanges="keyboardHidden|orientation"/>
         <activity android:name=".ui.lazyload.FragDemoActivity">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>-->
+            </intent-filter>
         </activity>
     </application>
 
