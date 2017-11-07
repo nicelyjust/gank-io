@@ -24,9 +24,7 @@ import butterknife.Unbinder;
  *  @修改时间:  Administrator 2017/11/1 11:52 
  *  @描述：    TODO
  */
-public class DemoFragment
-        extends Fragment
-{
+public class DemoFragment extends Fragment {
     private static final String TAG      = "DemoFragment";
     private static final String POSITION = "position";
     @BindView(R.id.tv_fragment_name)

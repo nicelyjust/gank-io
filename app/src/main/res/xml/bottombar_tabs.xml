@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        icon="@drawable/tab_icon_new"
+        id="@+id/tab_news"
+        title="新闻"/>
+    <tab
+        icon="@drawable/tab_icon_tweet"
+        id="@+id/tab_tweet"
+        title="推特"/>
+    <tab
+        icon="@drawable/tab_icon_explore"
+        id="@+id/tab_explore"
+        title="探索"/>
+    <tab
+        icon="@drawable/tab_icon_me"
+        id="@+id/tab_me"
+        title="我的"/>
+</tabs>
