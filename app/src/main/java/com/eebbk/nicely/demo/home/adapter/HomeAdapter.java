@@ -31,17 +31,24 @@ public class HomeAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                mNewsFragment = NewsFragment.newInstance();
+                if (mNewsFragment == null) {
+                    mNewsFragment = NewsFragment.newInstance();
+                }
                 return mNewsFragment;
             case 1:
-
-                mDemoFragment1 = DemoFragment.newInstance(String.valueOf(position + 1));
+                if (mDemoFragment1 == null) {
+                    mDemoFragment1 = DemoFragment.newInstance(String.valueOf(position + 1));
+                }
                 return mDemoFragment1;
             case 2:
-                mDemoFragment2 = DemoFragment.newInstance(String.valueOf(position + 1));
+                if (mDemoFragment2 == null) {
+                    mDemoFragment2 = DemoFragment.newInstance(String.valueOf(position + 1));
+                }
                 return mDemoFragment2;
             case 3:
-                mDemoFragment3 = DemoFragment.newInstance(String.valueOf(position + 1));
+                if (mDemoFragment3 == null) {
+                    mDemoFragment3 = DemoFragment.newInstance(String.valueOf(position + 1));
+                }
                 return mDemoFragment3;
         }
         System.exit(1);
