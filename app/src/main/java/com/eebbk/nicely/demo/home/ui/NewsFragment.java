@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.eebbk.nicely.demo.R;
-import com.eebbk.nicely.demo.base.fragment.LazyBaseFragment;
+import com.eebbk.nicely.demo.base.fragment.LazyBaseFragment2;
 
 import butterknife.BindView;
 import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
@@ -20,7 +20,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  *  @描述：
  */
 
-public class NewsFragment extends LazyBaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class NewsFragment extends LazyBaseFragment2 implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(R.id.rv_news)
     RecyclerView     mRv;
@@ -46,7 +46,7 @@ public class NewsFragment extends LazyBaseFragment implements BGARefreshLayout.B
     }
 
     @Override
-    protected void loadData() {
+    protected void fetchData() {
         /*// 延迟加载
         new Thread(new Runnable() {
             @Override
