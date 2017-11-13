@@ -63,7 +63,7 @@ public class DemoFragment extends LazyBaseFragment2 {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        L.d(TAG,  " isVisibleToUser == " + isVisibleToUser);
+        L.d("lz",  " isVisibleToUser == " + isVisibleToUser);
         super.setUserVisibleHint(isVisibleToUser);
     }
 

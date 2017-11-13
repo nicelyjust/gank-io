@@ -1,4 +1,4 @@
-package com.eebbk.nicely.demo.rx;
+package com.eebbk.nicely.demo.rxLearn;
 
 import android.util.DisplayMetrics;
 import android.view.View;

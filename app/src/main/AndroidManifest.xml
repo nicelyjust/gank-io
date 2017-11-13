@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>-->
         </activity>
-        <activity android:name=".rx.RxJavaActivity">
+        <activity android:name=".rxLearn.RxJavaActivity">
 
         </activity>
         <activity android:name=".media.SelectImgActivity"
