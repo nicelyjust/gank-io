@@ -26,7 +26,7 @@
         android:id="@+id/ruler_view"
         android:layout_width="100dp"
         android:layout_height="wrap_content"/>-->
-    <com.eebbk.nicely.demo.view.SpiderView
+    <com.eebbk.nicely.geek.view.SpiderView
         android:id="@+id/spider_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

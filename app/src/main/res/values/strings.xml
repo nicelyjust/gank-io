@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nicely</string>
+    <string name="app_name">GeekIO</string>
 
     <!-- Strings related to login -->
     <string name="login_other_hint">其他方式登录</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.eebbk.nicely.demo"
+<manifest package="com.eebbk.geek"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -9,38 +9,38 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
-        android:name=".base.AppManager"
+        android:name="com.eebbk.geek.base.AppManager"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name="com.eebbk.geek.ui.MainActivity">
 
         </activity>
-        <activity android:name=".ui.WelcomeActivity"
+        <activity android:name="com.eebbk.geek.ui.WelcomeActivity"
             android:theme="@style/App.Theme.Launch">
 
         </activity>
-        <activity android:name=".ui.AnimateActivity">
+        <activity android:name="com.eebbk.geek.ui.AnimateActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>-->
         </activity>
-        <activity android:name=".rxLearn.RxJavaActivity">
+        <activity android:name="com.eebbk.geek.rxLearn.RxJavaActivity">
 
         </activity>
-        <activity android:name=".media.SelectImgActivity"
+        <activity android:name="com.eebbk.geek.media.SelectImgActivity"
                   android:configChanges="keyboardHidden|orientation"/>
-        <activity android:name=".ui.lazyload.FragDemoActivity">
+        <activity android:name="com.eebbk.geek.ui.lazyload.FragDemoActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>-->
         </activity>
-        <activity android:name=".home.ui.HomeActivity">
+        <activity android:name="com.eebbk.geek.home.ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -1,4 +1,4 @@
-package com.eebbk.nicely.demo;
+package com.eebbk.nicely.geek;
 
 import org.junit.Test;
 

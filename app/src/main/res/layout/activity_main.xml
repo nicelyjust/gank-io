@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <com.eebbk.nicely.demo.view.Spider
+        <com.eebbk.nicely.geek.view.Spider
             app:popupTxtColor="#ffffff"
             app:popupTxtColored="#00c3c7"
             android:id="@+id/subject_spider"

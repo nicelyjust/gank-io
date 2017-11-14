@@ -1,4 +1,4 @@
-package com.eebbk.nicely.demo.http.api;
+package com.eebbk.geek.http.api;
 
 /*
  *  @项目名：  Demo 
@@ -9,9 +9,10 @@ package com.eebbk.nicely.demo.http.api;
  *  @描述：    GankIO Api 接口 实际使用 getDayGank 和 getData 两个接口
  */
 
-import com.eebbk.nicely.demo.bean.netBean.DataInfo;
-import com.eebbk.nicely.demo.bean.netBean.DataInfoVo;
-import com.eebbk.nicely.demo.bean.netBean.DayInfoVo;
+
+import com.eebbk.geek.bean.netBean.DataInfo;
+import com.eebbk.geek.bean.netBean.DataInfoVo;
+import com.eebbk.geek.bean.netBean.DayInfoVo;
 
 import java.util.List;
 
