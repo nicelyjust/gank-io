@@ -27,12 +27,12 @@ public class SpaceGridItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        /*outRect.left = space;
+        outRect.left = space;
         outRect.right = space;
         outRect.bottom = space;
-        outRect.top = space;*/
+        outRect.top = space;
         super.getItemOffsets(outRect , view , parent , state);
-        int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
+        /*int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
         if (position == 0) {
             outRect.set(0 , mHeight , 0 , 0);
         } else if (position > 0){
@@ -41,7 +41,7 @@ public class SpaceGridItemDecoration extends RecyclerView.ItemDecoration {
             } else {
                 outRect.set(0 , 0 , 0 , 0);
             }
-        }
+        }*/
 
     }
 
