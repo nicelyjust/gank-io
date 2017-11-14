@@ -90,6 +90,9 @@ public abstract class LazyBaseFragment2
         prepareFetchData();
     }
 
+    /**
+     * 懒加载方法
+     */
     protected abstract void fetchData();
 
     public boolean prepareFetchData() {

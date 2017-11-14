@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import com.eebbk.geek.http.ApiServer;
+
 
 /*
  *  @项目名：  Demo 
@@ -24,6 +26,7 @@ public class AppManager extends Application {
         sAppContext = getApplicationContext();
         sHandler = new Handler();
 //        ThemeUtils.setSwitchColor(this);
+        ApiServer.init();
     }
 
     @Override

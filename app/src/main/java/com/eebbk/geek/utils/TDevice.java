@@ -82,8 +82,7 @@ public class TDevice {
 	}
 
 	public static boolean hasInternet() {
-		ConnectivityManager cm = (ConnectivityManager) UiUtils.getApp()
-																						  .getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) UiUtils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = cm.getActiveNetworkInfo();
 		return info != null && info.isAvailable() && info.isConnected();
 	}

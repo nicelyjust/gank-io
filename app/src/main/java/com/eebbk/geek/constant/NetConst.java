@@ -12,6 +12,6 @@ package com.eebbk.geek.constant;
 public class NetConst {
     private NetConst() {
     }
-    private static final String  BASE_URL = "";
+    public static final String  BASE_URL = "http://gank.io/api/";
 
 }
