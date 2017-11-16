@@ -26,7 +26,7 @@ import butterknife.Unbinder;
 public abstract class LazyBaseFragment2
         extends Fragment {
     private static final String TAG = "BaseFragment";
-    private Context mContext;
+    public Context mContext;
     private Bundle mBundle;
     private View mRoot;
     private Unbinder mBind;

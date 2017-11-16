@@ -10,12 +10,21 @@ package com.eebbk.geek.constant;
  */
 
 public class Constant {
+    public static final int LOAD_TYPE_NORMAL = 0x1;
+    // 上拉加载更多
+    public static final int LOAD_TYPE_UP = 0x2;
+    // 下拉刷新
+    public static final int LOAD_TYPE_DOWN = 0x3;
+
     public static final int COUNT = 10;
+    public static final String CATEGORY = "extra_category";
+    public static final String DATA_EMPTY_MSG = "data is null";
     private Constant() {
 
     }
     public static class Extra{
 
+        public static final String CATEGORY = "extra_category";
     }
     public static final class Category {
         public static final String DAY = "每日精选";

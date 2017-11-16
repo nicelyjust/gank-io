@@ -19,7 +19,10 @@
         </activity>
         <activity android:name="com.eebbk.geek.ui.WelcomeActivity"
             android:theme="@style/App.Theme.Launch">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name="com.eebbk.geek.ui.AnimateActivity">
             <!--<intent-filter>
@@ -45,11 +48,11 @@
             </intent-filter>-->
         </activity>
         <activity android:name="com.eebbk.geek.home.ui.HomeActivity">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            </intent-filter>-->
         </activity>
     </application>
 

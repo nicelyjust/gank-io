@@ -1,6 +1,9 @@
 package com.eebbk.geek.beauty;
 
 import com.eebbk.geek.base.mvp.BaseView;
+import com.eebbk.geek.bean.netBean.DataInfoVo;
+
+import java.util.List;
 
 
 /*
@@ -14,4 +17,5 @@ import com.eebbk.geek.base.mvp.BaseView;
 
 public interface BeautyView extends BaseView {
 
+    void loadData(List<DataInfoVo> dataInfoVoList);
 }

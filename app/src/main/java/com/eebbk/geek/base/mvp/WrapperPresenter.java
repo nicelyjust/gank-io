@@ -5,13 +5,13 @@ package com.eebbk.geek.base.mvp;
  *  @创建者:   lz
  *  @创建时间:  2017/8/27 19:17
  *  @修改时间:  nicely 2017/8/27 19:17
- *  @描述：    TODO
+ *  @描述：
  */
 
 public abstract class WrapperPresenter<T extends BaseView> implements Presenter<T>
 {
 
-    T mView;
+    public T mView;
 
     @Override
     public void attachView(T view) {
@@ -23,4 +23,7 @@ public abstract class WrapperPresenter<T extends BaseView> implements Presenter<
         mView = null;
     }
 
+    public boolean isViewNotNull() {
+        return mView != null;
+    }
 }
