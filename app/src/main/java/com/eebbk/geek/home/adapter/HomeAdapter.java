@@ -13,6 +13,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.eebbk.geek.beauty.BeautyFragment;
+import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.ui.NewsFragment;
 import com.eebbk.geek.ui.lazyload.DemoFragment;
 
@@ -21,8 +23,8 @@ public class HomeAdapter extends FragmentStatePagerAdapter{
 
     private NewsFragment mNewsFragment;
     private DemoFragment mDemoFragment1;
-    private DemoFragment mDemoFragment2;
     private DemoFragment mDemoFragment3;
+    private BeautyFragment mBeautyFragment;
 
     public HomeAdapter(FragmentManager fm ) {
         super(fm);
@@ -42,10 +44,10 @@ public class HomeAdapter extends FragmentStatePagerAdapter{
                 }
                 return mDemoFragment1;
             case 2:
-                if (mDemoFragment2 == null) {
-                    mDemoFragment2 = DemoFragment.newInstance(String.valueOf(position + 1));
+                if ( mBeautyFragment == null) {
+                    mBeautyFragment = BeautyFragment.newInstance(Constant.Category.IMAGE);
                 }
-                return mDemoFragment2;
+                return mBeautyFragment;
             case 3:
                 if (mDemoFragment3 == null) {
                     mDemoFragment3 = DemoFragment.newInstance(String.valueOf(position + 1));

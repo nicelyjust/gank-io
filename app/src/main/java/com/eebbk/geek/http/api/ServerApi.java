@@ -29,7 +29,9 @@ public interface ServerApi {
      * @param page  第几页：数字，大于0
      */
     @GET("data/{type}/{count}/{page}")
-    Observable<DataInfo<List<DataInfoVo>>> getData(@Path("type") String type, @Path("count") int count, @Path("page") int page);
+    Observable<DataInfo<List<DataInfoVo>>> getData(@Path("type") String type,
+                                                   @Path("count") int count,
+                                                   @Path("page") int page);
 
     @GET("day/{date}")
     Observable<DataInfo<DayInfoVo>> getDayGank(@Path("date") String date);
