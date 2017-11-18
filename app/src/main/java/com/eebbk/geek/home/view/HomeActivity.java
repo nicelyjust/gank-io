@@ -70,10 +70,13 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     }
 
     @Override
-    public void showError(String message) {
+    public void showMessage(String message) {
 
     }
+    @Override
+    public void showMessage(int message) {
 
+    }
     @Override
     public void onTabSelected(@IdRes int tabId) {
         switch (tabId) {

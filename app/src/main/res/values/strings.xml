@@ -3,4 +3,6 @@
 
     <!-- Strings related to login -->
     <string name="login_other_hint">其他方式登录</string>
+
+    <string name="no_internet">网络不可用哦</string>
 </resources>

@@ -70,7 +70,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             Glide.with(mContext).load(infoVo.getUrl())
                  .asBitmap()
-                 .thumbnail(0.3f) // 缩略图
+                 .thumbnail(0.1f) // 缩略图
                  .into(ivImage);
 
         }

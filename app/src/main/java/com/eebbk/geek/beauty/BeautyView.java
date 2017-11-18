@@ -18,4 +18,8 @@ import java.util.List;
 public interface BeautyView extends BaseView {
 
     void loadData(List<DataInfoVo> dataInfoVoList);
+
+    void showLoadMoreOk();
+
+    void showPullRefreshOk();
 }

@@ -1,14 +1,17 @@
 package com.eebbk.geek.beauty.p;
 
-import android.content.Context;
-
+import com.eebbk.geek.R;
 import com.eebbk.geek.base.mvp.WrapperPresenter;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
-import com.eebbk.geek.beauty.model.BeautyModel;
 import com.eebbk.geek.beauty.BeautyView;
+import com.eebbk.geek.beauty.model.BeautyModel;
 import com.eebbk.geek.constant.Constant;
+import com.eebbk.geek.utils.TDevice;
 
 import java.util.List;
+
+import static com.eebbk.geek.constant.Constant.LOAD_TYPE_DOWN;
+import static com.eebbk.geek.constant.Constant.LOAD_TYPE_UP;
 
 
 /*
@@ -21,25 +24,40 @@ import java.util.List;
  */
 
 public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBeautyPresenter {
-    private Context          mContext;
     private BeautyModel      mBeautyModel;
-    private int              mCurrentPage;
+    private int              mCurrentPage = 1;
     private List<DataInfoVo> mDataInfoVoList;
-
-    public BeautyPresenter(Context context) {
-        mContext = context;
+    private long lastPullRefresh;
+    public BeautyPresenter() {
         mBeautyModel = new BeautyModel(this);
     }
 
     public void loadData(String category, int loadType) {
+        if (!TDevice.hasInternet()) {
+            mView.showMessage(R.string.no_internet);
+            return;
+        }
         if (mBeautyModel != null) {
-            mBeautyModel.loadData(category , loadType ,mCurrentPage);
-            if (loadType == Constant.LOAD_TYPE_UP) {
+            if (loadType == LOAD_TYPE_UP) {
                 mCurrentPage++;
             } else {
-                mCurrentPage = 0;
+                mCurrentPage = 1;
             }
+            mBeautyModel.loadData(category , loadType ,mCurrentPage);
         }
+    }
+
+    /**
+     * 加载更多与下拉刷新
+     */
+    public void pullToRefresh(String category, boolean isLoadMore) {
+        // 判断间隔时间
+        if (!isLoadMore && System.currentTimeMillis() - lastPullRefresh < Constant.PULL_REFRESH_TIME) {
+            mView.showPullRefreshOk();
+            return;
+        }
+        lastPullRefresh = System.currentTimeMillis();
+        loadData(category , isLoadMore ? LOAD_TYPE_UP : Constant.LOAD_TYPE_DOWN);
     }
 
     @Override
@@ -47,34 +65,41 @@ public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBe
         if (!isViewNotNull()) {
             return;
         }
-        mDataInfoVoList = dataInfoVoList;
         mView.hideLoading();
-        if (type == Constant.LOAD_TYPE_UP) {
+        if (type == LOAD_TYPE_UP) {
             this.mDataInfoVoList.addAll(dataInfoVoList);
+            mView.showLoadMoreOk();
+        } else if (type == LOAD_TYPE_DOWN){
+            this.mDataInfoVoList = dataInfoVoList;
+            mView.showPullRefreshOk();
         } else {
             this.mDataInfoVoList = dataInfoVoList;
         }
-        mView.loadData(dataInfoVoList);
+        mView.loadData(mDataInfoVoList);
     }
 
     @Override
     public void loadDataEmpty(int loadType) {
-        if (isViewNotNull()) {
-            mView.hideLoading();
+        if (!isViewNotNull()) {
+            return;
         }
-        if (loadType == Constant.LOAD_TYPE_NORMAL) {
-            if (isViewNotNull()) {
-            //  显示错误视图
-                mView.showError("空的数据");
-            }
+        mView.hideLoading();
+        mView.showLoadMoreOk();
+        mView.showPullRefreshOk();
+        if (loadType == Constant.LOAD_TYPE_NORMAL ) {
+            //  显示空视图
+            mView.showMessage("空的数据");
         }
     }
 
     @Override
     public void loadDataFailed(int loadType, String msg) {
-        if (isViewNotNull()) {
-            mView.showError(msg);
+        if (!isViewNotNull()) {
+            return;
         }
+        mView.showLoadMoreOk();
+        mView.showPullRefreshOk();
+        mView.showMessage(msg);
     }
 
     @Override

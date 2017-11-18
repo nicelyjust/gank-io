@@ -14,6 +14,8 @@ public interface BaseView {
 
     void hideLoading();
 
-    void showError(String message);
+    void showMessage(String message);
+
+    void showMessage(int message);
 
 }

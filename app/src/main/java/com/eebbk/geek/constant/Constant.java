@@ -16,9 +16,11 @@ public class Constant {
     // 下拉刷新
     public static final int LOAD_TYPE_DOWN = 0x3;
 
-    public static final int COUNT = 10;
-    public static final String CATEGORY = "extra_category";
+    public static final int COUNT             = 10;
+    public static final String CATEGORY       = "extra_category";
     public static final String DATA_EMPTY_MSG = "data is null";
+    public static final long PULL_REFRESH_TIME = 60 * 60 * 1000;
+
     private Constant() {
 
     }

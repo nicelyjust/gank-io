@@ -87,7 +87,7 @@ public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayou
     }
 
     private void createP() {
-        mPresenter = new BeautyPresenter(getActivity());
+        mPresenter = new BeautyPresenter();
     }
     @Override
     protected void fetchData() {
@@ -96,14 +96,23 @@ public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayou
     }
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-//        mPresenter.loadData(mCategory , Constant.LOAD_TYPE_DOWN);
+        if (TDevice.hasInternet()) {
+            mPresenter.pullToRefresh(mCategory ,false);
+        } else {
+            showMessage(R.string.no_internet);
+            mRefreshLayout.endRefreshing();
+        }
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-
-//        mPresenter.loadData(mCategory , Constant.LOAD_TYPE_UP);
-        return false;
+        if (TDevice.hasInternet()) {
+            mPresenter.pullToRefresh(mCategory ,true);
+            return true;
+        } else {
+            showMessage(R.string.no_internet);
+            return false;
+        }
     }
 
     @Override
@@ -116,20 +125,38 @@ public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayou
     }
 
     @Override
-    public void showError(String message) {
+    public void showMessage(String message) {
         Toast.makeText(mContext , message ,Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showMessage(int message) {
+        Toast.makeText(mContext , message ,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadData(List<DataInfoVo> dataInfoVoList) {
+        mAdapter.setData(dataInfoVoList);
+    }
+
+    @Override
+    public void showLoadMoreOk() {
+        if (mRefreshLayout != null && mRefreshLayout.isLoadingMore() ) {
+            mRefreshLayout.endLoadingMore();
+        }
+    }
+
+    @Override
+    public void showPullRefreshOk() {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.endRefreshing();
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (mPresenter != null) {
             mPresenter.detachView();
         }
-    }
-
-    @Override
-    public void loadData(List<DataInfoVo> dataInfoVoList) {
-        mAdapter.setData(dataInfoVoList);
     }
 }
