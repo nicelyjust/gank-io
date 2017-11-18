@@ -69,6 +69,8 @@ public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBe
         if (type == LOAD_TYPE_UP) {
             this.mDataInfoVoList.addAll(dataInfoVoList);
             mView.showLoadMoreOk();
+            mView.loadDataMore( mDataInfoVoList.size(), dataInfoVoList.size());
+            return;
         } else if (type == LOAD_TYPE_DOWN){
             this.mDataInfoVoList = dataInfoVoList;
             mView.showPullRefreshOk();
