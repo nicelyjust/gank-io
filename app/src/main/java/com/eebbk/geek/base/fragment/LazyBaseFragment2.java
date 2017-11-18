@@ -26,10 +26,8 @@ import butterknife.Unbinder;
 public abstract class LazyBaseFragment2 extends Fragment {
     private static final String TAG = "BaseFragment";
     public Context mContext;
-    private Bundle mBundle;
     private View mRoot;
     private Unbinder mBind;
-    private LayoutInflater mInflater;
     private boolean isViewInitiated;
     private boolean isVisibleToUser;
     private boolean isDataInitiated;
@@ -49,8 +47,7 @@ public abstract class LazyBaseFragment2 extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBundle = getArguments();
-        initBundle(mBundle);
+        initBundle(getArguments());
     }
 
 
@@ -62,7 +59,6 @@ public abstract class LazyBaseFragment2 extends Fragment {
                 parent.removeView(mRoot);
         } else {
             mRoot = inflater.inflate(getLayoutId(), container, false);
-            mInflater = inflater;
             // Do something
             onBindViewBefore(mRoot);
             // Bind view
@@ -130,7 +126,6 @@ public abstract class LazyBaseFragment2 extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mBind.unbind();
-        mBundle = null;
     }
 
     protected void onRestartInstance(Bundle savedInstanceState) {
