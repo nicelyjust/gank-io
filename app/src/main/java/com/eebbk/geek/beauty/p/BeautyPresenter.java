@@ -1,9 +1,11 @@
-package com.eebbk.geek.beauty;
+package com.eebbk.geek.beauty.p;
 
 import android.content.Context;
 
 import com.eebbk.geek.base.mvp.WrapperPresenter;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
+import com.eebbk.geek.beauty.model.BeautyModel;
+import com.eebbk.geek.beauty.BeautyView;
 import com.eebbk.geek.constant.Constant;
 
 import java.util.List;
@@ -18,10 +20,10 @@ import java.util.List;
  *  @描述：    p层应该是纯java代码
  */
 
-public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBeautyPresenter{
-    private Context mContext;
-    private  BeautyModel mBeautyModel;
-    private  int mCurrentPage;
+public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBeautyPresenter {
+    private Context          mContext;
+    private BeautyModel      mBeautyModel;
+    private int              mCurrentPage;
     private List<DataInfoVo> mDataInfoVoList;
 
     public BeautyPresenter(Context context) {

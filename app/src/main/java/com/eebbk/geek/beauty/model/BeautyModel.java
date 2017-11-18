@@ -1,4 +1,4 @@
-package com.eebbk.geek.beauty;
+package com.eebbk.geek.beauty.model;
 
 /*
  *  @项目名：  Demo 
@@ -11,6 +11,7 @@ package com.eebbk.geek.beauty;
 
 import com.eebbk.geek.bean.netBean.DataInfo;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
+import com.eebbk.geek.beauty.p.IBeautyPresenter;
 import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.http.ApiServer;
 import com.eebbk.geek.utils.L;

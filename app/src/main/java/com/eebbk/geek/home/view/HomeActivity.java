@@ -1,4 +1,4 @@
-package com.eebbk.geek.home.ui;
+package com.eebbk.geek.home.view;
 
 import android.content.Context;
 import android.support.annotation.IdRes;
@@ -7,7 +7,6 @@ import com.eebbk.geek.R;
 import com.eebbk.geek.base.activities.BaseMvpAct;
 import com.eebbk.geek.bean.MockBean;
 import com.eebbk.geek.home.HomePresenterImpl;
-import com.eebbk.geek.home.HomeView;
 import com.eebbk.geek.home.adapter.HomeAdapter;
 import com.eebbk.geek.view.NoScrollViewPager;
 import com.roughike.bottombar.BottomBar;

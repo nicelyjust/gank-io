@@ -1,4 +1,4 @@
-package com.eebbk.geek.beauty;
+package com.eebbk.geek.beauty.p;
 
 /*
  *  @项目名：  Demo 
@@ -13,7 +13,7 @@ import com.eebbk.geek.bean.netBean.DataInfoVo;
 
 import java.util.List;
 
-interface IBeautyPresenter {
+public interface IBeautyPresenter {
     void loadDataSuccess(List<DataInfoVo> dataInfoVoList, int loadType);
     void loadDataEmpty(int loadType);
     void loadDataFailed(int loadType, String msg);

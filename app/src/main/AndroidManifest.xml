@@ -48,7 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>-->
         </activity>
-        <activity android:name="com.eebbk.geek.home.ui.HomeActivity">
+        <activity android:name="com.eebbk.geek.home.view.HomeActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

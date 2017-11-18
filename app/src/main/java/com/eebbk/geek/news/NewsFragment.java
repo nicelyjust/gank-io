@@ -1,4 +1,4 @@
-package com.eebbk.geek.home.ui;
+package com.eebbk.geek.news;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -29,8 +29,7 @@ public class NewsFragment extends LazyBaseFragment2
     BGARefreshLayout mRefreshLayout;
 
     public static NewsFragment newInstance() {
-         NewsFragment fragment = new NewsFragment();
-        return fragment;
+        return new NewsFragment();
     }
     @Override
     protected int getLayoutId() {

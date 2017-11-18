@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.eebbk.geek.home.ui.HomeActivity;
+import com.eebbk.geek.home.view.HomeActivity;
 import com.eebbk.geek.utils.UiUtils;
 import com.eebbk.geek.R;
 

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment2;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
+import com.eebbk.geek.beauty.p.BeautyPresenter;
 import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.media.SpaceGridItemDecoration;
 import com.eebbk.geek.utils.TDevice;
@@ -29,14 +30,16 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  *  @描述：
  */
 
-public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayout.BGARefreshLayoutDelegate , BeautyView {
+public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayout.BGARefreshLayoutDelegate ,
+                                                                 BeautyView
+{
 
     @BindView(R.id.rv_beauty)
     RecyclerView     mRv;
     @BindView(R.id.refresh_layout_beauty)
     BGARefreshLayout mRefreshLayout;
     private BeautyPresenter mPresenter;
-    private String mCategory;
+    private String          mCategory;
     private CategoryAdapter mAdapter;
 
     public static BeautyFragment newInstance(String category) {

@@ -4,7 +4,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".home.ui.HomeActivity">
+                tools:context=".home.view.HomeActivity">
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
@@ -14,9 +14,9 @@
         app:bb_titleTextAppearance="@style/TextAppearance.Design.Tab"/>
     <!--用一个不可滑动的viewpager更好,fragment的状态不需要自己管理-->
     <com.eebbk.geek.view.NoScrollViewPager android:id="@+id/vp_home"
-                                                  android:layout_alignParentTop="true"
-                                                  android:layout_width="match_parent"
-                                                  android:layout_height="match_parent"
-                                                  android:layout_alignTop="@id/bottom_bar"/>
+                                           android:layout_above="@id/bottom_bar"
+                                           android:layout_alignParentTop="true"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="match_parent"/>
 
 </RelativeLayout>

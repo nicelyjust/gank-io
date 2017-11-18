@@ -1,4 +1,4 @@
-package com.eebbk.geek.home;
+package com.eebbk.geek.home.view;
 /*
  *  @项目名：  gank-io
  *  @包名：    com.eebbk.nicely.demo.home

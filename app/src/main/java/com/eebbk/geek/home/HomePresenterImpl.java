@@ -10,6 +10,7 @@ package com.eebbk.geek.home;
 
 
 import com.eebbk.geek.base.mvp.WrapperPresenter;
+import com.eebbk.geek.home.view.HomeView;
 
 public class HomePresenterImpl extends WrapperPresenter<HomeView> {
 
