@@ -23,8 +23,7 @@ import butterknife.Unbinder;
  *  @修改时间:  Administrator 2017/9/26 19:44 
  *  @描述：
  */
-public abstract class LazyBaseFragment2
-        extends Fragment {
+public abstract class LazyBaseFragment2 extends Fragment {
     private static final String TAG = "BaseFragment";
     public Context mContext;
     private Bundle mBundle;
