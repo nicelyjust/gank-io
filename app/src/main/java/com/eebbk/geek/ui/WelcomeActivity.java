@@ -26,7 +26,6 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // TODO: 2017/8/27 做检查权限的操作
         UiUtils.getHandler().postDelayed(new Runnable() {
             @Override
             public void run() {

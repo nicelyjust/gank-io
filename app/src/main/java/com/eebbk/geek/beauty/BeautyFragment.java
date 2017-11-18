@@ -141,7 +141,7 @@ public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayou
 
     @Override
     public void loadDataMore(int newSize, int oldSize) {
-        mAdapter.notifyItemRangeChanged(oldSize-1 , newSize);
+        mAdapter.notifyItemRangeChanged(oldSize , newSize);
     }
     @Override
     public void showLoadMoreOk() {
