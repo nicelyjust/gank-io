@@ -56,7 +56,9 @@ public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBe
             mView.showPullRefreshOk();
             return;
         }
-        lastPullRefresh = System.currentTimeMillis();
+        if (!isLoadMore ) {
+            lastPullRefresh = System.currentTimeMillis();
+        }
         loadData(category , isLoadMore ? LOAD_TYPE_UP : Constant.LOAD_TYPE_DOWN);
     }
 
