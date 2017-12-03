@@ -25,11 +25,10 @@ import butterknife.Unbinder;
  */
 public abstract class BaseFragment extends Fragment {
     private static final String TAG = "BaseFragment";
-    private Context mContext;
+    public Context mContext;
     private Bundle mBundle;
     private View mRoot;
     private Unbinder mBind;
-    private LayoutInflater mInflater;
 
     @Override
     public void onAttach(Context context) {
@@ -59,7 +58,6 @@ public abstract class BaseFragment extends Fragment {
                 parent.removeView(mRoot);
         } else {
             mRoot = inflater.inflate(getLayoutId(), container, false);
-            mInflater = inflater;
             // Do something
             onBindViewBefore(mRoot);
             // Bind view

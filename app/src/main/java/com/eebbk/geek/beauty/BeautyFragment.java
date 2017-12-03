@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.eebbk.geek.R;
-import com.eebbk.geek.base.fragment.LazyBaseFragment2;
+import com.eebbk.geek.base.fragment.BaseFragment;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
 import com.eebbk.geek.beauty.p.BeautyPresenter;
 import com.eebbk.geek.constant.Constant;
@@ -30,7 +30,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  *  @描述：
  */
 
-public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayout.BGARefreshLayoutDelegate ,
+public class BeautyFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate ,
                                                                  BeautyView
 {
 
@@ -90,7 +90,7 @@ public class BeautyFragment extends LazyBaseFragment2 implements BGARefreshLayou
         mPresenter = new BeautyPresenter();
     }
     @Override
-    protected void fetchData() {
+    protected void initData() {
         showLoading();
         mPresenter.loadData(mCategory , Constant.LOAD_TYPE_NORMAL);
     }
