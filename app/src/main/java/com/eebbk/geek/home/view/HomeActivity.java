@@ -1,14 +1,19 @@
 package com.eebbk.geek.home.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.FrameLayout;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.activities.BaseMvpAct;
 import com.eebbk.geek.bean.MockBean;
+import com.eebbk.geek.beauty.BeautyFragment;
+import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.HomePresenterImpl;
-import com.eebbk.geek.home.adapter.HomeAdapter;
-import com.eebbk.geek.view.NoScrollViewPager;
+import com.eebbk.geek.news.NewsFragment;
+import com.eebbk.geek.ui.lazyload.DemoFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabReselectListener;
@@ -23,6 +28,7 @@ import butterknife.BindView;
  *  @创建时间:  2017/8/27 20:15
  *  @修改时间:  nicely 2017/8/27 20:15
  *  @描述：    选用bottombar,备选 : https://github.com/yingLanNull/AlphaTabsIndicator(未读消息,平板应用等适用性更强)
+ *  v4-24.0.0+ 开始，官方修复了fragment重叠的问题，
  */
 
 public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeView, OnTabSelectListener,
@@ -30,8 +36,12 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
 
     @BindView(R.id.bottom_bar)
     BottomBar         mBottomBar;
-    @BindView(R.id.vp_home)
-    NoScrollViewPager mViewPager;
+    @BindView(R.id.home_container)
+    FrameLayout mContainer;
+    private NewsFragment mNewsFragment;
+    private DemoFragment mNoteFragment;
+    private BeautyFragment mBeautyFragment;
+    private DemoFragment mMineFragment;
 
     @Override
     protected int getContentView() {
@@ -39,16 +49,62 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     }
 
     @Override
-    protected void initWidget() {
+    protected void initWidget(Bundle savedInstanceState) {
+        dealWithFragment(savedInstanceState);
         mBottomBar.setOnTabSelectListener(this);
         mBottomBar.setOnTabReselectListener(this);
         BottomBarTab tweetBarTab = mBottomBar.getTabWithId(R.id.tab_tweet);
         tweetBarTab.setBadgeCount(9);
-        HomeAdapter adapter = new HomeAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(adapter);
-        mViewPager.setOffscreenPageLimit(4);
     }
 
+    private void dealWithFragment(Bundle savedInstanceState) {
+
+        if (savedInstanceState == null) {
+            int pos = getIntent().getIntExtra("position", 1);
+            mNewsFragment = NewsFragment.newInstance();
+            mNoteFragment = DemoFragment.newInstance("2");
+            mBeautyFragment = BeautyFragment.newInstance(Constant.Category.IMAGE);
+            mMineFragment = DemoFragment.newInstance("4");
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.home_container , mNewsFragment ,"1");
+            ft.add(R.id.home_container , mNoteFragment ,"2");
+            ft.add(R.id.home_container , mBeautyFragment ,"3");
+            ft.add(R.id.home_container , mMineFragment ,"4");
+
+            switch (pos) {
+                case 1:
+                    ft.hide(mNoteFragment);
+                    ft.hide(mBeautyFragment);
+                    ft.hide(mMineFragment);
+                    break;
+                case 2:
+                    ft.hide(mNewsFragment);
+                    ft.hide(mBeautyFragment);
+                    ft.hide(mMineFragment);
+                    break;
+                case 3:
+                    ft.hide(mNewsFragment);
+                    ft.hide(mNoteFragment);
+                    ft.hide(mMineFragment);
+                    break;
+                case 4:
+                    ft.hide(mNewsFragment);
+                    ft.hide(mNoteFragment);
+                    ft.hide(mBeautyFragment);
+                    break;
+            }
+            ft.commit();
+        } else {
+            int pos = savedInstanceState.getInt("position", 1);
+            mNewsFragment = (NewsFragment) getSupportFragmentManager().findFragmentByTag("1");
+            mNoteFragment = (DemoFragment) getSupportFragmentManager().findFragmentByTag("2");
+            mBeautyFragment = (BeautyFragment) getSupportFragmentManager().findFragmentByTag("3");
+            mMineFragment = (DemoFragment) getSupportFragmentManager().findFragmentByTag("4");
+
+            showCurFragment(pos);
+        }
+
+    }
     @Override
     protected HomePresenterImpl createP(Context context) {
         return null;
@@ -81,27 +137,52 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     public void onTabSelected(@IdRes int tabId) {
         switch (tabId) {
             case R.id.tab_news:
-                mViewPager.setCurrentItem(0);
-//                Toast.makeText(AppManager.getsAppContext(), "news", Toast.LENGTH_SHORT).show();
+                showCurFragment(1);
                  break;
             case R.id.tab_tweet:
-                mViewPager.setCurrentItem(1);
-//                Toast.makeText(AppManager.getsAppContext(),"tweet" , Toast.LENGTH_SHORT).show();
+                showCurFragment(2);
                 break;
             case R.id.tab_explore:
-                mViewPager.setCurrentItem(2);
-//                Toast.makeText(AppManager.getsAppContext(), "explore", Toast.LENGTH_SHORT).show();
+                showCurFragment(3);
                 break;
             case R.id.tab_me:
-                mViewPager.setCurrentItem(3);
-//                Toast.makeText(AppManager.getsAppContext(), "me", Toast.LENGTH_SHORT).show();
+                showCurFragment(4);
                 break;
             default:
                  break;
         }
 
     }
-
+    private void showCurFragment(int pos) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        switch (pos) {
+            case 1:
+                ft.show(mNewsFragment);
+                ft.hide(mNoteFragment);
+                ft.hide(mBeautyFragment);
+                ft.hide(mMineFragment);
+                break;
+            case 2:
+                ft.hide(mNewsFragment);
+                ft.show(mNoteFragment);
+                ft.hide(mBeautyFragment);
+                ft.hide(mMineFragment);
+                break;
+            case 3:
+                ft.hide(mNewsFragment);
+                ft.hide(mNoteFragment);
+                ft.show(mBeautyFragment);
+                ft.hide(mMineFragment);
+                break;
+            case 4:
+                ft.hide(mNewsFragment);
+                ft.hide(mNoteFragment);
+                ft.hide(mBeautyFragment);
+                ft.show(mMineFragment);
+                break;
+        }
+        ft.commit();
+    }
     @Override
     public void onTabReSelected(@IdRes int tabId) {
         mBottomBar.getTabWithId(tabId).removeBadge();

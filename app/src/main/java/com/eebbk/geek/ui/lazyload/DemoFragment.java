@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.eebbk.geek.base.fragment.LazyBaseFragment2;
-import com.eebbk.geek.utils.L;
 import com.eebbk.geek.R;
+import com.eebbk.geek.base.fragment.BaseFragment;
+import com.eebbk.geek.utils.L;
 
 import butterknife.BindView;
 
@@ -22,7 +22,7 @@ import butterknife.BindView;
  *  @修改时间:  Administrator 2017/11/1 11:52 
  *  @描述：    TODO
  */
-public class DemoFragment extends LazyBaseFragment2 {
+public class DemoFragment extends BaseFragment {
     private static final String TAG      = "DemoFragment";
     private static final String POSITION = "position";
     @BindView(R.id.tv_fragment_name)
@@ -51,7 +51,7 @@ public class DemoFragment extends LazyBaseFragment2 {
     }
 
     @Override
-    protected void fetchData() {
+    protected void initData() {
         L.d("lz" , mPosition + ": 加载数据了");
         mTvName.setText("fragment#:" + mPosition);
     }

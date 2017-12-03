@@ -28,7 +28,7 @@ public abstract class  BaseMvpAct<T extends WrapperPresenter> extends AppCompatA
         setContentView(getContentView());
         mBind = ButterKnife.bind(this);
         mPresenter = createP(this);
-        initWidget();
+        initWidget(savedInstanceState);
         initData();
         if (mPresenter != null) {
             mPresenter.attachView(this);
@@ -44,8 +44,9 @@ public abstract class  BaseMvpAct<T extends WrapperPresenter> extends AppCompatA
 
     /**
      * 初始化组件，设置监听器，子类选择实现
+     * @param savedInstanceState
      */
-    protected void initWidget() {
+    protected void initWidget(Bundle savedInstanceState) {
 
     }
 

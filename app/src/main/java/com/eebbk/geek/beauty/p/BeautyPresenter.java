@@ -1,12 +1,10 @@
 package com.eebbk.geek.beauty.p;
 
-import com.eebbk.geek.R;
 import com.eebbk.geek.base.mvp.WrapperPresenter;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
 import com.eebbk.geek.beauty.BeautyView;
 import com.eebbk.geek.beauty.model.BeautyModel;
 import com.eebbk.geek.constant.Constant;
-import com.eebbk.geek.utils.TDevice;
 
 import java.util.List;
 
@@ -33,10 +31,10 @@ public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBe
     }
 
     public void loadData(String category, int loadType) {
-        if (!TDevice.hasInternet()) {
+        /*if (!TDevice.hasInternet()) {
             mView.showMessage(R.string.no_internet);
             return;
-        }
+        }*/
         if (mBeautyModel != null) {
             if (loadType == LOAD_TYPE_UP) {
                 mCurrentPage++;
