@@ -4,11 +4,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eebbk.geek.R;
 import com.eebbk.geek.base.activities.BaseActivity;
-import com.eebbk.geek.media.SelectImgActivity;
 import com.eebbk.geek.media.config.SelectOptions;
 import com.eebbk.geek.utils.L;
-import com.eebbk.geek.R;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -108,8 +107,10 @@ public class RxJavaActivity extends BaseActivity
 
     @Override
     public void onClick(View v) {
-        SelectOptions options = new SelectOptions.Builder().setCallback(this).setSelectCount(6).build();
-        SelectImgActivity.show(this , options);
+        /*SelectOptions options = new SelectOptions.Builder().setCallback(this).setSelectCount(6).build();
+        SelectImgActivity.show(this , options);*/
+        setResult(RESULT_OK , getIntent());
+        finish();
     }
 
     @Override

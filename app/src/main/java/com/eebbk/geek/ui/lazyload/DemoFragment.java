@@ -1,5 +1,7 @@
 package com.eebbk.geek.ui.lazyload;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.BaseFragment;
+import com.eebbk.geek.constant.Constant;
+import com.eebbk.geek.rxLearn.RxJavaActivity;
 import com.eebbk.geek.utils.L;
 
 import butterknife.BindView;
@@ -22,7 +26,9 @@ import butterknife.BindView;
  *  @修改时间:  Administrator 2017/11/1 11:52 
  *  @描述：    TODO
  */
-public class DemoFragment extends BaseFragment {
+public class DemoFragment extends BaseFragment
+        implements View.OnClickListener
+{
     private static final String TAG      = "DemoFragment";
     private static final String POSITION = "position";
     @BindView(R.id.tv_fragment_name)
@@ -62,14 +68,40 @@ public class DemoFragment extends BaseFragment {
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        L.d("lz",  " isVisibleToUser == " + isVisibleToUser);
-        super.setUserVisibleHint(isVisibleToUser);
+    protected void initWidget(View root) {
+        mTvName.setOnClickListener(this);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Constant.Extra.DEMO_FOR_RESULT:
+                    String stringExtra = data.getStringExtra(Constant.Extra.DEMO_POSITION);
+                    mTvName.setText("i got you" + stringExtra );
+                    break;
+                default:
+                     break;
+            }
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         L.d("lz", mPosition + ":销毁了");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_fragment_name:
+                Intent intent = new Intent(mContext ,RxJavaActivity.class);
+                intent.putExtra(Constant.Extra.DEMO_POSITION , mPosition);
+                startActivityForResult(intent , Constant.Extra.DEMO_FOR_RESULT);
+                 break;
+            default:
+                 break;
+        }
     }
 }

@@ -25,7 +25,10 @@ public class Constant {
     }
     public static class Extra{
 
-        public static final String CATEGORY = "extra_category";
+        public static final String CATEGORY      = "extra_category";
+        public static final String DEMO_POSITION = "extra_position";
+
+        public static final int DEMO_FOR_RESULT  = 0x01;
     }
     public static final class Category {
         public static final String DAY = "每日精选";

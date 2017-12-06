@@ -1,6 +1,8 @@
 package com.eebbk.geek.home.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.HomePresenterImpl;
 import com.eebbk.geek.news.NewsFragment;
 import com.eebbk.geek.ui.lazyload.DemoFragment;
+import com.eebbk.geek.utils.L;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabReselectListener;
@@ -186,5 +189,20 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     @Override
     public void onTabReSelected(@IdRes int tabId) {
         mBottomBar.getTabWithId(tabId).removeBadge();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Constant.Extra.DEMO_FOR_RESULT:
+                    String stringExtra = data.getStringExtra(Constant.Extra.DEMO_POSITION);
+                    L.d("lz" , "i got too :" + stringExtra);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
