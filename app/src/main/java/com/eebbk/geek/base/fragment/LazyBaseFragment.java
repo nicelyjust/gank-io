@@ -22,28 +22,29 @@ import butterknife.Unbinder;
  *  @创建者:   lz
  *  @创建时间:  2017/9/26 19:44
  *  @修改时间:  Administrator 2017/9/26 19:44 
- *  @描述：
+ *  @描述：针对hide show 的延迟加载
  */
 public abstract class LazyBaseFragment extends Fragment {
-    private static final String TAG = "BaseFragment";
-    private Context mContext;
+    private static final String TAG = "LazyBaseFragment";
+    public Context mContext;
     private Bundle mBundle;
     private View mRoot;
     private Unbinder mBind;
-    private LayoutInflater mInflater;
-    private boolean isViewCreated;
-    private boolean isUIVisible;
+    protected  boolean  isFirstLoad = true;
+    protected boolean isVisible = false;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        L.d(TAG, " onAttach()" );
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mContext = null;
+        L.d(TAG, " onDetach()" );
     }
 
     @Override
@@ -51,6 +52,7 @@ public abstract class LazyBaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mBundle = getArguments();
         initBundle(mBundle);
+        L.d(TAG, " onCreate()" );
     }
 
 
@@ -62,7 +64,6 @@ public abstract class LazyBaseFragment extends Fragment {
                 parent.removeView(mRoot);
         } else {
             mRoot = inflater.inflate(getLayoutId(), container, false);
-            mInflater = inflater;
             // Do something
             onBindViewBefore(mRoot);
             // Bind view
@@ -73,37 +74,30 @@ public abstract class LazyBaseFragment extends Fragment {
             // Init
             initWidget(mRoot);
         }
+        L.d(TAG, " onCreateView()" );
         return mRoot;
-    }
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        L.d("lz", ":view创建完毕");
-        isViewCreated = true;
-        lazyLoad();
     }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        L.d(TAG,  " isVisibleToUser == " + isVisibleToUser);
-        if (isVisibleToUser) {
-            isUIVisible = true;
-            lazyLoad();
-        } else {
-            isUIVisible = false;
+        L.d(TAG, " setUserVisibleHint: " + isVisibleToUser);
+        this.isVisible = isVisibleToUser;
+        if(getUserVisibleHint()) {
+            onVisible();
         }
     }
-    private void lazyLoad() {
-        if (isViewCreated && isUIVisible) {
-            loadData();
-            //数据加载完毕,恢复标记,防止重复加载
-            isViewCreated = false;
-            isUIVisible = false;
+    /**
+     * 可见, 执行延迟加载
+     */
+    protected void onVisible() {
+        if(isFirstLoad && getView() != null){
+            lazyLoad();
+            isFirstLoad = false;
         }
     }
 
-    protected void loadData() {
-    }
+    protected abstract void lazyLoad();
+
 
     protected void onBindViewBefore(View root) {
         // ...
@@ -122,6 +116,15 @@ public abstract class LazyBaseFragment extends Fragment {
 
     protected void initWidget(View root) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getUserVisibleHint()){
+            onVisible();
+        }
+        L.d(TAG, " onResume()" );
     }
 
     @Override

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eebbk.geek.R;
-import com.eebbk.geek.base.fragment.BaseFragment;
+import com.eebbk.geek.base.fragment.LazyBaseFragment;
 import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.rxLearn.RxJavaActivity;
 import com.eebbk.geek.utils.L;
@@ -26,7 +26,7 @@ import butterknife.BindView;
  *  @修改时间:  Administrator 2017/11/1 11:52 
  *  @描述：    TODO
  */
-public class DemoFragment extends BaseFragment
+public class DemoFragment extends LazyBaseFragment
         implements View.OnClickListener
 {
     private static final String TAG      = "DemoFragment";
@@ -57,7 +57,7 @@ public class DemoFragment extends BaseFragment
     }
 
     @Override
-    protected void initData() {
+    protected void lazyLoad() {
         L.d("lz" , mPosition + ": 加载数据了");
         mTvName.setText("fragment#:" + mPosition);
     }
