@@ -26,9 +26,7 @@ import butterknife.BindView;
  *  @修改时间:  Administrator 2017/11/1 11:52 
  *  @描述：    TODO
  */
-public class DemoFragment extends LazyBaseFragment
-        implements View.OnClickListener
-{
+public class DemoFragment extends LazyBaseFragment implements View.OnClickListener {
     private static final String TAG      = "DemoFragment";
     private static final String POSITION = "position";
     @BindView(R.id.tv_fragment_name)
@@ -57,8 +55,8 @@ public class DemoFragment extends LazyBaseFragment
     }
 
     @Override
-    protected void lazyLoad() {
-        L.d("DemoFragment" , mPosition + ": 加载数据了");
+    protected void fetchData() {
+        L.d("fetchData" , mPosition + ": 加载数据了");
         mTvName.setText("fragment#:" + mPosition);
     }
 

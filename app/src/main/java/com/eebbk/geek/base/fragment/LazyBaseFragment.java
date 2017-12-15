@@ -27,32 +27,28 @@ import butterknife.Unbinder;
 public abstract class LazyBaseFragment extends Fragment {
     private static final String TAG = "LazyBaseFragment";
     public Context mContext;
-    private Bundle mBundle;
     private View mRoot;
     private Unbinder mBind;
-    protected  boolean  isFirstLoad = true;
-    protected boolean isVisible = false;
+    private boolean isViewInitiated;
+    private boolean isVisibleToUser;
+    private boolean isDataInitiated;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        L.d(TAG, " onAttach()" );
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mContext = null;
-        L.d(TAG, " onDetach()" );
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBundle = getArguments();
-        initBundle(mBundle);
-        L.d(TAG, " onCreate()" );
+        initBundle(getArguments());
     }
 
 
@@ -78,27 +74,43 @@ public abstract class LazyBaseFragment extends Fragment {
         return mRoot;
     }
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isViewInitiated = true;
+        prepareFetchData();
+    }
+
+    /*@Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        L.d(TAG, " setUserVisibleHint: " + isVisibleToUser);
-        this.isVisible = isVisibleToUser;
-        if(getUserVisibleHint()) {
-            onVisible();
-        }
+        this.isVisibleToUser = isVisibleToUser;
+        prepareFetchData();
+    }*/
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        this.isVisibleToUser = !hidden;
+        prepareFetchData();
     }
+
     /**
-     * 可见, 执行延迟加载
+     * 懒加载方法
      */
-    protected void onVisible() {
-        L.d(TAG, " isFirstLoad: " + isFirstLoad +"; getView(): " + getView());
-        if(isFirstLoad && getView() != null){
-            lazyLoad();
-            isFirstLoad = false;
-        }
+    protected abstract void fetchData();
+
+    public boolean prepareFetchData() {
+        return prepareFetchData(false);
     }
 
-    protected abstract void lazyLoad();
-
+    public boolean prepareFetchData(boolean forceUpdate) {
+        if (isVisibleToUser && isViewInitiated && (!isDataInitiated || forceUpdate)) {
+            fetchData();
+            isDataInitiated = true;
+            return true;
+        }
+        return false;
+    }
 
     protected void onBindViewBefore(View root) {
         // ...
@@ -120,19 +132,9 @@ public abstract class LazyBaseFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if(getUserVisibleHint()){
-            onVisible();
-        }
-        L.d(TAG, " onResume()" );
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mBind.unbind();
-        mBundle = null;
     }
 
     protected void onRestartInstance(Bundle savedInstanceState) {

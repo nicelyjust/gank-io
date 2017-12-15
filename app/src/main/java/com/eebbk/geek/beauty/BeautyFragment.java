@@ -12,7 +12,6 @@ import com.eebbk.geek.bean.netBean.DataInfoVo;
 import com.eebbk.geek.beauty.p.BeautyPresenter;
 import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.media.SpaceGridItemDecoration;
-import com.eebbk.geek.utils.L;
 import com.eebbk.geek.utils.TDevice;
 
 import java.util.List;
@@ -70,10 +69,6 @@ public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout
             mPresenter.attachView(this);
         }
     }
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        L.d("lz" , "hidden : " + hidden);
-    }
     private void initRecyclerview() {
         mRv.setLayoutManager(new StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL));
         mRv.addItemDecoration(new SpaceGridItemDecoration(TDevice.dip2px(mContext , 5)));
@@ -93,7 +88,7 @@ public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout
         mPresenter = new BeautyPresenter();
     }
     @Override
-    protected void lazyLoad() {
+    protected void fetchData() {
         showLoading();
         mPresenter.loadData(mCategory , Constant.LOAD_TYPE_NORMAL);
     }

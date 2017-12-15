@@ -73,27 +73,23 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
             ft.add(R.id.home_container , mNoteFragment ,"2");
             ft.add(R.id.home_container , mBeautyFragment ,"3");
             ft.add(R.id.home_container , mMineFragment ,"4");
-
+            // show hide 懒加载调用的是hidden
+            ft.hide(mNewsFragment);
+            ft.hide(mNoteFragment);
+            ft.hide(mBeautyFragment);
+            ft.hide(mMineFragment);
             switch (pos) {
                 case 1:
-                    ft.hide(mNoteFragment);
-                    ft.hide(mBeautyFragment);
-                    ft.hide(mMineFragment);
+                    ft.show(mNewsFragment);
                     break;
                 case 2:
-                    ft.hide(mNewsFragment);
-                    ft.hide(mBeautyFragment);
-                    ft.hide(mMineFragment);
+                    ft.show(mNoteFragment);
                     break;
                 case 3:
-                    ft.hide(mNewsFragment);
-                    ft.hide(mNoteFragment);
-                    ft.hide(mMineFragment);
+                    ft.show(mBeautyFragment);
                     break;
                 case 4:
-                    ft.hide(mNewsFragment);
-                    ft.hide(mNoteFragment);
-                    ft.hide(mBeautyFragment);
+                    ft.show(mMineFragment);
                     break;
             }
             ft.commit();
@@ -158,29 +154,21 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     }
     private void showCurFragment(int pos) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.hide(mNewsFragment);
+        ft.hide(mNoteFragment);
+        ft.hide(mBeautyFragment);
+        ft.hide(mMineFragment);
         switch (pos) {
             case 1:
                 ft.show(mNewsFragment);
-                ft.hide(mNoteFragment);
-                ft.hide(mBeautyFragment);
-                ft.hide(mMineFragment);
                 break;
             case 2:
-                ft.hide(mNewsFragment);
                 ft.show(mNoteFragment);
-                ft.hide(mBeautyFragment);
-                ft.hide(mMineFragment);
                 break;
             case 3:
-                ft.hide(mNewsFragment);
-                ft.hide(mNoteFragment);
                 ft.show(mBeautyFragment);
-                ft.hide(mMineFragment);
                 break;
             case 4:
-                ft.hide(mNewsFragment);
-                ft.hide(mNoteFragment);
-                ft.hide(mBeautyFragment);
                 ft.show(mMineFragment);
                 break;
         }

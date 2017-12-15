@@ -21,8 +21,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  *  @描述：
  */
 
-public class NewsFragment extends LazyBaseFragment
-        implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class NewsFragment extends LazyBaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(R.id.rv_news)
     RecyclerView     mRv;
@@ -47,25 +46,10 @@ public class NewsFragment extends LazyBaseFragment
     }
 
     @Override
-    protected void lazyLoad() {
-        /*// 延迟加载
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(300);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
+    protected void fetchData() {
+        L.d("fetchData");
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        L.d("lz" , "hidden : " + hidden);
-    }
 
     @Override
     public void onResume() {
