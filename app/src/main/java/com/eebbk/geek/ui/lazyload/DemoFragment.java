@@ -52,13 +52,13 @@ public class DemoFragment extends LazyBaseFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        L.d("lz", mPosition + ":创建了");
+        L.d("DemoFragment", mPosition + ":创建了");
         return super.onCreateView( inflater, container,savedInstanceState);
     }
 
     @Override
     protected void lazyLoad() {
-        L.d("lz" , mPosition + ": 加载数据了");
+        L.d("DemoFragment" , mPosition + ": 加载数据了");
         mTvName.setText("fragment#:" + mPosition);
     }
 
@@ -89,7 +89,7 @@ public class DemoFragment extends LazyBaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        L.d("lz", mPosition + ":销毁了");
+        L.d("DemoFragment", mPosition + ":销毁了");
     }
 
     @Override

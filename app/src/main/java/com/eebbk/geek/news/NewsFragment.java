@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
+import com.eebbk.geek.utils.L;
 
 import butterknife.BindView;
 import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
@@ -27,7 +28,7 @@ public class NewsFragment extends LazyBaseFragment
     RecyclerView     mRv;
     @BindView(R.id.refresh_layout_news)
     BGARefreshLayout mRefreshLayout;
-
+    private static final String TAG = "NewsFragment";
     public static NewsFragment newInstance() {
         return new NewsFragment();
     }
@@ -61,6 +62,22 @@ public class NewsFragment extends LazyBaseFragment
         });*/
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        L.d("lz" , "hidden : " + hidden);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        L.d("lz");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        L.d("lz");
+    }
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
 

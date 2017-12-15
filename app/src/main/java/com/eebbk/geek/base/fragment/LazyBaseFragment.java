@@ -90,6 +90,7 @@ public abstract class LazyBaseFragment extends Fragment {
      * 可见, 执行延迟加载
      */
     protected void onVisible() {
+        L.d(TAG, " isFirstLoad: " + isFirstLoad +"; getView(): " + getView());
         if(isFirstLoad && getView() != null){
             lazyLoad();
             isFirstLoad = false;

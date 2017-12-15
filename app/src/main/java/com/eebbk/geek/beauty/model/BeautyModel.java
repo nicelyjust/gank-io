@@ -66,7 +66,7 @@ public class BeautyModel {
 
                     @Override
                     public void onComplete() {
-                        L.d("lz" , "onComplete()");
+                        L.d("BeautyModel" , "onComplete()");
                     }
                 });
 
