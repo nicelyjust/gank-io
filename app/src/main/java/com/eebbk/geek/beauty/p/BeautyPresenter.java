@@ -70,7 +70,7 @@ public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBe
             int oldSize = mDataInfoVoList.size();
             this.mDataInfoVoList.addAll(dataInfoVoList);
             mView.showLoadMoreOk();
-            mView.loadDataMore( mDataInfoVoList.size(), oldSize);
+            mView.loadDataMore( dataInfoVoList);
             return;
         } else if (type == LOAD_TYPE_DOWN){
             this.mDataInfoVoList = dataInfoVoList;

@@ -23,5 +23,5 @@ public interface BeautyView extends BaseView {
 
     void showPullRefreshOk();
 
-    void loadDataMore(int newSize, int oldSize);
+    void loadDataMore(List<DataInfoVo> dataInfoVoList);
 }

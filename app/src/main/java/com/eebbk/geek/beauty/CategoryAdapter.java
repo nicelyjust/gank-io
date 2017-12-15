@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.eebbk.geek.R;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,10 +36,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mInflater = LayoutInflater.from(context);
         mContext = context;
         mHeightmap = new SparseIntArray();
+        mDataInfoVos = new ArrayList<>();
     }
     public void setData(List<DataInfoVo> dataInfoVos){
-        mDataInfoVos = dataInfoVos;
-        notifyDataSetChanged();
+        if (dataInfoVos != null) {
+            int previousSize = mDataInfoVos.size();
+            mDataInfoVos.clear();
+            notifyItemRangeRemoved(0 , previousSize);
+            mDataInfoVos.addAll(dataInfoVos);
+            notifyItemRangeInserted(0 ,mDataInfoVos.size());
+        }
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -94,6 +101,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public ImageHolder(View itemView) {
             super(itemView);
             this.mIvImage = (ImageView) itemView.findViewById(R.id.iv_image);
+        }
+    }
+
+    public void addAll(List<DataInfoVo> items) {
+        if (items != null) {
+            int size = mDataInfoVos.size();
+            this.mDataInfoVos.addAll(items);
+            notifyItemRangeInserted(size , items.size());
+            notifyItemRangeChanged(size , items.size());
         }
     }
 }
