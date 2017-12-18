@@ -67,7 +67,6 @@ public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBe
         }
         mView.hideLoading();
         if (type == LOAD_TYPE_UP) {
-            int oldSize = mDataInfoVoList.size();
             this.mDataInfoVoList.addAll(dataInfoVoList);
             mView.showLoadMoreOk();
             mView.loadDataMore( dataInfoVoList);

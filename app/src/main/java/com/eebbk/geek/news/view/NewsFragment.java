@@ -1,10 +1,13 @@
-package com.eebbk.geek.news;
+package com.eebbk.geek.news.view;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
+import com.eebbk.geek.constant.Constant;
+import com.eebbk.geek.news.presenter.NewsPresenter;
 import com.eebbk.geek.utils.L;
 
 import butterknife.BindView;
@@ -28,8 +31,15 @@ public class NewsFragment extends LazyBaseFragment implements BGARefreshLayout.B
     @BindView(R.id.refresh_layout_news)
     BGARefreshLayout mRefreshLayout;
     private static final String TAG = "NewsFragment";
-    public static NewsFragment newInstance() {
-        return new NewsFragment();
+    private NewsPresenter mPresenter;
+    private String mCategory;
+
+    public static NewsFragment newInstance(String category) {
+        Bundle agrs = new Bundle();
+        NewsFragment newsFragment = new NewsFragment();
+        agrs.putString("category" , category);
+        newsFragment.setArguments(agrs);
+        return newsFragment;
     }
     @Override
     protected int getLayoutId() {
@@ -37,7 +47,14 @@ public class NewsFragment extends LazyBaseFragment implements BGARefreshLayout.B
     }
 
     @Override
+    protected void initBundle(Bundle bundle) {
+        super.initBundle(bundle);
+        mCategory = bundle.getString("category");
+    }
+
+    @Override
     protected void initWidget(View root) {
+        createP();
         mRefreshLayout.setDelegate(this);
         BGAMoocStyleRefreshViewHolder refreshViewHolder = new BGAMoocStyleRefreshViewHolder( getActivity() , true);
         refreshViewHolder.setOriginalImage(R.mipmap.ic_nav_news_normal);
@@ -45,22 +62,27 @@ public class NewsFragment extends LazyBaseFragment implements BGARefreshLayout.B
         mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
     }
 
+    private void createP() {
+        mPresenter = new NewsPresenter();
+    }
+
     @Override
     protected void fetchData() {
-        L.d("fetchData");
+        L.d(TAG,"fetchData");
+        mPresenter.loadNewsData(Constant.LOAD_TYPE_NORMAL , mCategory);
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        L.d("lz");
+        L.d(TAG);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        L.d("lz");
+        L.d(TAG);
     }
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {

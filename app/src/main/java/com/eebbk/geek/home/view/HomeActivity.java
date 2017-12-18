@@ -14,7 +14,7 @@ import com.eebbk.geek.bean.MockBean;
 import com.eebbk.geek.beauty.BeautyFragment;
 import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.HomePresenterImpl;
-import com.eebbk.geek.news.NewsFragment;
+import com.eebbk.geek.news.view.NewsFragment;
 import com.eebbk.geek.ui.lazyload.DemoFragment;
 import com.eebbk.geek.utils.L;
 import com.roughike.bottombar.BottomBar;

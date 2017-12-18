@@ -15,7 +15,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.eebbk.geek.beauty.BeautyFragment;
 import com.eebbk.geek.constant.Constant;
-import com.eebbk.geek.news.NewsFragment;
+import com.eebbk.geek.news.view.NewsFragment;
 import com.eebbk.geek.ui.lazyload.DemoFragment;
 
 
