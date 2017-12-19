@@ -11,6 +11,8 @@ package com.eebbk.geek.bean.netBean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class DataInfoVo {
     /**
      * _id : 5a08ea7b421aa90fe7253628
@@ -32,6 +34,8 @@ public class DataInfoVo {
     private String  desc;
     @SerializedName("publishedAt")
     private String  publishedTime;
+
+    private List<String> images;
 
     private String  source;
 
@@ -69,6 +73,14 @@ public class DataInfoVo {
 
     public void setPublishedTime(String publishedTime) {
         this.publishedTime = publishedTime;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String getSource() {

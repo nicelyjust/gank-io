@@ -16,6 +16,6 @@ public interface BaseView {
 
     void showMessage(String message);
 
-    void showMessage(int message);
+    void showMessage(int messageRes);
 
 }

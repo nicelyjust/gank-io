@@ -26,7 +26,9 @@ public class NewsHomeFragment extends LazyBaseFragment {
     ViewPager mVp;
     private NewsHomeAdapter mAdapter;
 
-
+    public static NewsHomeFragment newInstance() {
+        return new NewsHomeFragment();
+    }
     @Override
     protected void fetchData() {
 

@@ -125,7 +125,13 @@ public abstract class LazyBaseFragment2 extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mBind.unbind();
+        if (mBind != null && mBind != Unbinder.EMPTY) {
+            try {
+                mBind.unbind();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     protected void onRestartInstance(Bundle savedInstanceState) {

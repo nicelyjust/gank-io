@@ -2,18 +2,25 @@ package com.eebbk.geek.beauty;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.eebbk.geek.R;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
+import com.eebbk.geek.constant.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /*
@@ -27,10 +34,14 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int TYPE_NEWS = 0x01;
+    private static final int TYPE_IMAGE = 0x02;
+
     private SparseIntArray mHeightmap;
     private LayoutInflater mInflater;
     private Context mContext;
     private List<DataInfoVo> mDataInfoVos;
+    private static final String TAG = "CategoryAdapter";
 
     public CategoryAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -38,19 +49,31 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mHeightmap = new SparseIntArray();
         mDataInfoVos = new ArrayList<>();
     }
-    public void setData(List<DataInfoVo> dataInfoVos){
+
+    public void setData(List<DataInfoVo> dataInfoVos) {
         if (dataInfoVos != null) {
             int previousSize = mDataInfoVos.size();
             mDataInfoVos.clear();
-            notifyItemRangeRemoved(0 , previousSize);
+            notifyItemRangeRemoved(0, previousSize);
             mDataInfoVos.addAll(dataInfoVos);
-            notifyItemRangeInserted(0 ,mDataInfoVos.size());
+            notifyItemRangeInserted(0, mDataInfoVos.size());
         }
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_image, parent, false);
-        return new ImageHolder(view);
+        View view;
+        switch (viewType) {
+            case TYPE_IMAGE:
+                view = mInflater.inflate(R.layout.item_image, parent, false);
+                return new ImageHolder(view);
+            case TYPE_NEWS:
+                view = mInflater.inflate(R.layout.item_category, parent, false);
+                return new NewsHolder(view);
+            default:
+                return null;
+        }
+
     }
 
     @Override
@@ -60,27 +83,49 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         DataInfoVo infoVo = mDataInfoVos.get(position);
         if (holder instanceof ImageHolder) {
-            ImageView ivImage = ((ImageHolder) holder).mIvImage;
-            //随机生成图片高度
-            if (mHeightmap.size() <= position) {
-                mHeightmap.put(position, generaHeight());
-            }
-            ViewGroup.LayoutParams lp = ivImage.getLayoutParams();
-            //防止产生height为空
-            int height = mHeightmap.get(position);
-            if (height == 0) {
-                height = generaHeight();
-                mHeightmap.put(position, height);
-            }
-            lp.height = height;
-            ivImage.setLayoutParams(lp);
-
-            Glide.with(mContext).load(infoVo.getUrl())
-                 .asBitmap()
-                 .thumbnail(0.3f) // 缩略图
-                 .into(ivImage);
-
+            bindImageHolder((ImageHolder) holder, position, infoVo);
+        } else if (holder instanceof NewsHolder) {
+            bindNewsHolder((NewsHolder) holder, infoVo);
         }
+    }
+
+    private void bindNewsHolder(NewsHolder holder, DataInfoVo infoVo) {
+        NewsHolder vh = holder;
+        List<String> images = infoVo.getImages();
+        if (images == null || images.isEmpty() || TextUtils.isEmpty(images.get(0))) {
+            vh.mIvImage.setVisibility(View.GONE);
+        } else {
+            Glide.with(mContext).load(images.get(0))
+                    .dontAnimate()
+                    .thumbnail(0.3f) // 缩略图
+                    .into(vh.mIvImage);
+        }
+
+        vh.mTvAuthor.setText(infoVo.getWho());
+        vh.mTvPublishTime.setText(infoVo.getPublishedTime());
+        vh.mTvDesc.setText(infoVo.getDesc());
+    }
+
+    private void bindImageHolder(ImageHolder holder, int position, DataInfoVo infoVo) {
+        ImageView ivImage = holder.mIvImage;
+        //随机生成图片高度
+        if (mHeightmap.size() <= position) {
+            mHeightmap.put(position, generaHeight());
+        }
+        ViewGroup.LayoutParams lp = ivImage.getLayoutParams();
+        //防止产生height为空
+        int height = mHeightmap.get(position);
+        if (height == 0) {
+            height = generaHeight();
+            mHeightmap.put(position, height);
+        }
+        lp.height = height;
+        ivImage.setLayoutParams(lp);
+
+        Glide.with(mContext).load(infoVo.getUrl())
+                .asBitmap()
+                .thumbnail(0.3f) // 缩略图
+                .into(ivImage);
     }
 
     @Override
@@ -88,17 +133,33 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mDataInfoVos == null ? 0 : mDataInfoVos.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (mDataInfoVos == null || mDataInfoVos.size() == 0) {
+            return TYPE_NEWS;
+        }
+        String type = mDataInfoVos.get(position).getType();
+        Log.d(TAG, "type = " + type);
+        if (Constant.Category.IMAGE.equals(type)) {
+            return TYPE_IMAGE;
+        } else {
+            return TYPE_NEWS;
+        }
+    }
+
     /**
      * 随机生成瀑布流高度
+     *
      * @return
      */
     private int generaHeight() {
         return (int) (Math.random() * 300 + 500);
     }
 
-    private class ImageHolder extends RecyclerView.ViewHolder {
+    static class ImageHolder extends RecyclerView.ViewHolder {
         ImageView mIvImage;
-        public ImageHolder(View itemView) {
+
+        ImageHolder(View itemView) {
             super(itemView);
             this.mIvImage = (ImageView) itemView.findViewById(R.id.iv_image);
         }
@@ -108,8 +169,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (items != null) {
             int size = mDataInfoVos.size();
             this.mDataInfoVos.addAll(items);
-            notifyItemRangeInserted(size , items.size());
-            notifyItemRangeChanged(size , items.size());
+            notifyItemRangeInserted(size, items.size());
+            notifyItemRangeChanged(size, items.size());
         }
     }
+
+    static class NewsHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.iv_image)
+        ImageView mIvImage;
+        @BindView(R.id.tv_desc)
+        TextView mTvDesc;
+        @BindView(R.id.tv_author)
+        TextView mTvAuthor;
+        @BindView(R.id.tv_publish_time)
+        TextView mTvPublishTime;
+        public NewsHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
 }

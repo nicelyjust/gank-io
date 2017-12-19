@@ -128,8 +128,8 @@ public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout
     }
 
     @Override
-    public void showMessage(int message) {
-        Toast.makeText(mContext , message ,Toast.LENGTH_SHORT).show();
+    public void showMessage(int messageRes) {
+        Toast.makeText(mContext , messageRes ,Toast.LENGTH_SHORT).show();
     }
 
     @Override

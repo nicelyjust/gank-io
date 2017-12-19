@@ -10,6 +10,16 @@ package com.eebbk.geek.news.view;
  */
 
 import com.eebbk.geek.base.mvp.BaseView;
+import com.eebbk.geek.bean.netBean.DataInfoVo;
+
+import java.util.List;
 
 public interface NewsView extends BaseView{
+    void loadData(List<DataInfoVo> dataInfoVos);
+
+    void showPullRefreshOk();
+
+    void loadDataMore(List<DataInfoVo> dataInfoVos);
+
+    void showLoadMoreOk();
 }

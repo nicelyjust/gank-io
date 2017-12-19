@@ -98,8 +98,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mBind.unbind();
-        mBundle = null;
+        if (mBind != null && mBind != Unbinder.EMPTY) {
+            try {
+                mBind.unbind();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     protected void onRestartInstance(Bundle savedInstanceState) {

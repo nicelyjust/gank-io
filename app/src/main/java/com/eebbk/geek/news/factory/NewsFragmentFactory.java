@@ -19,20 +19,23 @@ import java.lang.ref.WeakReference;
 
 public class NewsFragmentFactory {
     private static final String TAG = "NewsFragmentFactory";
-    private static final int ANDROID = 1;
-    private static final int IOS = 2;
-    private static final int FRONT_END = 3;
-    private static final int EXTRA_SOURCE = 4;
-    private static final int VIDEOS = 5;
+    private static final int ANDROID = 0;
+    private static final int IOS = 1;
+    private static final int FRONT_END = 2;
+    private static final int EXTRA_SOURCE = 3;
+    private static final int VIDEOS = 4;
     private static SparseArray<Reference<Fragment>> mFragments = new SparseArray<>();
 
     public static Fragment createNewsFragment(int key){
 
         Fragment fragment = null;
         //优先从集合中取出来
-        if (mFragments.get(key).get() != null) {
-            fragment = mFragments.get(key).get();
-            return fragment;
+        Reference<Fragment> fragmentReference = mFragments.get(key);
+        if (fragmentReference != null && fragmentReference.get() != null) {
+            fragment = fragmentReference.get();
+            if (fragment != null) {
+                return fragment;
+            }
         }
 
         switch (key) {

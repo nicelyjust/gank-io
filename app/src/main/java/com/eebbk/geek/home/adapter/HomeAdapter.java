@@ -15,13 +15,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.eebbk.geek.beauty.BeautyFragment;
 import com.eebbk.geek.constant.Constant;
-import com.eebbk.geek.news.view.NewsFragment;
+import com.eebbk.geek.news.view.NewsHomeFragment;
 import com.eebbk.geek.ui.lazyload.DemoFragment;
 
 
 public class HomeAdapter extends FragmentStatePagerAdapter{
 
-    private NewsFragment mNewsFragment;
+    private NewsHomeFragment mNewsFragment;
     private DemoFragment mDemoFragment1;
     private DemoFragment mDemoFragment3;
     private BeautyFragment mBeautyFragment;
@@ -35,7 +35,7 @@ public class HomeAdapter extends FragmentStatePagerAdapter{
         switch (position) {
             case 0:
                 if (mNewsFragment == null) {
-                    mNewsFragment = NewsFragment.newInstance();
+                    mNewsFragment = NewsHomeFragment.newInstance();
                 }
                 return mNewsFragment;
             case 1:

@@ -14,7 +14,7 @@ import com.eebbk.geek.bean.MockBean;
 import com.eebbk.geek.beauty.BeautyFragment;
 import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.HomePresenterImpl;
-import com.eebbk.geek.news.view.NewsFragment;
+import com.eebbk.geek.news.view.NewsHomeFragment;
 import com.eebbk.geek.ui.lazyload.DemoFragment;
 import com.eebbk.geek.utils.L;
 import com.roughike.bottombar.BottomBar;
@@ -41,7 +41,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     BottomBar         mBottomBar;
     @BindView(R.id.home_container)
     FrameLayout mContainer;
-    private NewsFragment mNewsFragment;
+    private NewsHomeFragment mNewsFragment;
     private DemoFragment mNoteFragment;
     private BeautyFragment mBeautyFragment;
     private DemoFragment mMineFragment;
@@ -64,7 +64,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
 
         if (savedInstanceState == null) {
             int pos = getIntent().getIntExtra("position", 1);
-            mNewsFragment = NewsFragment.newInstance();
+            mNewsFragment = NewsHomeFragment.newInstance();
             mNoteFragment = DemoFragment.newInstance("2");
             mBeautyFragment = BeautyFragment.newInstance(Constant.Category.IMAGE);
             mMineFragment = DemoFragment.newInstance("4");
@@ -95,7 +95,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
             ft.commit();
         } else {
             int pos = savedInstanceState.getInt("position", 1);
-            mNewsFragment = (NewsFragment) getSupportFragmentManager().findFragmentByTag("1");
+            mNewsFragment = (NewsHomeFragment) getSupportFragmentManager().findFragmentByTag("1");
             mNoteFragment = (DemoFragment) getSupportFragmentManager().findFragmentByTag("2");
             mBeautyFragment = (BeautyFragment) getSupportFragmentManager().findFragmentByTag("3");
             mMineFragment = (DemoFragment) getSupportFragmentManager().findFragmentByTag("4");
