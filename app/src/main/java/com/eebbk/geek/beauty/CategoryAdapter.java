@@ -1,6 +1,7 @@
 package com.eebbk.geek.beauty;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,9 +19,6 @@ import com.eebbk.geek.constant.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /*
@@ -85,12 +83,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof ImageHolder) {
             bindImageHolder((ImageHolder) holder, position, infoVo);
         } else if (holder instanceof NewsHolder) {
-            bindNewsHolder((NewsHolder) holder, infoVo);
+            bindNewsHolder((NewsHolder) holder, infoVo ,position);
         }
     }
 
-    private void bindNewsHolder(NewsHolder holder, DataInfoVo infoVo) {
+    private void bindNewsHolder(NewsHolder holder, DataInfoVo infoVo, int position) {
         NewsHolder vh = holder;
+        vh.itemView.setTag(position);
         List<String> images = infoVo.getImages();
         if (images == null || images.isEmpty() || TextUtils.isEmpty(images.get(0))) {
             vh.mIvImage.setVisibility(View.GONE);
@@ -100,7 +99,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .thumbnail(0.3f) // 缩略图
                     .into(vh.mIvImage);
         }
-
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = (int) v.getTag();
+                Snackbar.make(v , "点击: " + pos ,Snackbar.LENGTH_SHORT).show();
+            }
+        });
         vh.mTvAuthor.setText(infoVo.getWho());
         vh.mTvPublishTime.setText(infoVo.getPublishedTime());
         vh.mTvDesc.setText(infoVo.getDesc());
@@ -175,17 +180,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class NewsHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_image)
+//        RelativeLayout mRootView;
         ImageView mIvImage;
-        @BindView(R.id.tv_desc)
         TextView mTvDesc;
-        @BindView(R.id.tv_author)
         TextView mTvAuthor;
-        @BindView(R.id.tv_publish_time)
         TextView mTvPublishTime;
         public NewsHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+//            mRootView = (RelativeLayout) itemView.findViewById(R.id.item_root_news);
+            mIvImage = (ImageView) itemView.findViewById(R.id.iv_news_image);
+            mTvDesc = (TextView) itemView.findViewById(R.id.tv_desc);
+            mTvAuthor = (TextView) itemView.findViewById(R.id.tv_author);
+            mTvPublishTime = (TextView) itemView.findViewById(R.id.tv_publish_time);
         }
     }
 

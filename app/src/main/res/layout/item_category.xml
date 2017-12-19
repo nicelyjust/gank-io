@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_root_news"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:elevation="5dp"
-    android:layout_margin="10dp"
-    tools:ignore="UnusedAttribute">
+    android:background="@drawable/ic_material"
+    android:padding="10dp">
 
     <ImageView
         android:adjustViewBounds="true"
         android:contentDescription="@null"
-        android:id="@+id/iv_image"
+        android:id="@+id/iv_news_image"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_height="80dp"
@@ -20,10 +19,10 @@
 
     <TextView
         android:id="@+id/tv_desc"
-        android:layout_alignTop="@+id/iv_image"
+        android:layout_alignTop="@+id/iv_news_image"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@+id/iv_image"
+        android:layout_toLeftOf="@+id/iv_news_image"
         android:layout_width="match_parent"
         android:textSize="18sp" />
 
