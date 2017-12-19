@@ -99,6 +99,7 @@ public class BeautyPresenter extends WrapperPresenter<BeautyView> implements IBe
         if (!isViewNotNull()) {
             return;
         }
+        mView.hideLoading();
         mView.showLoadMoreOk();
         mView.showPullRefreshOk();
         mView.showMessage(msg);

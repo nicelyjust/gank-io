@@ -46,6 +46,5 @@ public class NewsHomeFragment extends LazyBaseFragment {
         mVp.setAdapter(mAdapter);
         mVp.setOffscreenPageLimit(3);
         mSlidingTab.setupWithViewPager(mVp);
-        mSlidingTab.setTabMode(TabLayout.MODE_FIXED);
     }
 }

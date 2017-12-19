@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
@@ -14,6 +16,7 @@ import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.media.SpaceGridItemDecoration;
 import com.eebbk.geek.utils.TDevice;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,16 +33,18 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  *  @描述：
  */
 
-public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate , BeautyView
-{
-
+public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate , BeautyView {
+    private static final String TAG = "BeautyFragment";
     @BindView(R.id.rv_beauty)
     RecyclerView     mRv;
     @BindView(R.id.refresh_layout_beauty)
     BGARefreshLayout mRefreshLayout;
+    @BindView(R.id.pb_beauty)
+    ProgressBar mProgressBar;
     private BeautyPresenter mPresenter;
     private String          mCategory;
     private CategoryAdapter mAdapter;
+    private RvScrollListener mScrollListener;
 
     public static BeautyFragment newInstance(String category) {
         Bundle args = new Bundle();
@@ -73,6 +78,8 @@ public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout
         mRv.setLayoutManager(new StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL));
         mRv.addItemDecoration(new SpaceGridItemDecoration(TDevice.dip2px(mContext , 5)));
         mAdapter = new CategoryAdapter(mContext);
+        mScrollListener = new RvScrollListener(this);
+        mRv.addOnScrollListener(mScrollListener);
         mRv.setAdapter(mAdapter);
     }
 
@@ -114,12 +121,29 @@ public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout
     }
 
     @Override
-    public void showLoading() {
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (mScrollListener != null) {
+            if (hidden) {
+                mRv.removeOnScrollListener(mScrollListener);
+            }else {
+                mRv.addOnScrollListener(mScrollListener);
+            }
+        }
+    }
 
+    @Override
+    public void showLoading() {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hideLoading() {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -159,6 +183,36 @@ public class BeautyFragment extends LazyBaseFragment implements BGARefreshLayout
         super.onDestroyView();
         if (mPresenter != null) {
             mPresenter.detachView();
+        }
+        if (mRv != null && mScrollListener != null) {
+            mRv.removeOnScrollListener(mScrollListener);
+            mScrollListener = null;
+        }
+    }
+
+    static class RvScrollListener extends RecyclerView.OnScrollListener {
+
+        private WeakReference<BeautyFragment> mReference;
+
+        public RvScrollListener(BeautyFragment fragment) {
+            mReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            BeautyFragment beautyFragment = mReference.get();
+            if (beautyFragment == null) {
+                return;
+            }
+            switch (newState) {
+                case RecyclerView.SCROLL_STATE_IDLE:
+                    Glide.with(beautyFragment.mContext).resumeRequests();
+                    break;
+                default:
+                    Glide.with(beautyFragment.mContext).pauseRequests();
+                    break;
+            }
         }
     }
 }

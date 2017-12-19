@@ -87,8 +87,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private void bindNewsHolder(NewsHolder holder, DataInfoVo infoVo, int position) {
-        NewsHolder vh = holder;
+    private void bindNewsHolder(NewsHolder vh, DataInfoVo infoVo, int position) {
         vh.itemView.setTag(position);
         List<String> images = infoVo.getImages();
         if (images == null || images.isEmpty() || TextUtils.isEmpty(images.get(0))) {
