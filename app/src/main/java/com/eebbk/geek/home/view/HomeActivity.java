@@ -57,7 +57,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
         mBottomBar.setOnTabSelectListener(this);
         mBottomBar.setOnTabReselectListener(this);
         BottomBarTab tweetBarTab = mBottomBar.getTabWithId(R.id.tab_tweet);
-        tweetBarTab.setBadgeCount(9);
+        tweetBarTab.setBadgeCount(1);
     }
 
     private void dealWithFragment(Bundle savedInstanceState) {
