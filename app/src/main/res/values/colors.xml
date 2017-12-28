@@ -31,6 +31,6 @@
     <color name="login_other_color">#cacaca</color>
 
 
-    <color name="bg_press">#ebebeb</color>\
+    <color name="bg_press">#ebebeb</color>
     <color name="bg_press_material">#d4d4d4</color>
 </resources>

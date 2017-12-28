@@ -21,7 +21,7 @@
         android:layout_height="wrap_content" />
 
     <WebView
-        android:id="@+id/webView__news_web"
+        android:id="@+id/webView_news_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
