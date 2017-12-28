@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
 import com.eebbk.geek.constant.Constant;
+import com.eebbk.geek.news.CourseBean;
 import com.eebbk.geek.rxLearn.RxJavaActivity;
 import com.eebbk.geek.utils.L;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 
@@ -29,9 +33,14 @@ import butterknife.BindView;
 public class DemoFragment extends LazyBaseFragment implements View.OnClickListener {
     private static final String TAG      = "DemoFragment";
     private static final String POSITION = "position";
+    private String[] subjectRes = {"物理" ,"数学" , "语文"  , "政治" , "生物" ,  "化学" , "历史" , "地理" ,"英语" };
     @BindView(R.id.tv_fragment_name)
     TextView mTvName;
+    @BindView(R.id.rv_demo)
+    RecyclerView mRv;
     private String mPosition;
+    private List<CourseBean> mCourseBeanlist ;
+    private Random mRandom;
 
     public static DemoFragment newInstance(String str) {
         Bundle args = new Bundle();
@@ -47,17 +56,52 @@ public class DemoFragment extends LazyBaseFragment implements View.OnClickListen
         mPosition = getArguments().getString(POSITION);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        L.d("DemoFragment", mPosition + ":创建了");
-        return super.onCreateView( inflater, container,savedInstanceState);
-    }
 
     @Override
     protected void fetchData() {
         L.d("fetchData" , mPosition + ": 加载数据了");
         mTvName.setText("fragment#:" + mPosition);
+        mockData();
+        Collections.sort(mCourseBeanlist);
+    }
+
+    private void mockData() {
+        for (int i = 1; i <= 18; i++) {
+            CourseBean courseBean = new CourseBean("cp" + i % 9, i % 9);
+            courseBean.setSubjectName(subjectRes[i % 9]);
+            courseBean.setSubjectID(i % 9);
+            mCourseBeanlist.add(courseBean);
+        }
+        CourseBean courseBean = new CourseBean("cp" + 9, 9);
+        int i = mRandom.nextInt(10);
+        courseBean.setSubjectName(subjectRes[i]);
+        courseBean.setSubjectID(i);
+
+        CourseBean courseBean1 = new CourseBean("cp" + 10, 10);
+        int i1 = mRandom.nextInt(10);
+        courseBean1.setSubjectName(subjectRes[i1]);
+        courseBean1.setSubjectID(i1);
+
+        CourseBean courseBean2 = new CourseBean("cp" + 11, 11);
+        int i2 = mRandom.nextInt(10);
+        courseBean2.setSubjectName(subjectRes[i2]);
+        courseBean2.setSubjectID(i2);
+
+        CourseBean courseBean3 = new CourseBean("cp" + 12, 12);
+        int i3 = mRandom.nextInt(10);
+        courseBean3.setSubjectName(subjectRes[i3]);
+        courseBean3.setSubjectID(i3);
+
+        CourseBean courseBean4 = new CourseBean("cp" + 13, 13);
+        int i4 = mRandom.nextInt(10);
+        courseBean4.setSubjectName(subjectRes[i4]);
+        courseBean4.setSubjectID(i4);
+
+        mCourseBeanlist.add(courseBean);
+        mCourseBeanlist.add(courseBean1);
+        mCourseBeanlist.add(courseBean2);
+        mCourseBeanlist.add(courseBean3);
+        mCourseBeanlist.add(courseBean4);
     }
 
     @Override
@@ -67,6 +111,7 @@ public class DemoFragment extends LazyBaseFragment implements View.OnClickListen
 
     @Override
     protected void initWidget(View root) {
+        mRandom = new Random();
         mTvName.setOnClickListener(this);
     }
     @Override
