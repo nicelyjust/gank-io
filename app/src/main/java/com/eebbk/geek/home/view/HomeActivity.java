@@ -14,6 +14,7 @@ import com.eebbk.geek.bean.MockBean;
 import com.eebbk.geek.beauty.BeautyFragment;
 import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.HomePresenterImpl;
+import com.eebbk.geek.mine.MineFragment;
 import com.eebbk.geek.news.view.NewsHomeFragment;
 import com.eebbk.geek.ui.lazyload.DemoFragment;
 import com.eebbk.geek.utils.L;
@@ -44,7 +45,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     private NewsHomeFragment mNewsFragment;
     private DemoFragment mNoteFragment;
     private BeautyFragment mBeautyFragment;
-    private DemoFragment mMineFragment;
+    private MineFragment mMineFragment;
 
     @Override
     protected int getContentView() {
@@ -67,7 +68,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
             mNewsFragment = NewsHomeFragment.newInstance();
             mNoteFragment = DemoFragment.newInstance("2");
             mBeautyFragment = BeautyFragment.newInstance(Constant.Category.IMAGE);
-            mMineFragment = DemoFragment.newInstance("4");
+            mMineFragment = MineFragment.newInstance();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.home_container , mNewsFragment ,"1");
             ft.add(R.id.home_container , mNoteFragment ,"2");
@@ -98,7 +99,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
             mNewsFragment = (NewsHomeFragment) getSupportFragmentManager().findFragmentByTag("1");
             mNoteFragment = (DemoFragment) getSupportFragmentManager().findFragmentByTag("2");
             mBeautyFragment = (BeautyFragment) getSupportFragmentManager().findFragmentByTag("3");
-            mMineFragment = (DemoFragment) getSupportFragmentManager().findFragmentByTag("4");
+            mMineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag("4");
 
             showCurFragment(pos);
         }

@@ -12,8 +12,4 @@
         android:padding="10dp"
         android:textSize="20sp"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_demo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </FrameLayout>
