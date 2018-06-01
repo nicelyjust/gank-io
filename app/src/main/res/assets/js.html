@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>lizeng</title>
+        <script>
+                // Android需要调用的方法
+               function callJS(){
+                  alert("Android调用了JS的callJS方法");
+               }
+               function callAndroid(){
+                  var p = document.getElementById('p-id');
+                  p.innerHTML = test.hello();
+               }
+        </script>
+
+    </head>
+    <body>
+        //点击按钮则调用callAndroid函数
+        <button type="button" id="button1" onclick="callAndroid()"></button>
+
+        <p id="p-id">初始值</p>
+    </body>
+</html>

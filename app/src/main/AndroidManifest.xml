@@ -63,6 +63,7 @@
         </activity>
         <activity android:name=".news.view.NewsWebActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".ui.H5Activity" android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

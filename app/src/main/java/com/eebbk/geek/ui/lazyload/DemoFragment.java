@@ -4,16 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
 import com.eebbk.geek.constant.Constant;
-import com.eebbk.geek.rxLearn.RxJavaActivity;
+import com.eebbk.geek.ui.H5Activity;
 import com.eebbk.geek.utils.L;
 
 import butterknife.BindView;
+import butterknife.Unbinder;
 
 /*
  *  @项目名：  Demo 
@@ -25,10 +27,20 @@ import butterknife.BindView;
  *  @描述：    TODO
  */
 public class DemoFragment extends LazyBaseFragment implements View.OnClickListener {
-    private static final String TAG      = "DemoFragment";
+    private static final String TAG = "DemoFragment";
     private static final String POSITION = "position";
-    @BindView(R.id.tv_fragment_name)
-    TextView mTvName;
+    private static final int CAPTURE_PHOTO_REQUEST_CODE = 0x01;
+    /*@BindView(R.id.tv_fragment_name)
+    TextView mTvName;*/
+    @BindView(R.id.btn_album)
+    AppCompatButton mBtnAlbum;
+    @BindView(R.id.btn_camera)
+    AppCompatButton mBtnCamera;
+    @BindView(R.id.iv_img)
+    ImageView mIvImg;
+    @BindView(R.id.js_jump)
+    AppCompatButton mJsJump;
+    Unbinder unbinder;
     private String mPosition;
 
     public static DemoFragment newInstance(String str) {
@@ -48,8 +60,8 @@ public class DemoFragment extends LazyBaseFragment implements View.OnClickListen
 
     @Override
     protected void fetchData() {
-        L.d("fetchData" , mPosition + ": 加载数据了");
-        mTvName.setText("fragment#:" + mPosition);
+        L.d("fetchData", mPosition + ": 加载数据了");
+//        mTvName.setText("fragment#:" + mPosition);
     }
 
 
@@ -60,8 +72,11 @@ public class DemoFragment extends LazyBaseFragment implements View.OnClickListen
 
     @Override
     protected void initWidget(View root) {
-        mTvName.setOnClickListener(this);
+        mJsJump.setOnClickListener(this);
+        mBtnCamera.setOnClickListener(this);
+        mBtnAlbum.setOnClickListener(this);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -69,10 +84,10 @@ public class DemoFragment extends LazyBaseFragment implements View.OnClickListen
             switch (requestCode) {
                 case Constant.Extra.DEMO_FOR_RESULT:
                     String stringExtra = data.getStringExtra(Constant.Extra.DEMO_POSITION);
-                    mTvName.setText("i got you" + stringExtra );
+//                    mTvName.setText("i got you" + stringExtra );
                     break;
                 default:
-                     break;
+                    break;
             }
         }
     }
@@ -86,13 +101,22 @@ public class DemoFragment extends LazyBaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_fragment_name:
-                Intent intent = new Intent(mContext ,RxJavaActivity.class);
-                intent.putExtra(Constant.Extra.DEMO_POSITION , mPosition);
-                startActivityForResult(intent , Constant.Extra.DEMO_FOR_RESULT);
-                 break;
+            case R.id.btn_album:
+
+                break;
+            case R.id.btn_camera:
+                /*Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File file = new File(Environment.getExternalStorageDirectory() , "image.jpg");
+                Uri fileUri = Uri.fromFile(mPhotoFile);
+                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                startActivityForResult(captureIntent, CAPTURE_PHOTO_REQUEST_CODE);*/
+                break;
+            case R.id.js_jump:
+                Intent intent = new Intent(mContext, H5Activity.class);
+                startActivity(intent);
+                break;
             default:
-                 break;
+                break;
         }
     }
 }
