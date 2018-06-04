@@ -1,23 +1,25 @@
 package com.eebbk.geek.ui;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.eebbk.geek.R;
-import com.eebbk.geek.base.AppManager;
 import com.eebbk.geek.base.activities.BaseActivity;
+import com.eebbk.geek.utils.L;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /*
@@ -34,17 +36,10 @@ public class H5Activity extends BaseActivity implements View.OnClickListener {
     LinearLayout mLl;
     @BindView(R.id.btn_call_js)
     Button mBtnCallJs;
-
-    private String mUrl;
-    private WebView mWebView;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_h5);
-        ButterKnife.bind(this);
-
-    }
+    @BindView(R.id.h5_web)
+    WebView mWebView;
+    @BindView(R.id.tv_title_name)
+    TextView mTvName;
 
     @Override
     protected int getContentView() {
@@ -55,9 +50,7 @@ public class H5Activity extends BaseActivity implements View.OnClickListener {
     protected void initWidget() {
         super.initWidget();
         mBtnCallJs.setOnClickListener(this);
-        mWebView = new WebView(AppManager.getsAppContext());
 
-        mLl.addView(mWebView);
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -69,20 +62,43 @@ public class H5Activity extends BaseActivity implements View.OnClickListener {
                 return super.shouldOverrideUrlLoading(view, request);
             }
         });
-        mWebView.addJavascriptInterface(new TestApi(), "test");
+        mWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                L.d("lz" , "title == " + title);
+                mTvName.setText(title);
+            }
 
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
+                AlertDialog.Builder b = new AlertDialog.Builder(H5Activity.this);
+                b.setTitle("Alert");
+                b.setMessage(message);
+                b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        result.confirm();
+                    }
+                });
+                b.setCancelable(false);
+                b.create().show();
+                return true;
+            }
+        });
+        mWebView.addJavascriptInterface(new TestApi(), "test");
     }
 
     @Override
     protected void initData() {
         super.initData();
-        mUrl = "file:///assets/js.html";
-        mWebView.loadUrl(mUrl);
+        String url = "file:///android_asset/js.html";
+        mWebView.loadUrl(url);
     }
 
     @Override
     public void onClick(View v) {
-        mWebView.loadUrl("js:callJS()");
+        mWebView.loadUrl("javascript:callJS()");
     }
 
     class TestApi {

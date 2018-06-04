@@ -12,29 +12,38 @@
         android:padding="10dp"
         android:textSize="20sp"/>-->
     <android.support.v7.widget.AppCompatButton
-        android:layout_marginTop="20dp"
         android:id="@+id/btn_album"
-        android:text="相册选择"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="相册选择" />
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_camera"
-        android:layout_below="@id/btn_album"
-        android:text="拍摄"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btn_album"
+        android:layout_below="@+id/btn_album"
+        android:text="拍摄" />
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/js_jump"
-        android:layout_below="@id/btn_camera"
-        android:text="跳转去JS与android交互"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:layout_below="@id/btn_camera"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/iv_img"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_camera"
         android:layout_centerHorizontal="true"
+        android:text="跳转去JS与android交互" />
+
+    <ImageView
+        android:id="@+id/iv_img"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>
