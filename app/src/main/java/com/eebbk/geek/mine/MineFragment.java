@@ -1,9 +1,6 @@
 package com.eebbk.geek.mine;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.view.View;
-import android.view.Window;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
@@ -20,10 +17,6 @@ import com.eebbk.geek.base.fragment.LazyBaseFragment;
 public class MineFragment extends LazyBaseFragment {
     @Override
     protected void fetchData() {
-        Window window = getActivity().getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(Color.parseColor("#10000000"));
-        }
     }
 
     @Override

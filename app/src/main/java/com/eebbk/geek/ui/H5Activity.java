@@ -2,6 +2,7 @@ package com.eebbk.geek.ui;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -31,11 +32,13 @@ import butterknife.BindView;
  *  @描述：    TODO
  */
 
-public class H5Activity extends BaseActivity implements View.OnClickListener {
+public class H5Activity extends BaseActivity {
     @BindView(R.id.ll)
     LinearLayout mLl;
     @BindView(R.id.btn_call_js)
     Button mBtnCallJs;
+    @BindView(R.id.tv_hide)
+    TextView mTvHide;
     @BindView(R.id.h5_web)
     WebView mWebView;
     @BindView(R.id.tv_title_name)
@@ -49,7 +52,16 @@ public class H5Activity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initWidget() {
         super.initWidget();
-        mBtnCallJs.setOnClickListener(this);
+        mBtnCallJs.setOnClickListener(new View.OnClickListener() {
+            private boolean visible;
+            @Override
+            public void onClick(View v) {
+                mWebView.loadUrl("javascript:callJS()");
+                visible = !visible;
+                TransitionManager.beginDelayedTransition(mLl);
+                mTvHide.setVisibility(visible ? View.VISIBLE : View.GONE);
+            }
+        });
 
 
         WebSettings webSettings = mWebView.getSettings();
@@ -94,11 +106,6 @@ public class H5Activity extends BaseActivity implements View.OnClickListener {
         super.initData();
         String url = "file:///android_asset/js.html";
         mWebView.loadUrl(url);
-    }
-
-    @Override
-    public void onClick(View v) {
-        mWebView.loadUrl("javascript:callJS()");
     }
 
     class TestApi {
