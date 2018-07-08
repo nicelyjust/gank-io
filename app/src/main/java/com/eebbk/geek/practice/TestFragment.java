@@ -16,6 +16,7 @@ import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
 import com.eebbk.geek.practice.adapter.BannerPagerAdapter;
 import com.eebbk.geek.ui.H5Activity;
+import com.eebbk.geek.utils.L;
 
 import butterknife.BindView;
 
@@ -60,6 +61,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
 
     @Override
     protected void fetchData() {
+        performViewPager();
         /* 实现 自动切换 */
         autoCycle();
     }
@@ -73,7 +75,6 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     @Override
     protected void initWidget(View root) {
         performDot();
-        performViewPager();
 
         mBtnJs.setOnClickListener(this);
         mBtnChoosePicture.setOnClickListener(this);
@@ -104,6 +105,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
         int item = Integer.MAX_VALUE / 2 - (Integer.MAX_VALUE / 2 % resImg.length);
         mViewPager.setCurrentItem(item);// 设置初始位置
         // 将第一个圆点设置选中的颜色
+        mViewPager.setPageTransformer(true , new CustomTransformer());
         mLlDotContainer.getChildAt(mPrePosition).setEnabled(true);
     }
     private void autoCycle() {
@@ -190,4 +192,22 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
             removeCallbacks(this);
         }
     }
+    public class CustomTransformer implements ViewPager.PageTransformer {
+        private static final float MIN_SCALE = 0.9F;
+        @Override
+        public void transformPage(View page, float position) {
+            L.d(TAG, "transformPage: position == " + position);
+            if (position < -1) {
+                page.setScaleY(MIN_SCALE);
+            } else if (position <= 1) {
+                float scale = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                page.setScaleY(scale);
+
+            } else {
+                page.setScaleY(MIN_SCALE);
+            }
+        }
+
+    }
+
 }
