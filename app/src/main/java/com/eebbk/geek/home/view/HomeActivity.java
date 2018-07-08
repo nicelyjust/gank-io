@@ -16,7 +16,7 @@ import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.HomePresenterImpl;
 import com.eebbk.geek.mine.MineFragment;
 import com.eebbk.geek.news.view.NewsHomeFragment;
-import com.eebbk.geek.ui.lazyload.DemoFragment;
+import com.eebbk.geek.practice.TestFragment;
 import com.eebbk.geek.utils.L;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -43,7 +43,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     @BindView(R.id.home_container)
     FrameLayout mContainer;
     private NewsHomeFragment mNewsFragment;
-    private DemoFragment mNoteFragment;
+    private TestFragment mNoteFragment;
     private BeautyFragment mBeautyFragment;
     private MineFragment mMineFragment;
 
@@ -66,7 +66,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
         if (savedInstanceState == null) {
             int pos = getIntent().getIntExtra("position", 1);
             mNewsFragment = NewsHomeFragment.newInstance();
-            mNoteFragment = DemoFragment.newInstance("2");
+            mNoteFragment = TestFragment.newInstance();
             mBeautyFragment = BeautyFragment.newInstance(Constant.Category.IMAGE);
             mMineFragment = MineFragment.newInstance();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -97,7 +97,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
         } else {
             int pos = savedInstanceState.getInt("position", 1);
             mNewsFragment = (NewsHomeFragment) getSupportFragmentManager().findFragmentByTag("1");
-            mNoteFragment = (DemoFragment) getSupportFragmentManager().findFragmentByTag("2");
+            mNoteFragment = (TestFragment) getSupportFragmentManager().findFragmentByTag("2");
             mBeautyFragment = (BeautyFragment) getSupportFragmentManager().findFragmentByTag("3");
             mMineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag("4");
 
@@ -138,15 +138,19 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
         switch (tabId) {
             case R.id.tab_news:
                 showCurFragment(1);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.main_green));
                  break;
             case R.id.tab_tweet:
                 showCurFragment(2);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.black_alpha_64));
                 break;
             case R.id.tab_explore:
                 showCurFragment(3);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.black_alpha_64));
                 break;
             case R.id.tab_me:
                 showCurFragment(4);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.black_alpha_64));
                 break;
             default:
                  break;

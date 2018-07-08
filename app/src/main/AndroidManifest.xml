@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eebbk.geek">
+          package="com.eebbk.geek">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
     <!-- 该权限group用于读写外置存储的文件，比如app或第三方sdk需要读写缓存文件等 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".base.AppManager"
@@ -17,14 +17,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.MainActivity"/>
         <activity
             android:name=".ui.WelcomeActivity"
             android:theme="@style/App.Theme.Launch">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".ui.AnimateActivity">
@@ -49,8 +49,9 @@
         </activity>
         <activity
             android:name=".media.SelectImgActivity"
-            android:configChanges="keyboardHidden|orientation" />
-        <activity android:name=".home.view.HomeActivity"
+            android:configChanges="keyboardHidden|orientation"/>
+        <activity
+            android:name=".home.view.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
 
             <!--
@@ -61,9 +62,12 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".news.view.NewsWebActivity"
+        <activity
+            android:name=".news.view.NewsWebActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".ui.H5Activity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".ui.H5Activity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>
