@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
+import com.eebbk.geek.draftpaper.DraftPaperActivity;
 import com.eebbk.geek.practice.adapter.BannerPagerAdapter;
 import com.eebbk.geek.ui.H5Activity;
 import com.eebbk.geek.utils.L;
@@ -39,6 +40,9 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     AppCompatButton mBtnJs;
     @BindView(R.id.btn_choose_picture)
     AppCompatButton mBtnChoosePicture;
+
+    @BindView(R.id.draft)
+    AppCompatButton mBtnDraft;
 
     private int[]    resImg = {R.mipmap.banner1, R.mipmap.banner2, R.mipmap.banner3 ,R.mipmap.banner4};
     private AutoCycleTask mAutoCycleTask;
@@ -78,6 +82,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
 
         mBtnJs.setOnClickListener(this);
         mBtnChoosePicture.setOnClickListener(this);
+        mBtnDraft.setOnClickListener(this);
     }
     private void performDot() {
         for (int i = 0; i < resImg.length; i++) {
@@ -141,6 +146,10 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
             case R.id.btn_js:
                 Intent intent = new Intent(mContext, H5Activity.class);
                 startActivity(intent);
+                break;
+            case R.id.draft:
+                Intent intent1 = new Intent(mContext, DraftPaperActivity.class);
+                startActivity(intent1);
                 break;
             default:
                 break;

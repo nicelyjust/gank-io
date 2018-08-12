@@ -68,6 +68,7 @@
         <activity
             android:name=".ui.H5Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".draftpaper.DraftPaperActivity"/>
     </application>
 
 </manifest>

@@ -16,9 +16,9 @@ import java.util.List;
 
 public class DrawInvoker {
     // 绘制列表
-    List<DrawPath> mDrawPaths = Collections.synchronizedList(new ArrayList<>());
+    List<DrawPath> mDrawPaths = Collections.synchronizedList(new ArrayList<DrawPath>());
     // 重做列表
-    List<DrawPath> mRedos = Collections.synchronizedList(new ArrayList<>());
+    List<DrawPath> mRedos = Collections.synchronizedList(new ArrayList<DrawPath>());
 
     public void add( DrawPath command){
         mDrawPaths.add(command);
