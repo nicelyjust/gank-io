@@ -122,7 +122,6 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override
