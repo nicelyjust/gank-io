@@ -189,8 +189,10 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mAutoCycleTask.removeCallbacksAndMessages(null);
-        mAutoCycleTask = null;
+        if (mAutoCycleTask != null) {
+            mAutoCycleTask.removeCallbacksAndMessages(null);
+            mAutoCycleTask = null;
+        }
     }
     @SuppressLint("HandlerLeak")
     class AutoCycleTask extends Handler implements Runnable {
