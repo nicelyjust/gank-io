@@ -101,13 +101,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos = (int) v.getTag();
-                Snackbar.make(v , "点击: " + pos ,Snackbar.LENGTH_SHORT).show();
+                test(v);
             }
         });
         vh.mTvAuthor.setText(infoVo.getWho());
         vh.mTvPublishTime.setText(infoVo.getPublishedTime());
         vh.mTvDesc.setText(infoVo.getDesc());
+    }
+
+    private void test(View v) {
+        int pos = (int) v.getTag();
+        Snackbar.make(v , "点击: " + pos ,Snackbar.LENGTH_SHORT).show();
     }
 
     private void bindImageHolder(ImageHolder holder, int position, DataInfoVo infoVo) {
