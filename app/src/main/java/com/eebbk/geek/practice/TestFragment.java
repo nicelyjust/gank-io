@@ -20,6 +20,7 @@ import com.eebbk.geek.practice.adapter.BannerPagerAdapter;
 import com.eebbk.geek.rxLearn.RxJavaActivity;
 import com.eebbk.geek.ui.H5Activity;
 import com.eebbk.geek.utils.L;
+import com.eebbk.geek.viewLearn.hencoderpracticedraw1.Practice1Activity;
 
 import butterknife.BindView;
 
@@ -30,7 +31,7 @@ import butterknife.BindView;
  *  @创建者:   lz
  *  @创建时间:  2017/11/1 11:52
  *  @修改时间:  Administrator 2017/11/1 11:52 
- *  @描述：    TODO
+ *  @描述：
  */
 public class TestFragment extends LazyBaseFragment implements View.OnClickListener, ViewPager.OnPageChangeListener, View.OnTouchListener {
     private static final String TAG = "TestFragment";
@@ -47,6 +48,8 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     AppCompatButton mBtnDraft;
     @BindView(R.id.btn_rx)
     Button mBtnRxDemo;
+    @BindView(R.id.btn_customization)
+    Button mBtnCustomView;
 
     private int[]    resImg = {R.mipmap.banner1, R.mipmap.banner2, R.mipmap.banner3 ,R.mipmap.banner4};
     private AutoCycleTask mAutoCycleTask;
@@ -88,6 +91,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
         mBtnChoosePicture.setOnClickListener(this);
         mBtnDraft.setOnClickListener(this);
         mBtnRxDemo.setOnClickListener(this);
+        mBtnCustomView.setOnClickListener(this);
     }
     private void performDot() {
         for (int i = 0; i < resImg.length; i++) {
@@ -159,6 +163,10 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
             case R.id.btn_rx:
                 Intent intent2 = new Intent(mContext, RxJavaActivity.class);
                 startActivity(intent2);
+                break;
+                case R.id.btn_customization:
+                Intent intent3 = new Intent(mContext, Practice1Activity.class);
+                startActivity(intent3);
                 break;
             default:
                 break;
