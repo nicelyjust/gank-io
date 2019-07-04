@@ -21,6 +21,7 @@ import com.eebbk.geek.rxLearn.RxJavaActivity;
 import com.eebbk.geek.ui.H5Activity;
 import com.eebbk.geek.utils.L;
 import com.eebbk.geek.viewLearn.hencoderpracticedraw1.Practice1Activity;
+import com.eebbk.geek.web.FlutterMainActivity;
 
 import butterknife.BindView;
 
@@ -50,6 +51,8 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     Button mBtnRxDemo;
     @BindView(R.id.btn_customization)
     Button mBtnCustomView;
+    @BindView(R.id.btn_flutter)
+    Button mBtnFlutter;
 
     private int[]    resImg = {R.mipmap.banner1, R.mipmap.banner2, R.mipmap.banner3 ,R.mipmap.banner4};
     private AutoCycleTask mAutoCycleTask;
@@ -92,6 +95,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
         mBtnDraft.setOnClickListener(this);
         mBtnRxDemo.setOnClickListener(this);
         mBtnCustomView.setOnClickListener(this);
+        mBtnFlutter.setOnClickListener(this);
     }
     private void performDot() {
         for (int i = 0; i < resImg.length; i++) {
@@ -122,6 +126,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
         mViewPager.setPageTransformer(true , new CustomTransformer());
         mLlDotContainer.getChildAt(mPrePosition).setEnabled(true);
     }
+
     private void autoCycle() {
         if (mAutoCycleTask == null) {
             mAutoCycleTask = new AutoCycleTask();
@@ -164,9 +169,12 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
                 Intent intent2 = new Intent(mContext, RxJavaActivity.class);
                 startActivity(intent2);
                 break;
-                case R.id.btn_customization:
+            case R.id.btn_customization:
                 Intent intent3 = new Intent(mContext, Practice1Activity.class);
                 startActivity(intent3);
+                break;
+            case R.id.btn_flutter:
+                FlutterMainActivity.start(mContext);
                 break;
             default:
                 break;

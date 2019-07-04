@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import com.eebbk.geek.http.ApiServer;
 
+import io.flutter.view.FlutterMain;
+
 
 /*
  *  @项目名：  Demo 
@@ -27,6 +29,7 @@ public class AppManager extends Application {
         sHandler = new Handler();
 //        ThemeUtils.setSwitchColor(this);
         ApiServer.init();
+        FlutterMain.startInitialization(this);
     }
 
     @Override
