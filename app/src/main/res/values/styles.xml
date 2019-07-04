@@ -32,4 +32,9 @@
     <style name="TabLayout.Text.Tab" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
     </style>
+    <style name="web.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateDrawable">@null</item>
+        <item name="android:minHeight">3dp</item>
+        <item name="android:maxHeight">3dp</item>
+    </style>
 </resources>

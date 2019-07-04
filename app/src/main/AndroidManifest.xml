@@ -71,6 +71,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".draftpaper.DraftPaperActivity"/>
         <activity android:name=".viewLearn.hencoderpracticedraw1.Practice1Activity" />
+        <activity android:name=".web.WebActivity" />
     </application>
 
 </manifest>

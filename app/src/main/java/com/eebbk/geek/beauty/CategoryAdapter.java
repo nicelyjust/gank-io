@@ -1,7 +1,6 @@
 package com.eebbk.geek.beauty;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.eebbk.geek.R;
 import com.eebbk.geek.bean.netBean.DataInfoVo;
 import com.eebbk.geek.constant.Constant;
+import com.eebbk.geek.web.WebActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,20 +98,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .thumbnail(0.3f) // 缩略图
                     .into(vh.mIvImage);
         }
-        vh.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                test(v);
-            }
+        vh.itemView.setOnClickListener(v -> {
+            int pos = (int) v.getTag();
+            WebActivity.start(v.getContext(),infoVo.getUrl());
         });
         vh.mTvAuthor.setText(infoVo.getWho());
         vh.mTvPublishTime.setText(infoVo.getPublishedTime());
         vh.mTvDesc.setText(infoVo.getDesc());
-    }
-
-    private void test(View v) {
-        int pos = (int) v.getTag();
-        Snackbar.make(v , "点击: " + pos ,Snackbar.LENGTH_SHORT).show();
     }
 
     private void bindImageHolder(ImageHolder holder, int position, DataInfoVo infoVo) {
