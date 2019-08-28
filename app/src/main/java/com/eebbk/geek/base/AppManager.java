@@ -6,8 +6,6 @@ import android.os.Handler;
 
 import com.eebbk.geek.http.ApiServer;
 
-import io.flutter.view.FlutterMain;
-
 
 /*
  *  @项目名：  Demo 
@@ -24,18 +22,17 @@ public class AppManager extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // 初始化组件
         sAppContext = getApplicationContext();
         sHandler = new Handler();
-//        ThemeUtils.setSwitchColor(this);
         ApiServer.init();
-        FlutterMain.startInitialization(this);
+        //FlutterMain.startInitialization(this);
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
     }
+
     public static Context getsAppContext() {
         return sAppContext;
     }
@@ -44,13 +41,4 @@ public class AppManager extends Application {
         return sHandler;
     }
 
-   /* @Override
-    public int replaceColorById(Context context, @ColorRes int colorId) {
-        return 0;
-    }
-
-    @Override
-    public int replaceColor(Context context, @ColorInt int color) {
-        return 0;
-    }*/
 }

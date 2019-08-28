@@ -8,14 +8,14 @@
     android:background="#f8f8f8"
     tools:context=".viewLearn.hencoderpracticedraw1.Practice1Activity">
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@android:color/white"
         style="@style/TabLayout" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

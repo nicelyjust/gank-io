@@ -1,6 +1,6 @@
 package com.eebbk.geek.news.view;
 
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 

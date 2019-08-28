@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:src="@mipmap/spider_popup_arrow"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/spider_popup_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

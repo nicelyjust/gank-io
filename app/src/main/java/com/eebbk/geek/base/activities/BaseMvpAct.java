@@ -10,7 +10,7 @@ package com.eebbk.geek.base.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.eebbk.geek.base.mvp.BaseView;
 import com.eebbk.geek.base.mvp.WrapperPresenter;

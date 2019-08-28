@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.eebbk.geek.news.view.NewsWebActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_news_web"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -9,7 +9,7 @@ package com.eebbk.geek.news.factory;
  *  @描述：    Android | iOS | 休息视频 | 拓展资源 | 前端
  */
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.SparseArray;
 
 import com.eebbk.geek.news.view.NewsFragment;

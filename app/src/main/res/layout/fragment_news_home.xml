@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/home_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -18,15 +18,15 @@
             android:text="资讯"
             android:textColor="@color/white"
             android:textSize="16sp"/>
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/sliding_tabs"
         style="@style/TabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_news_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
