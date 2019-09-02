@@ -8,7 +8,7 @@ import org.junit.Test;
  *  @文件名:   LinkListOne
  *  @创建者:   lz
  *  @创建时间:  2019/8/28 15:31
- *  @描述：使用单链表实现堆栈
+ *  @描述：使用单链表实现堆栈;链表反转示例;
  */
 public class LinkListOne {
     @Test
@@ -53,6 +53,7 @@ public class LinkListOne {
         node.next = null;
         return reverse;
     }
+
     public <T> void printNode(Node<T> node){
         StringBuilder builder = new StringBuilder();
         while (node.next != null) {
