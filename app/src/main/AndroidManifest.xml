@@ -69,10 +69,12 @@
         <activity
             android:name=".ui.H5Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".draftpaper.DraftPaperActivity"/>
         <activity android:name=".viewLearn.hencoderpracticedraw1.Practice1Activity" />
         <activity android:name=".web.WebActivity" />
         <activity android:name=".web.FlutterMainActivity" />
+        <activity android:name=".service.BasicAndroidActivity" />
+
+        <service android:name=".service.LifeCycleService" />
     </application>
 
 </manifest>

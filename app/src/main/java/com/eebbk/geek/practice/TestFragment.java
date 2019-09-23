@@ -4,57 +4,56 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.AppCompatButton;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
-import com.eebbk.geek.draftpaper.DraftPaperActivity;
 import com.eebbk.geek.practice.adapter.BannerPagerAdapter;
 import com.eebbk.geek.rxLearn.RxJavaActivity;
 import com.eebbk.geek.ui.H5Activity;
 import com.eebbk.geek.utils.L;
 import com.eebbk.geek.viewLearn.hencoderpracticedraw1.Practice1Activity;
-import com.eebbk.geek.web.FlutterMainActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /*
- *  @项目名：  Demo 
+ *  @项目名：  Demo
  *  @包名：    com.eebbk.nicely.demo.ui
  *  @文件名:   TestFragment
  *  @创建者:   lz
  *  @创建时间:  2017/11/1 11:52
- *  @修改时间:  Administrator 2017/11/1 11:52 
+ *  @修改时间:  Administrator 2017/11/1 11:52
  *  @描述：
  */
-public class TestFragment extends LazyBaseFragment implements View.OnClickListener, ViewPager.OnPageChangeListener, View.OnTouchListener {
+public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageChangeListener, View.OnTouchListener {
     private static final String TAG = "TestFragment";
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
     @BindView(R.id.ll_dot_container)
     LinearLayout mLlDotContainer;
     @BindView(R.id.btn_js)
-    AppCompatButton mBtnJs;
+    Button mBtnJs;
     @BindView(R.id.btn_choose_picture)
-    AppCompatButton mBtnChoosePicture;
+    Button mBtnChoosePicture;
 
-    @BindView(R.id.draft)
-    AppCompatButton mBtnDraft;
     @BindView(R.id.btn_rx)
     Button mBtnRxDemo;
     @BindView(R.id.btn_customization)
     Button mBtnCustomView;
     @BindView(R.id.btn_flutter)
     Button mBtnFlutter;
+    @BindView(R.id.btn_android_basic)
+    Button mBtnAndroidBasic;
 
-    private int[]    resImg = {R.mipmap.banner1, R.mipmap.banner2, R.mipmap.banner3 ,R.mipmap.banner4};
+    private int[] resImg = {R.mipmap.banner1, R.mipmap.banner2, R.mipmap.banner3, R.mipmap.banner4};
     private AutoCycleTask mAutoCycleTask;
     private int mPrePosition;
     private BannerPagerAdapter mAdapter;
@@ -87,16 +86,29 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        L.d(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        L.d(TAG, "onHiddenChanged: hidden" + hidden);
+        if (hidden) {
+            if (mAutoCycleTask != null)
+                mAutoCycleTask.stop();
+        } else {
+            if (mAutoCycleTask != null)
+                mAutoCycleTask.start();
+        }
+    }
+
+    @Override
     protected void initWidget(View root) {
         performDot();
-
-        mBtnJs.setOnClickListener(this);
-        mBtnChoosePicture.setOnClickListener(this);
-        mBtnDraft.setOnClickListener(this);
-        mBtnRxDemo.setOnClickListener(this);
-        mBtnCustomView.setOnClickListener(this);
-        mBtnFlutter.setOnClickListener(this);
     }
+
     private void performDot() {
         for (int i = 0; i < resImg.length; i++) {
             View dotView = new View(mContext);
@@ -123,7 +135,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
         int item = Integer.MAX_VALUE / 2 - (Integer.MAX_VALUE / 2 % resImg.length);
         mViewPager.setCurrentItem(item);// 设置初始位置
         // 将第一个圆点设置选中的颜色
-        mViewPager.setPageTransformer(true , new CustomTransformer());
+        mViewPager.setPageTransformer(true, new CustomTransformer());
         mLlDotContainer.getChildAt(mPrePosition).setEnabled(true);
     }
 
@@ -136,7 +148,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d(TAG,"position===" + position + "positionOffset===" + positionOffset + "positionOffsetPixels===" + positionOffsetPixels);
+        Log.d("vp", "position===" + position + "positionOffset===" + positionOffset + "positionOffsetPixels===" + positionOffsetPixels);
 
     }
 
@@ -151,19 +163,16 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     @Override
     public void onPageScrollStateChanged(int state) {
     }
-    
-    @Override
-    public void onClick(View v) {
+    @OnClick({R.id.btn_android_basic,R.id.btn_choose_picture,R.id.btn_js,R.id.btn_rx,R.id.btn_customization,R.id.btn_flutter})
+    public void onViewClicked(View v) {
         switch (v.getId()) {
+            case R.id.btn_android_basic:
+                break;
             case R.id.btn_choose_picture:
                 break;
             case R.id.btn_js:
                 Intent intent = new Intent(mContext, H5Activity.class);
                 startActivity(intent);
-                break;
-            case R.id.draft:
-                Intent intent1 = new Intent(mContext, DraftPaperActivity.class);
-                startActivity(intent1);
                 break;
             case R.id.btn_rx:
                 Intent intent2 = new Intent(mContext, RxJavaActivity.class);
@@ -174,7 +183,7 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
                 startActivity(intent3);
                 break;
             case R.id.btn_flutter:
-                FlutterMainActivity.start(mContext);
+                //FlutterMainActivity.start(mContext);
                 break;
             default:
                 break;
@@ -190,8 +199,6 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mAutoCycleTask.stop();
-                break;
             case MotionEvent.ACTION_MOVE:
                 mAutoCycleTask.stop();
                 break;
@@ -228,11 +235,13 @@ public class TestFragment extends LazyBaseFragment implements View.OnClickListen
             removeCallbacks(this);
         }
     }
+
     public class CustomTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.9F;
+
         @Override
         public void transformPage(View page, float position) {
-            L.d(TAG, "transformPage: position == " + position);
+            L.d("vp", "transformPage: position == " + position);
             if (position < -1) {
                 page.setScaleY(MIN_SCALE);
             } else if (position <= 1) {

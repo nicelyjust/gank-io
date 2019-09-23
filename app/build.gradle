@@ -48,6 +48,7 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
 
     implementation 'org.aspectj:aspectjrt:1.8.9'
+    implementation 'com.google.android:flexbox:1.1.1'
 }
 import org.aspectj.bridge.IMessage
 import org.aspectj.bridge.MessageHandler
