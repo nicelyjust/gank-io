@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".base.AppManager"
@@ -75,6 +76,9 @@
         <activity android:name=".service.BasicAndroidActivity" />
 
         <service android:name=".service.LifeCycleService" />
+        <service
+            android:name=".service.RemoteService"
+            android:process=":remote" />
     </application>
 
 </manifest>

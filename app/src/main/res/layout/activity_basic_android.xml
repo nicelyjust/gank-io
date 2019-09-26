@@ -1,30 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:flexDirection="column"
-    tools:ignore="HardcodedText"
-    app:flexWrap="wrap">
-    <Button
-        android:id="@+id/btn_start"
-        android:text="start service"
+    android:orientation="vertical">
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/btn_bind"
-        android:text="bind service"
+        android:layout_height="wrap_content"
+        app:flexDirection="column"
+        tools:ignore="HardcodedText"
+        tools:context=".service.BasicAndroidActivity"
+        app:flexWrap="wrap">
+        <Button
+            android:id="@+id/btn_start"
+            android:text="start service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_bind"
+            android:text="bind service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_stop"
+            android:text="stop service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_cancel_notification"
+            android:text="service与activity通信"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/btn_stop"
-        android:text="stop service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</com.google.android.flexbox.FlexboxLayout>
+        android:layout_height="wrap_content"
+        app:flexDirection="row"
+        tools:ignore="HardcodedText"
+        tools:context=".service.BasicAndroidActivity"
+        app:flexWrap="wrap">
+        <Button
+            android:id="@+id/btn_bind_remote"
+            android:text="bind remote service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_unbind_remote"
+            android:text="unbind service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_add"
+            android:text="添加书本"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_show"
+            android:text="展示书本:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_books"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.google.android.flexbox.FlexboxLayout>
+</LinearLayout>

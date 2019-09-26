@@ -17,6 +17,7 @@ import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
 import com.eebbk.geek.practice.adapter.BannerPagerAdapter;
 import com.eebbk.geek.rxLearn.RxJavaActivity;
+import com.eebbk.geek.service.BasicAndroidActivity;
 import com.eebbk.geek.ui.H5Activity;
 import com.eebbk.geek.utils.L;
 import com.eebbk.geek.viewLearn.hencoderpracticedraw1.Practice1Activity;
@@ -167,6 +168,7 @@ public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageCh
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.btn_android_basic:
+                BasicAndroidActivity.start(mContext);
                 break;
             case R.id.btn_choose_picture:
                 break;
