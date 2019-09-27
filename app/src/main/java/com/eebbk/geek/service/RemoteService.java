@@ -1,9 +1,11 @@
 package com.eebbk.geek.service;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -30,7 +32,7 @@ import java.util.List;
  *  @创建时间:  2019/9/23 18:03
  *  @描述：    两种启动方式:1.startService,需要手动stop,第一次start,周期start()-->startCommand(),随后start只走startCommand();
  * 2.bind方式,绑定当前组件的生命周期,无需手动解绑,只能绑定一次;
- * 3.混合启动:stop与
+ * 3.混合启动:stop必须调用,服务才会销毁;
  */
 public class RemoteService extends Service {
     private static final String TAG = "RemoteService";
@@ -64,10 +66,19 @@ public class RemoteService extends Service {
         return mBinder;
     }
 
-    public Binder getBinder() {
-        return mBinder;
+    public static String dealProcessName(Context cxt, int pid) {
+        ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            if (procInfo.pid == pid) {
+                return procInfo.processName;
+            }
+        }
+        return null;
     }
-
     public Binder mBinder = new IBookManager.Stub() {
         @Override
         public List<Book> getBookList() throws RemoteException {
@@ -77,6 +88,11 @@ public class RemoteService extends Service {
         @Override
         public void addBook(Book book) throws RemoteException {
             mBookList.add(book);
+        }
+
+        @Override
+        public String getProcessName() throws RemoteException {
+            return dealProcessName(RemoteService.this, android.os.Process.myPid());
         }
     };
     @Override

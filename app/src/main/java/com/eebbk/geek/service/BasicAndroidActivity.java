@@ -40,6 +40,8 @@ public class BasicAndroidActivity extends BaseActivity {
     Button mBtnStop;
     @BindView(R.id.tv_books)
     TextView mTextView;
+    @BindView(R.id.tv_process)
+    TextView mTvProcessName;
     private LifeCycleService mService;
     private IBookManager mBookManager;
     private String[] mBookName = new String[]{"深入理解JVM","Android开发艺术探索","Effective Java","图解HTTP"};
@@ -133,6 +135,14 @@ public class BasicAndroidActivity extends BaseActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
             mBookManager = IBookManager.Stub.asInterface(binder);
+            if (mBookManager == null) {
+                return;
+            }
+            try {
+                mTvProcessName.setText(String.format("服务所在进程:%s", mBookManager.getProcessName()));
+            } catch (RemoteException e) {
+                mTvProcessName.setText(String.format("服务所在进程:%s", e.getMessage()));
+            }
         }
 
         @Override
