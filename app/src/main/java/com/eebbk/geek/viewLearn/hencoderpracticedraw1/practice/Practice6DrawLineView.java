@@ -22,6 +22,9 @@ import android.view.animation.OvershootInterpolator;
 
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
+import com.eebbk.geek.practice.animate.Point;
+import com.eebbk.geek.practice.animate.PointSinEvaluator;
+
 public class Practice6DrawLineView extends View {
 
     public static final float RADIUS = 20f;

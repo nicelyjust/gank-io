@@ -1,4 +1,4 @@
-package com.eebbk.geek.viewLearn.hencoderpracticedraw1.practice;
+package com.eebbk.geek.practice.animate;
 
 import android.os.Parcel;
 import android.os.Parcelable;

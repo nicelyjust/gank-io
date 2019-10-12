@@ -34,6 +34,8 @@ public class AnimateActivity extends BaseActivity {
     Button mBtnAnimate;
     @BindView(R.id.tv_animate)
     TextView mTvAnimate;
+    @BindView(R.id.av_anim)
+    AnimView mAnimView;
 
     @Override
     protected int getContentView() {
@@ -62,20 +64,30 @@ public class AnimateActivity extends BaseActivity {
         animatorSet.start();
     }
 
-    @OnClick({R.id.btn_animate})
+    @OnClick({R.id.btn_animate,R.id.btn_start_anim, R.id.btn_pause_anim, R.id.btn_stop_anim})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_animate:
                 AnimatorSet animatorSet = new AnimatorSet();
                 ObjectAnimator translationY = ObjectAnimator.ofFloat(mTvAnimate, "translationY", -100, 80, 50, 30, 20, 0, 10, 5, 0);
-                animatorSet.play(ObjectAnimator.ofFloat(mTvAnimate, "rotation",0,360 ))
+                animatorSet.play(ObjectAnimator.ofFloat(mTvAnimate, "rotation", 0, 360))
                         .after(translationY);
                 animatorSet.setDuration(5000);
                 animatorSet.start();
 
                 break;
+            case R.id.btn_start_anim:
+                mAnimView.startAnim();
+                break;
+            case R.id.btn_pause_anim:
+                mAnimView.pauseAnimation();
+                break;
+            case R.id.btn_stop_anim:
+                mAnimView.stopAnimation();
+                break;
         }
     }
+
     public static void start(Context context) {
         Intent starter = new Intent(context, AnimateActivity.class);
         context.startActivity(starter);

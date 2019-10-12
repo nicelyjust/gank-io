@@ -1,4 +1,4 @@
-package com.eebbk.geek.viewLearn.hencoderpracticedraw1.practice;
+package com.eebbk.geek.practice.animate;
 
 import android.animation.TypeEvaluator;
 
@@ -10,7 +10,7 @@ import android.animation.TypeEvaluator;
  *  @创建时间:  2019/10/9 16:26
  *  @描述：
  */
-class PointSinEvaluator implements TypeEvaluator {
+public class PointSinEvaluator implements TypeEvaluator {
     @Override
     public Object evaluate(float fraction, Object startValue, Object endValue) {
         Point startPoint = (Point) startValue;

@@ -5,25 +5,63 @@
     android:layout_height="match_parent">
 
     <Button
-        android:layout_marginTop="50dp"
         android:id="@+id/btn_animate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Animate"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Simple Animate"
         android:textAllCaps="false"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="200dp">
+
+        <Button
+            android:text="start"
+            android:id="@+id/btn_start_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="pause"
+            android:id="@+id/btn_pause_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="stop"
+            android:id="@+id/btn_stop_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_animate"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:text="Property Animation"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="50dp"
+        android:text="Property Animation"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.eebbk.geek.practice.animate.AnimView
+        android:id="@+id/av_anim"
+        app:layout_constraintTop_toBottomOf="@id/ll_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
