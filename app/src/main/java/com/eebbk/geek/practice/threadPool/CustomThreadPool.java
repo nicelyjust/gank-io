@@ -30,7 +30,7 @@ public class CustomThreadPool {
         mService = new ThreadPoolExecutor(5, 10, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
     }
 
-    public CustomThreadPool getInstance() {
+    public static CustomThreadPool getInstance() {
         return SingletonHolder.INSTANCE;
     }
 

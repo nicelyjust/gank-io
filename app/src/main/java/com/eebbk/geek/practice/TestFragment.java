@@ -16,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
 import com.eebbk.geek.practice.adapter.BannerPagerAdapter;
+import com.eebbk.geek.practice.animate.AnimateActivity;
+import com.eebbk.geek.practice.threadPool.ThreadPoolActivity;
 import com.eebbk.geek.rxLearn.RxJavaActivity;
 import com.eebbk.geek.service.BasicAndroidActivity;
 import com.eebbk.geek.ui.H5Activity;
@@ -164,7 +166,8 @@ public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageCh
     @Override
     public void onPageScrollStateChanged(int state) {
     }
-    @OnClick({R.id.btn_android_basic,R.id.btn_choose_picture,R.id.btn_js,R.id.btn_rx,R.id.btn_customization,R.id.btn_flutter})
+    @OnClick({R.id.btn_android_basic,R.id.btn_choose_picture,R.id.btn_js,R.id.btn_rx,R.id.btn_customization,
+            R.id.btn_flutter,R.id.btn_thread_pool,R.id.btn_animate_example})
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.btn_android_basic:
@@ -186,6 +189,12 @@ public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageCh
                 break;
             case R.id.btn_flutter:
                 //FlutterMainActivity.start(mContext);
+                break;
+            case R.id.btn_thread_pool:
+                ThreadPoolActivity.start(mContext);
+                break;
+            case R.id.btn_animate_example:
+                AnimateActivity.start(mContext);
                 break;
             default:
                 break;

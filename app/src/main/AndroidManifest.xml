@@ -74,6 +74,8 @@
         <activity android:name=".web.WebActivity" />
         <activity android:name=".web.FlutterMainActivity" />
         <activity android:name=".service.BasicAndroidActivity" />
+        <activity android:name=".practice.threadPool.ThreadPoolActivity" />
+        <activity android:name=".practice.animate.AnimateActivity" />
 
         <service android:name=".service.LifeCycleService" />
         <service

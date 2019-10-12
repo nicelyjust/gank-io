@@ -7,7 +7,7 @@
     <tab
         icon="@drawable/tab_icon_tweet"
         id="@+id/tab_tweet"
-        title="日記"/>
+        title="笔記"/>
     <tab
         icon="@drawable/tab_icon_explore"
         id="@+id/tab_explore"
