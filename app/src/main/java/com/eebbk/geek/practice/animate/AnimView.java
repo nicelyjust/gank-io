@@ -23,7 +23,7 @@ import com.eebbk.geek.utils.TDevice;
  *  @文件名:   AnimView
  *  @创建者:   lz
  *  @创建时间:  2019/10/12 10:39
- *  @描述：    TODO
+ *  @描述：
  */
 public class AnimView extends View {
 
@@ -115,4 +115,9 @@ public class AnimView extends View {
         }
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        stopAnimation();
+    }
 }
