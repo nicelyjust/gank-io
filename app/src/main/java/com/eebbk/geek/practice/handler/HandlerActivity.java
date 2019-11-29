@@ -78,8 +78,9 @@ public class HandlerActivity extends BaseActivity {
                 .build();
 
         try {
-            Response execute = client.newCall(request).execute();
-            client.newCall(request).enqueue(new Callback() {
+            Call call = client.newCall(request);
+            Response execute = call.execute();
+            call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
 
