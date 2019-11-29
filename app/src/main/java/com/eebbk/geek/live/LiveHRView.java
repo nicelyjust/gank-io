@@ -20,8 +20,6 @@ import androidx.annotation.Nullable;
 
 import com.eebbk.geek.R;
 
-import java.util.Arrays;
-
 
 /*
  *  @项目名：  mio_sport
@@ -227,42 +225,30 @@ public class LiveHRView extends View {
      */
     @ColorInt
     private int calculateBlockColor(int[] zones, int[] record, int i) {
+        // etc. {19,38,57,76,95}--> {10,28,47,66,85}
         int[] blockPositions = calculateBlockPositions(zones);
-        Log.d(TAG, "blockPositions: " + Arrays.toString(blockPositions));
-        // 找到当前区间
+
         int length = blockPositions.length;
         int cur = record[0] + i;
+        // 找到当前区间
         int sectionPos = getSectionPos(blockPositions, cur, length);
-        if (length == 3) {
-            if (sectionPos == 0) {
+        Log.d(TAG, "mCurValue == " + mCurValue + ";sectionPos == " + sectionPos + "; cur == " + cur);
+        if (length == 5) {
+            if (sectionPos == 1) {
                 return Color.parseColor(FIRST);
-            } else if (sectionPos == 1) {
-                float factor = i * 1.0f / (blockPositions[1] - blockPositions[0]);
-                Log.d(TAG, "factor: " + factor);
-                return i == 0 ? Color.parseColor(FIRST) : ColorGradient.calculateColor(FIRST, SECOND, factor);
             } else if (sectionPos == 2) {
-                float factor = i * 1.0f / (blockPositions[2] - blockPositions[1]);
-                Log.d(TAG, "factor: " + factor);
-                return i == 0 ? Color.parseColor(SECOND) : ColorGradient.calculateColor(SECOND, FIFTH, factor);
-            } else {
-                return Color.parseColor(FIFTH);
-            }
-        } else if (length == 5) {
-            if (sectionPos == 0) {
-                return Color.parseColor(FIRST);
-            } else if (sectionPos == 1) {
                 float factor = i * 1.0f / (blockPositions[1] - blockPositions[0] +1);
                 Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(FIRST) : ColorGradient.calculateColor(FIRST, SECOND, factor);
-            } else if (sectionPos == 2) {
+            } else if (sectionPos == 3) {
                 float factor = i * 1.0f / (blockPositions[2] - blockPositions[1] + 1);
                 Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(SECOND) : ColorGradient.calculateColor(SECOND, THIRD, factor);
-            } else if (sectionPos == 3) {
+            } else if (sectionPos == 4) {
                 float factor = i * 1.0f / (blockPositions[3] - blockPositions[2] +1);
                 Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(THIRD) : ColorGradient.calculateColor(THIRD, FOURTH, factor);
-            } else if (sectionPos == 4) {
+            } else if (sectionPos == 5) {
                 float factor = i * 1.0f / (blockPositions[4] - blockPositions[3]+1);
                 Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(FOURTH) : ColorGradient.calculateColor(FOURTH, FIFTH, factor);
@@ -282,25 +268,25 @@ public class LiveHRView extends View {
      */
     private int getSectionPos(int[] blockPositions, int cur, int length) {
         if (length == 3) {
-            if (cur < blockPositions[0]) {
+            if (cur <= blockPositions[0]) {
                 return 1;
-            } else if (cur < blockPositions[1]) {
+            } else if (cur <= blockPositions[1]) {
                 return 2;
-            } else if (cur < blockPositions[2]) {
+            } else if (cur <= blockPositions[2]) {
                 return 3;
             } else {
                 return 4;
             }
         } else if (length == 5) {
-            if (cur < blockPositions[0]) {
+            if (cur <= blockPositions[0]) {
                 return 1;
-            } else if (cur < blockPositions[1]) {
+            } else if (cur <= blockPositions[1]) {
                 return 2;
-            } else if (cur < blockPositions[2]) {
+            } else if (cur <= blockPositions[2]) {
                 return 3;
-            } else if (cur < blockPositions[3]) {
+            } else if (cur <= blockPositions[3]) {
                 return 4;
-            } else if (cur < blockPositions[4]) {
+            } else if (cur <= blockPositions[4]) {
                 return 5;
             } else {
                 return 6;
@@ -309,13 +295,21 @@ public class LiveHRView extends View {
         return 1;
     }
 
+    /**
+     *
+     * @param zones 三(四)区间,或者五(六)区间
+     * @return 三区间,或者五区间不包括首尾
+     */
     private int[] calculateBlockPositions(int[] zones) {
         int length = zones.length;
         int min = zones[0];
         int max = zones[length - 1];
-        int[] blockPositions = new int[length - 1];
-        for (int i = 1; i < length; i++) {
-            blockPositions[i - 1] = getValuePosition(min, max, zones[i], false);
+        int[] blockPositions = new int[length-1];
+        for (int i = 0; i < length-1; i++) {
+            int position = getValuePosition(min, max, zones[i], false);
+            int valuePosition = getValuePosition(min, max, zones[i + 1], false);
+            int value = (valuePosition - position) / 2;
+            blockPositions[i] = value + position;
         }
         return blockPositions;
     }

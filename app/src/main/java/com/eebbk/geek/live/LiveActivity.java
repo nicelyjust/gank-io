@@ -43,7 +43,7 @@ public class LiveActivity extends AppCompatActivity {
             obtain.what = 1;
             obtain.arg1 = random.nextInt(190);
             handler.sendMessage(obtain);
-        }, 1, 1, TimeUnit.SECONDS);
+        }, 1, 3, TimeUnit.SECONDS);
     }
 
     private static class MyHandler extends Handler {
