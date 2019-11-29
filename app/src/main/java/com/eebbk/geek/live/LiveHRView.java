@@ -11,7 +11,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -19,6 +18,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
 import com.eebbk.geek.R;
+import com.eebbk.geek.utils.L;
 
 
 /*
@@ -132,7 +132,6 @@ public class LiveHRView extends View {
         if (valuePosition > innerRingNumber) {
             valuePosition = innerRingNumber;
         }
-        Log.d(TAG, "valuePosition: " + valuePosition);
         if (mCurValue == -1) {
             mRecord[0] = valuePosition;
             mRecord[1] = mRecord[0];
@@ -204,7 +203,6 @@ public class LiveHRView extends View {
         for (int i = 0; i < count + 1; i++) {
             /*------------ 找出开始角度的颜色值 -------------*/
             int color = calculateBlockColor(zones, mRecord, i);
-            Log.d(TAG, "current color: " + color);
             mMBgPaint.setColor(color);
             canvas.drawRect(left, innerRingHeight, right, 0, mMBgPaint);
             canvas.rotate(mInnerDegrees, 0, 0);
@@ -232,25 +230,22 @@ public class LiveHRView extends View {
         int cur = record[0] + i;
         // 找到当前区间
         int sectionPos = getSectionPos(blockPositions, cur, length);
-        Log.d(TAG, "mCurValue == " + mCurValue + ";sectionPos == " + sectionPos + "; cur == " + cur);
+        L.d(TAG, "i == " + i);
+        L.d(TAG, "mCurValue == " + mCurValue + ";sectionPos == " + sectionPos + "; cur == " + cur);
         if (length == 5) {
             if (sectionPos == 1) {
                 return Color.parseColor(FIRST);
             } else if (sectionPos == 2) {
                 float factor = i * 1.0f / (blockPositions[1] - blockPositions[0] +1);
-                Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(FIRST) : ColorGradient.calculateColor(FIRST, SECOND, factor);
             } else if (sectionPos == 3) {
                 float factor = i * 1.0f / (blockPositions[2] - blockPositions[1] + 1);
-                Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(SECOND) : ColorGradient.calculateColor(SECOND, THIRD, factor);
             } else if (sectionPos == 4) {
                 float factor = i * 1.0f / (blockPositions[3] - blockPositions[2] +1);
-                Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(THIRD) : ColorGradient.calculateColor(THIRD, FOURTH, factor);
             } else if (sectionPos == 5) {
                 float factor = i * 1.0f / (blockPositions[4] - blockPositions[3]+1);
-                Log.d(TAG, "factor: " + factor);
                 return i == 0 ? Color.parseColor(FOURTH) : ColorGradient.calculateColor(FOURTH, FIFTH, factor);
             } else {
                 return Color.parseColor(FIFTH);
