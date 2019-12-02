@@ -50,11 +50,11 @@ public class LiveHRView extends View {
 
     private float mCenterY;
     private float mCenterX;
-    private static final String FIRST  = "#4FBFED";
-    private static final String SECOND = "#05E16B";
-    private static final String THIRD  = "#FE8C29";
-    private static final String FOURTH = "#FF40E2";
-    private static final String FIFTH  = "#EE291C";
+    private static final String FIRST  = "#FF4FBFED";
+    private static final String SECOND = "#FF05E16B";
+    private static final String THIRD  = "#FFFE8C29";
+    private static final String FOURTH = "#FFFF40E2";
+    private static final String FIFTH  = "#FFEE291C";
     private final int[] zone3ColorResources = new int[]{
             0xFF4FBFED,
             0xFF05E16B,
@@ -192,15 +192,24 @@ public class LiveHRView extends View {
 
         drawBgRing(canvas);
         drawOutColorRing(canvas);
+        drawInnerColorRing(canvas);
 
+        drawArrow(canvas);
+
+    }
+
+    private void drawInnerColorRing(Canvas canvas) {
+        if (mCurValue == -1) {
+            return;
+        }
         canvas.save();
         float startAngle = mInnerDegrees * (mRecord[0] - 1);
         canvas.rotate(startAngle);
-        int count = mRecord[1] - mRecord[0];
-
+        int count = mRecord[1] - mRecord[0] + 1;
+        L.d(TAG, "onDraw: count == " + count);
         int left = -(width >> 1) + outerRingHeight + innerRingPadding;
         int right = -(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth;
-        for (int i = 0; i < count + 1; i++) {
+        for (int i = 0; i < count; i++) {
             /*------------ 找出开始角度的颜色值 -------------*/
             int color = calculateBlockColor(zones, mRecord, i);
             mMBgPaint.setColor(color);
@@ -208,9 +217,6 @@ public class LiveHRView extends View {
             canvas.rotate(mInnerDegrees, 0, 0);
         }
         canvas.restore();
-
-        drawArrow(canvas);
-
     }
 
     /**
@@ -236,17 +242,21 @@ public class LiveHRView extends View {
             if (sectionPos == 1) {
                 return Color.parseColor(FIRST);
             } else if (sectionPos == 2) {
-                float factor = i * 1.0f / (blockPositions[1] - blockPositions[0] +1);
-                return i == 0 ? Color.parseColor(FIRST) : ColorGradient.calculateColor(FIRST, SECOND, factor);
+                cur = cur - blockPositions[0];
+                float factor = cur * 1.0f / (blockPositions[1] - blockPositions[0] +1);
+                return ColorGradient.calculateColor(FIRST, SECOND, factor);
             } else if (sectionPos == 3) {
-                float factor = i * 1.0f / (blockPositions[2] - blockPositions[1] + 1);
-                return i == 0 ? Color.parseColor(SECOND) : ColorGradient.calculateColor(SECOND, THIRD, factor);
+                cur = cur - blockPositions[1];
+                float factor = cur * 1.0f / (blockPositions[2] - blockPositions[1] + 1);
+                return ColorGradient.calculateColor(SECOND, THIRD, factor);
             } else if (sectionPos == 4) {
-                float factor = i * 1.0f / (blockPositions[3] - blockPositions[2] +1);
-                return i == 0 ? Color.parseColor(THIRD) : ColorGradient.calculateColor(THIRD, FOURTH, factor);
+                cur = cur - blockPositions[2];
+                float factor = cur * 1.0f / (blockPositions[3] - blockPositions[2] +1);
+                return  ColorGradient.calculateColor(THIRD, FOURTH, factor);
             } else if (sectionPos == 5) {
-                float factor = i * 1.0f / (blockPositions[4] - blockPositions[3]+1);
-                return i == 0 ? Color.parseColor(FOURTH) : ColorGradient.calculateColor(FOURTH, FIFTH, factor);
+                cur = cur - blockPositions[3];
+                float factor = cur * 1.0f / (blockPositions[4] - blockPositions[3]+1);
+                return ColorGradient.calculateColor(FOURTH, FIFTH, factor);
             } else {
                 return Color.parseColor(FIFTH);
             }
