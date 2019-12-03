@@ -10,7 +10,11 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -18,7 +22,6 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
 import com.eebbk.geek.R;
-import com.eebbk.geek.utils.L;
 
 
 /*
@@ -27,15 +30,15 @@ import com.eebbk.geek.utils.L;
  *  @文件名:   LiveHRView
  *  @创建者:   lz
  *  @创建时间:  2019/11/26 15:36
- *  @描述：
+ *  @描述：先调用setZones() => setLiveValue()
  */
 public class LiveHRView extends View {
     private static final String TAG = "LiveHRView";
-    private final int DEFAULT_WIDTH = dp2px(210);
-    private final int DEFAULT_HEIGHT = dp2px(210);
+    private final int DEFAULT_WIDTH = dp2px(271);
+    private final int DEFAULT_HEIGHT = dp2px(271);
     private final Bitmap indicatorBp;
     private int width, height;
-    private final int mStartAngle = 151, mSweepAngle = 240; // 起始角度 绘制角度
+    private static final int mStartAngle = 151, mSweepAngle = 240; // 起始角度 绘制角度
     private int mMin, mMax; // 最小值 最大值
     //内环环高
     private int innerRingWidth = dp2px(21);
@@ -91,13 +94,20 @@ public class LiveHRView extends View {
      * 内环外环一个单位对应的radian
      */
     private float mInnerDegrees, mOutDegrees;
-
-    private int[] mRecord = new int[2];
+    /**
+     * index 0 代表inner ring绘制的下区间,index 1 代表上区间,index 2为控制是否绘制inner ring
+     */
+    private int[] mRecord = new int[3];
     private Paint mBitmapPaint;
     /**
      * 变换arrow位置和角度
      */
     private Matrix mMatrix;
+    private Paint mTextPaint;
+    /**
+     * 测量文字用
+     */
+    private Rect mRectF;
 
     public LiveHRView(Context context) {
         this(context, null);
@@ -112,6 +122,7 @@ public class LiveHRView extends View {
         initPaint();
         indicatorBp = BitmapFactory.decodeResource(getResources(), R.mipmap.arrow_2);
         mMatrix = new Matrix();
+        mRectF = new Rect();
     }
 
     /**
@@ -132,15 +143,27 @@ public class LiveHRView extends View {
         if (valuePosition > innerRingNumber) {
             valuePosition = innerRingNumber;
         }
+        if (value >= mMin) {
+            mRecord[2] = 1;
+        }
         if (mCurValue == -1) {
             mRecord[0] = valuePosition;
             mRecord[1] = mRecord[0];
         } else if (valuePosition > mRecord[1]) {
             mRecord[1] = valuePosition;
-        } else if (valuePosition < mRecord[0]){
+        } else if (valuePosition < mRecord[0]) {
             mRecord[0] = valuePosition;
         }
         this.mCurValue = value;
+        invalidate();
+    }
+
+    public void reset() {
+        mCurValue = -1;
+        int length = mRecord.length;
+        for (int i = 0; i < length; i++) {
+            mRecord[i] = 0;
+        }
         invalidate();
     }
 
@@ -155,6 +178,10 @@ public class LiveHRView extends View {
         mPointPaint.setStrokeWidth(dp2px(6));
 
         mBitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mBitmapPaint.setDither(true);
+        mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setTextSize(dp2px(80));
+        mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DINPro-Medium.otf"));
     }
 
     @Override
@@ -188,25 +215,43 @@ public class LiveHRView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.translate(mCenterX, mCenterY);
-        canvas.rotate(mStartAngle - 180);
+        int degrees = mStartAngle - 180;
+        canvas.rotate(degrees);
 
         drawBgRing(canvas);
         drawOutColorRing(canvas);
         drawInnerColorRing(canvas);
-
+        drawText(canvas,degrees);
         drawArrow(canvas);
 
     }
 
+    private void drawText(Canvas canvas, int degrees) {
+        int save = canvas.save();
+        canvas.rotate(-degrees);
+        String value;
+        if (mCurValue == -1 || mCurValue <= 30) {
+            value = "--";
+            mTextPaint.setColor(0xFFFFFFFF);
+        } else {
+            value = String.valueOf(mCurValue);
+            mTextPaint.setColor(mCurValue < mMin ? 0xFFFFFFFF :getCurrentValueColor(zones, mCurValue));
+        }
+        mTextPaint.getTextBounds(value,0,value.length(),mRectF);
+        canvas.drawText(value, -mRectF.width()/2, mRectF.height()*0.25f, mTextPaint);
+        canvas.restoreToCount(save);
+
+    }
+
     private void drawInnerColorRing(Canvas canvas) {
-        if (mCurValue == -1) {
+        if (mCurValue == -1 || mRecord[2] == 0) {
             return;
         }
         canvas.save();
         float startAngle = mInnerDegrees * (mRecord[0] - 1);
         canvas.rotate(startAngle);
         int count = mRecord[1] - mRecord[0] + 1;
-        L.d(TAG, "onDraw: count == " + count);
+        Log.d(TAG, "onDraw: count == " + count);
         int left = -(width >> 1) + outerRingHeight + innerRingPadding;
         int right = -(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth;
         for (int i = 0; i < count; i++) {
@@ -236,8 +281,8 @@ public class LiveHRView extends View {
         int cur = record[0] + i;
         // 找到当前区间
         int sectionPos = getSectionPos(blockPositions, cur, length);
-        L.d(TAG, "i == " + i);
-        L.d(TAG, "mCurValue == " + mCurValue + ";sectionPos == " + sectionPos + "; cur == " + cur);
+        Log.d(TAG, "i == " + i);
+        Log.d(TAG, "mCurValue == " + mCurValue + ";sectionPos == " + sectionPos + "; cur == " + cur);
         if (length == 5) {
             if (sectionPos == 1) {
                 return Color.parseColor(FIRST);
@@ -257,6 +302,20 @@ public class LiveHRView extends View {
                 cur = cur - blockPositions[3];
                 float factor = cur * 1.0f / (blockPositions[4] - blockPositions[3]+1);
                 return ColorGradient.calculateColor(FOURTH, FIFTH, factor);
+            } else {
+                return Color.parseColor(FIFTH);
+            }
+        } else if (length == 3) {
+            if (sectionPos == 1) {
+                return Color.parseColor(FIRST);
+            } else if (sectionPos == 2) {
+                cur = cur - blockPositions[0];
+                float factor = cur * 1.0f / (blockPositions[1] - blockPositions[0] +1);
+                return ColorGradient.calculateColor(FIRST, SECOND, factor);
+            } else if (sectionPos == 3) {
+                cur = cur - blockPositions[1];
+                float factor = cur * 1.0f / (blockPositions[2] - blockPositions[1] + 1);
+                return ColorGradient.calculateColor(SECOND, FIFTH, factor);
             } else {
                 return Color.parseColor(FIFTH);
             }
@@ -320,19 +379,23 @@ public class LiveHRView extends View {
     }
 
     private void drawArrow(Canvas canvas) {
-        if (mCurValue == -1) {
+        if (mCurValue == -1 || mCurValue < mMin) {
             return;
         }
         canvas.save();
-        int valuePosition = getValuePosition(mMin, mMax, mCurValue, false);
-        float curAngle = mInnerDegrees * valuePosition + mInnerDegrees;
+        int value = mCurValue;
+        if (value > mMax){
+            value = mMax;
+        }
+        int valuePosition = getValuePosition(mMin, mMax, value, false);
+        float curAngle = mInnerDegrees * valuePosition + mInnerDegrees/2;
         canvas.rotate(curAngle);
         float fakeRad = (width >> 1) - outerRingHeight - innerRingPadding - innerRingWidth - (indicatorBp.getWidth() >> 1);
         mMatrix.reset();
         mMatrix.postRotate(30);
         mMatrix.postTranslate(-fakeRad, 0);
 
-        mBitmapPaint.setColorFilter(new PorterDuffColorFilter(getArrowColor(zones, mCurValue), PorterDuff.Mode.SRC_IN));
+        mBitmapPaint.setColorFilter(new PorterDuffColorFilter(getCurrentValueColor(zones, value), PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(indicatorBp, mMatrix, mBitmapPaint);
         canvas.restore();
     }
@@ -379,7 +442,7 @@ public class LiveHRView extends View {
         mInnerDegrees = mSweepAngle * 1.0f / innerRingNumber;
         canvas.save();
         mPointPaint.setColor(zone3ColorResources[0]);
-        canvas.drawPoint(-(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth + mPointPaint.getStrokeWidth() + 5, 0, mPointPaint);
+        canvas.drawPoint(-(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth + mPointPaint.getStrokeWidth() + 5, mPointPaint.getStrokeWidth()/2-2, mPointPaint);
         for (int i = 0; i < innerRingNumber; i++) {
             canvas.drawRect(-(width >> 1) + outerRingHeight + innerRingPadding, innerRingHeight, -(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth, 0, mMBgPaint);
             canvas.rotate(mInnerDegrees, 0, 0);
@@ -406,10 +469,13 @@ public class LiveHRView extends View {
     }
 
     @ColorInt
-    private int getArrowColor(int[] zones, int curValue) {
+    private int getCurrentValueColor(int[] zones, int curValue) {
         int color;
         int length = zones.length;
         if (length == 4) {
+            if (curValue < zones[0]){
+                return 0xFFFFFFFF;
+            }
             //三区间
             if (curValue < zones[1]) {
                 color = colors[0];

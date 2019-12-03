@@ -3,12 +3,12 @@ package com.eebbk.geek.live;
 import android.graphics.Color;
 
 /*
- *  @项目名：  EasyChart
- *  @包名：    com.github.iron.easychart
+ *  @项目名：  mio_sport
+ *  @包名：    com.lifesense.mio.module.live
  *  @文件名:   ColorGradient
  *  @创建者:   lz
  *  @创建时间:  2019/11/29 15:11
- *  @描述：
+ *  @描述：两个颜色的渐变值算法工具类
  */
 public class ColorGradient {
 

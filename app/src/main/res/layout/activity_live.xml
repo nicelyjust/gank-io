@@ -9,8 +9,8 @@
         android:id="@+id/hr_v"
         android:layout_marginTop="120dp"
         android:layout_gravity="center"
-        android:layout_height="210dp"
-        android:layout_width="210dp"/>
+        android:layout_height="271dp"
+        android:layout_width="271dp"/>
 
     <EditText
         android:inputType="number"
