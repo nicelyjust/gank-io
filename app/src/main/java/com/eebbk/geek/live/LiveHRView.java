@@ -43,7 +43,7 @@ public class LiveHRView extends View {
     //内环环高
     private int innerRingWidth = dp2px(21);
     //内环padding
-    private int innerRingPadding = dp2px(7);
+    private int innerRingPadding = dp2px(8);
     //内环的格数
     private int innerRingNumber = 95;
     //外环的高度
@@ -464,7 +464,7 @@ public class LiveHRView extends View {
         if (value == max) {
             return outer ? outerRingNumber : innerRingNumber;
         }
-        int position = outer ? (value - min) * outerRingNumber / (max - min + 1) + 1 : (value - min) * innerRingNumber / (max - min + 1) + 1;
+        int position = outer ? (int) ((value - min) * outerRingNumber * 1.0f / (max - min + 1) + 1 + 0.5) : (int) ((value - min) * innerRingNumber * 1.0f / (max - min + 1) + 1 + 0.5);
         return position <= 0 ? 1 : position;
     }
 

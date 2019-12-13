@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -153,7 +152,6 @@ public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageCh
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d("vp", "position===" + position + "positionOffset===" + positionOffset + "positionOffsetPixels===" + positionOffsetPixels);
 
     }
 
@@ -260,7 +258,6 @@ public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageCh
 
         @Override
         public void transformPage(View page, float position) {
-            L.d("vp", "transformPage: position == " + position);
             if (position < -1) {
                 page.setScaleY(MIN_SCALE);
             } else if (position <= 1) {

@@ -36,7 +36,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         mButton = findViewById(R.id.btn_set);
         mButton.setOnClickListener(this);
         //mLiveHRView.setZones(new int[]{56, 115, 145, 190}, new int[]{98, 117, 137, 156, 176, 195});
-        mLiveHRView.setZones(new int[]{56, 115, 145, 195}, null);
+        mLiveHRView.setZones(new int[]{117, 128,164, 175}, null);
     }
 
     @Override
