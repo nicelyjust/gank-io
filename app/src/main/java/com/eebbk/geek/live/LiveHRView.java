@@ -50,6 +50,8 @@ public class LiveHRView extends View {
     private int outerRingHeight = dp2px(3), innerRingHeight = dp2px(3);
     //外环的格数
     private int outerRingNumber = 119;
+    // 圆点的半径
+    private int mPointRadian = dp2px(4);
 
     private float mCenterY;
     private float mCenterX;
@@ -258,8 +260,8 @@ public class LiveHRView extends View {
             /*------------ 找出开始角度的颜色值 -------------*/
             int color = calculateBlockColor(zones, mRecord, i);
             mMBgPaint.setColor(color);
-            canvas.drawRect(left, innerRingHeight, right, 0, mMBgPaint);
-            canvas.rotate(mInnerDegrees, 0, 0);
+            canvas.drawRect(left, -innerRingHeight, right, 0, mMBgPaint);
+            canvas.rotate(mInnerDegrees);
         }
         canvas.restore();
     }
@@ -388,7 +390,7 @@ public class LiveHRView extends View {
             value = mMax;
         }
         int valuePosition = getValuePosition(mMin, mMax, value, false);
-        float curAngle = mInnerDegrees * valuePosition + mInnerDegrees/2;
+        float curAngle = mInnerDegrees * valuePosition + mInnerDegrees;
         canvas.rotate(curAngle);
         float fakeRad = (width >> 1) - outerRingHeight - innerRingPadding - innerRingWidth - (indicatorBp.getWidth() >> 1);
         mMatrix.reset();
@@ -417,8 +419,8 @@ public class LiveHRView extends View {
         int count = valuePositionEnd - valuePositionStart;
         mMBgPaint.setColor(zone3ColorResources[1]);
         for (int i = 0; i < count; i++) {
-            canvas.drawRect(-width / 2, outerRingHeight, -width / 2 + outerRingHeight, 0, mMBgPaint);
-            canvas.rotate(mOutDegrees, 0, 0);
+            canvas.drawRect(-width / 2, -outerRingHeight, -width / 2 + outerRingHeight, 0, mMBgPaint);
+            canvas.rotate(mOutDegrees);
         }
         canvas.restore();
     }
@@ -434,22 +436,22 @@ public class LiveHRView extends View {
         // 外环一个单位对应的角度
         mOutDegrees = mSweepAngle * 1.0f / outerRingNumber;
         for (int i = 0; i < outerRingNumber; i++) {
-            canvas.drawRect(-width / 2, outerRingHeight, -width / 2 + outerRingHeight, 0, mMBgPaint);
-            canvas.rotate(mOutDegrees, 0, 0);
+            canvas.drawRect(-width / 2, -outerRingHeight, -width / 2 + outerRingHeight, 0, mMBgPaint);
+            canvas.rotate(mOutDegrees);
         }
         canvas.restore();
         // 内环一个单位对应的角度
         mInnerDegrees = mSweepAngle * 1.0f / innerRingNumber;
         canvas.save();
         mPointPaint.setColor(zone3ColorResources[0]);
-        canvas.drawPoint(-(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth + mPointPaint.getStrokeWidth() + 5, mPointPaint.getStrokeWidth()/2-2, mPointPaint);
+        canvas.drawCircle(-(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth +mPointRadian*2, -5,mPointRadian, mPointPaint);
         for (int i = 0; i < innerRingNumber; i++) {
-            canvas.drawRect(-(width >> 1) + outerRingHeight + innerRingPadding, innerRingHeight, -(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth, 0, mMBgPaint);
-            canvas.rotate(mInnerDegrees, 0, 0);
+            canvas.drawRect(-(width >> 1) + outerRingHeight + innerRingPadding, -innerRingHeight, -(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth, 0, mMBgPaint);
+            canvas.rotate(mInnerDegrees);
         }
         mPointPaint.setColor(zone3ColorResources[2]);
         // width - 外环宽度- 内外环间距-内环宽度-画笔宽度-offset
-        canvas.drawPoint(-(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth + mPointPaint.getStrokeWidth() + 5, mPointPaint.getStrokeWidth(), mPointPaint);
+        canvas.drawCircle(-(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth +mPointRadian*2, mPointRadian,mPointRadian, mPointPaint);
         canvas.restore();
     }
 
