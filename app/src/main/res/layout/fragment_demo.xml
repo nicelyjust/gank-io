@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.eebbk.geek.practice.NoteFragment">
+    tools:context=".module.practice.NoteFragment">
 
     <LinearLayout
         android:id="@+id/ll_view_pager"
@@ -112,13 +112,6 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:text="Flutter"
-            tools:ignore="HardcodedText" />
-        <Button
-            android:id="@+id/btn_live"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:lines="1"
-            android:text="LIVE Animate"
             tools:ignore="HardcodedText" />
     </com.google.android.flexbox.FlexboxLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

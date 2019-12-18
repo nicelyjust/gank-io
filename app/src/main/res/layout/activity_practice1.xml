@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f8f8f8"
-    tools:context=".viewLearn.hencoderpracticedraw1.Practice1Activity">
+    tools:context=".module.viewLearn.Practice1Activity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

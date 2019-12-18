@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eebbk.geek.news.view.NewsWebActivity">
+    tools:context=".module.news.view.NewsWebActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_news_web"

@@ -56,7 +56,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.eebbk.geek.practice.animate.AnimView
+    <com.eebbk.geek.module.practice.animate.AnimView
         android:id="@+id/av_anim"
         app:layout_constraintTop_toBottomOf="@id/ll_btn"
         app:layout_constraintStart_toStartOf="parent"
