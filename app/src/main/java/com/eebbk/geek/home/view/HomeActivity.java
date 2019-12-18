@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.FrameLayout;
+
 import androidx.annotation.IdRes;
 import androidx.fragment.app.FragmentTransaction;
-import android.widget.FrameLayout;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.activities.BaseMvpAct;
@@ -16,7 +17,7 @@ import com.eebbk.geek.constant.Constant;
 import com.eebbk.geek.home.HomePresenterImpl;
 import com.eebbk.geek.mine.MineFragment;
 import com.eebbk.geek.news.view.NewsHomeFragment;
-import com.eebbk.geek.practice.TestFragment;
+import com.eebbk.geek.practice.NoteFragment;
 import com.eebbk.geek.utils.L;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -43,7 +44,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
     @BindView(R.id.home_container)
     FrameLayout mContainer;
     private NewsHomeFragment mNewsFragment;
-    private TestFragment mNoteFragment;
+    private NoteFragment mNoteFragment;
     private BeautyFragment mBeautyFragment;
     private MineFragment mMineFragment;
 
@@ -66,7 +67,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
         if (savedInstanceState == null) {
             int pos = getIntent().getIntExtra("position", 1);
             mNewsFragment = NewsHomeFragment.newInstance();
-            mNoteFragment = TestFragment.newInstance();
+            mNoteFragment = NoteFragment.newInstance();
             mBeautyFragment = BeautyFragment.newInstance(Constant.Category.IMAGE);
             mMineFragment = MineFragment.newInstance();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -97,7 +98,7 @@ public class HomeActivity extends BaseMvpAct<HomePresenterImpl> implements HomeV
         } else {
             int pos = savedInstanceState.getInt("position", 1);
             mNewsFragment = (NewsHomeFragment) getSupportFragmentManager().findFragmentByTag("1");
-            mNoteFragment = (TestFragment) getSupportFragmentManager().findFragmentByTag("2");
+            mNoteFragment = (NoteFragment) getSupportFragmentManager().findFragmentByTag("2");
             mBeautyFragment = (BeautyFragment) getSupportFragmentManager().findFragmentByTag("3");
             mMineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag("4");
 

@@ -31,14 +31,14 @@ import butterknife.OnClick;
 /*
  *  @项目名：  Demo
  *  @包名：    com.eebbk.nicely.demo.ui
- *  @文件名:   TestFragment
+ *  @文件名:   NoteFragment
  *  @创建者:   lz
  *  @创建时间:  2017/11/1 11:52
  *  @修改时间:  Administrator 2017/11/1 11:52
  *  @描述：
  */
-public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageChangeListener, View.OnTouchListener {
-    private static final String TAG = "TestFragment";
+public class NoteFragment extends LazyBaseFragment implements ViewPager.OnPageChangeListener, View.OnTouchListener {
+    private static final String TAG = "NoteFragment";
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
     @BindView(R.id.ll_dot_container)
@@ -62,9 +62,9 @@ public class TestFragment extends LazyBaseFragment implements ViewPager.OnPageCh
     private int mPrePosition;
     private BannerPagerAdapter mAdapter;
 
-    public static TestFragment newInstance() {
+    public static NoteFragment newInstance() {
         Bundle args = new Bundle();
-        TestFragment fragment = new TestFragment();
+        NoteFragment fragment = new NoteFragment();
         fragment.setArguments(args);
         return fragment;
     }
