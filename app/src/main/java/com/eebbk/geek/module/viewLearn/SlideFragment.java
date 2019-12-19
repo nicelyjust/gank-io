@@ -17,4 +17,9 @@ public class SlideFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_slide;
     }
+
+    public static SlideFragment newInstance() {
+        SlideFragment fragment = new SlideFragment();
+        return fragment;
+    }
 }

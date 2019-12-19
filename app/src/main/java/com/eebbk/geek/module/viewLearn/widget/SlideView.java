@@ -28,6 +28,8 @@ public class SlideView extends View {
     private int mW;
     private int mH;
     private Scroller mScroller;
+    private float mLastX;
+    private float mLastY;
 
     public SlideView(Context context) {
         this(context,null);
@@ -70,10 +72,14 @@ public class SlideView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
+                mLastX = event.getX();
+                mLastY = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
+                int offsetX = (int) (event.getX() - mLastX);
+                int offsetY = (int) (event.getY() - mLastY);
 
+                layout(getLeft()+offsetX,getTop()+offsetY,getRight()+offsetX,getBottom()+offsetY);
                 break;
             case MotionEvent.ACTION_UP:
 

@@ -7,18 +7,14 @@
     <string name="no_internet">网络不可用哦</string>
     <string name="rx_thread">%s线程%s\n</string>
 
-    <string name="title_draw_color">drawColor()</string>
     <string name="title_draw_circle">drawCircle()</string>
     <string name="title_draw_rect">drawRect()</string>
     <string name="title_draw_point">drawPoint()</string>
     <string name="title_draw_oval">drawOval()</string>
     <string name="title_draw_line">drawLine()</string>
-    <string name="title_draw_round_rect">drawRoundRect()</string>
     <string name="title_draw_arc">drawArc()</string>
     <string name="title_draw_path">drawPath()</string>
     <string name="title_draw_histogram">直方图</string>
     <string name="title_draw_pie_chart">饼图</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
