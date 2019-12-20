@@ -12,4 +12,28 @@
     <declare-styleable name="SquareLayout">
         <attr name="oscAccordTo" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="XferModeView">
+        <attr name="xferMode" format="enum">
+            <enum name="clear" value="0"/>
+            <enum name="src" value="1"/>
+            <enum name="dst" value="2"/>
+            <enum name="srcOver" value="3"/>
+
+            <enum name="dstOver" value="4"/>
+            <enum name="srcIn" value="5"/>
+            <enum name="dstIn" value="6"/>
+            <enum name="srcOut" value="7"/>
+
+            <enum name="dstOut" value="8"/>
+            <enum name="srcATop" value="9"/>
+            <enum name="dstATop" value="10"/>
+            <enum name="xOr" value="11"/>
+
+            <enum name="darken" value="12"/>
+            <enum name="lighten" value="13"/>
+            <enum name="multiply" value="14"/>
+            <enum name="screen" value="15"/>
+
+        </attr>
+    </declare-styleable>
 </resources>

@@ -16,5 +16,25 @@
     <string name="title_draw_path">drawPath()</string>
     <string name="title_draw_histogram">直方图</string>
     <string name="title_draw_pie_chart">饼图</string>
+    <string-array name="xfer_mode">
+        <item name="clear">Clear</item>
+        <item name="src">Src</item>
+        <item name="dst">Dst</item>
+        <item name="srcOver">SrcOver</item>
 
+        <item name="dstOver">DstOver</item>
+        <item name="srcIn">SrcIn</item>
+        <item name="dstIn">DstIn</item>
+        <item name="srcOut">SrcOut</item>
+
+        <item name="dstOut">DstOut</item>
+        <item name="srcATop">SrcATop</item>
+        <item name="dstATop">DstATop</item>
+        <item name="xOr">Xor</item>
+
+        <item name="darken">Darken</item>
+        <item name="lighten">Lighten</item>
+        <item name="multiply">Multiply</item>
+        <item name="screen">Screen</item>
+    </string-array>
 </resources>

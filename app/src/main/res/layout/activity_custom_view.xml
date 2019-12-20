@@ -46,11 +46,6 @@
                 android:text="心率表盘" />
 
             <RadioButton
-                android:id="@+id/btn_circle_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="绘制圆角图片" />
-            <RadioButton
                 android:id="@+id/btn_x_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
