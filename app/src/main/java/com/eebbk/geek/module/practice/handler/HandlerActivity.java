@@ -12,15 +12,7 @@ import com.eebbk.geek.R;
 import com.eebbk.geek.base.AppManager;
 import com.eebbk.geek.base.activities.BaseActivity;
 
-import java.io.IOException;
-
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 
 /*
@@ -70,31 +62,6 @@ public class HandlerActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
-        OkHttpClient client = new OkHttpClient();
-        //构造request
-        Request request = new Request.Builder()
-                .url("www.baidu.com")
-                .build();
-
-        try {
-            Call call = client.newCall(request);
-            Response execute = call.execute();
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-
-                }
-            });
-            ResponseBody body = execute.body();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void checkForUpdate() {

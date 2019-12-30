@@ -50,6 +50,10 @@ dependencies {
 
     implementation 'org.aspectj:aspectjrt:1.8.9'
     implementation 'com.google.android:flexbox:1.1.1'
+    //谷歌官方权限库
+    implementation 'pub.devrel:easypermissions:2.0.1'
+
+
 }
 import org.aspectj.bridge.IMessage
 import org.aspectj.bridge.MessageHandler

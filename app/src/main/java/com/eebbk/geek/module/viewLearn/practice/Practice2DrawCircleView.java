@@ -5,9 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import androidx.annotation.Nullable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.eebbk.geek.utils.TDevice;
 
@@ -16,6 +19,7 @@ public class Practice2DrawCircleView extends View {
     private Paint mPaint;
     private int mUnit;
     private Path mPath;
+    private PorterDuffXfermode mXfermode;
 
     public Practice2DrawCircleView(Context context) {
         super(context);
@@ -30,6 +34,7 @@ public class Practice2DrawCircleView extends View {
     public Practice2DrawCircleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initPaint();
+        mXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_OUT);
     }
 
     private void initPaint() {
@@ -64,13 +69,20 @@ public class Practice2DrawCircleView extends View {
         mPaint.setStrokeWidth(TDevice.dip2px(getContext(), 1));
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(cx * 3, cx, radius, mPaint);
-
+        // path FillType
         mPath.reset();
         mPath.addCircle(cx, cx * 3, radius, Path.Direction.CW);
-        mPath.addCircle(cx, cx * 3, radius - TDevice.dip2px(getContext(),20), Path.Direction.CW);
+        mPath.addCircle(cx, cx * 3, radius - TDevice.dip2px(getContext(), 20), Path.Direction.CW);
         mPath.setFillType(Path.FillType.EVEN_ODD);
 
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawPath(mPath, mPaint);
+
+        canvas.drawCircle(cx * 3, cx * 3, radius, mPaint);
+
+        mPaint.setXfermode(mXfermode);
+
+        canvas.drawCircle(cx * 3, cx * 3, radius - TDevice.dip2px(getContext(), 20), mPaint);
+        mPaint.setXfermode(null);
     }
 }

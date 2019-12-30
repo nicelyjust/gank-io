@@ -1,0 +1,215 @@
+package com.eebbk.geek.module.ble;
+
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Build;
+import android.os.IBinder;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.eebbk.geek.R;
+import com.eebbk.geek.base.AppManager;
+import com.eebbk.geek.base.activities.BaseActivity;
+import com.eebbk.geek.utils.L;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+
+/*
+ *  @项目名：  mock500
+ *  @包名：    com.yunzhou.tdinformation.etc
+ *  @文件名:   BLEActivity
+ *  @创建者:   lz
+ *  @创建时间:  2019/2/26 10:23
+ *  @描述：    ble探究,扫取特征设备
+ */
+public class BLEActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+    private static final int RC_LOCATION_PERM = 0x03;
+    private static final String TAG = "BLEActivity";
+    private static final int SCAN_TIME = 10000;
+    @BindView(R.id.btn_search)
+    Button mBtnSearch;
+    @BindView(R.id.rv_device)
+    RecyclerView mRv;
+    private BluetoothAdapter mBluetoothAdapter;
+    private DeviceAdapter mAdapter;
+    private BtScan mBtScanCallback;
+    private boolean mScaning;
+    private Intent mGattIntent;
+    private ServiceConnection mServiceConnection;
+    private BluetoothLeService mService;
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_ble;
+    }
+
+
+    @Override
+    protected void initWidget() {
+        super.initWidget();
+        mBtScanCallback = new BtScan(this);
+        mRv.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new DeviceAdapter(this, new DeviceAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+                BluetoothDevice device = mAdapter.getItem(pos);
+
+            }
+        });
+        mRv.setAdapter(mAdapter);
+
+        mGattIntent = new Intent(this, BluetoothLeService.class);
+        mServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder iBinder) {
+                L.d(TAG, "onServiceConnected: ComponentName = " + name);
+                BluetoothLeService.LeBinder leBinder = (BluetoothLeService.LeBinder) iBinder;
+                mService = leBinder.getService();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                L.d(TAG, "onServiceDisconnected: ComponentName = " + name);
+            }
+        };
+        bindService(mGattIntent, mServiceConnection, BIND_AUTO_CREATE);
+    }
+
+    @AfterPermissionGranted(RC_LOCATION_PERM)
+    public void requestLocation() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            performBLE();
+        } else {
+            EasyPermissions.requestPermissions(this, "我们需要您的位置以便为您提供个性化服务", RC_LOCATION_PERM, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        performBLE();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    }
+
+    @OnClick({R.id.btn_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_search:
+                //ToastUtil.showShort(this,mService.getTAG());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestLocation();
+                } else {
+                    performBLE();
+                }
+                break;
+        }
+    }
+
+    private void performBLE() {
+        if (mBluetoothAdapter == null) {
+            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, 10);
+        }
+        scanBlueTooth(true);
+    }
+
+    private void scanBlueTooth(boolean enable) {
+        if (mBluetoothAdapter == null) {
+            return;
+        }
+        final BluetoothLeScanner bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        if (bluetoothLeScanner == null) {
+            Log.e(TAG, "scanBlueTooth: bluetoothLeScanner === null");
+            return;
+        }
+        if (enable) {
+            AppManager.getsHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mScaning = false;
+                    bluetoothLeScanner.stopScan(mBtScanCallback);
+                }
+            }, SCAN_TIME);
+            mScaning = true;
+            bluetoothLeScanner.startScan(mBtScanCallback);
+        } else {
+            mScaning = false;
+            bluetoothLeScanner.stopScan(mBtScanCallback);
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 10 && resultCode == RESULT_CANCELED) {
+            //没有开启蓝牙
+            finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        scanBlueTooth(false);
+    }
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, BLEActivity.class);
+        context.startActivity(starter);
+    }
+
+    private class BtScan extends ScanCallback {
+        private final WeakReference<BLEActivity> mWeakReference;
+
+        public BtScan(BLEActivity bleActivity) {
+            mWeakReference = new WeakReference<>(bleActivity);
+        }
+
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            BLEActivity bleActivity = mWeakReference.get();
+            L.d(TAG, "onLeScan: " + Thread.currentThread().getName());
+            if (result.getDevice() != null && !bleActivity.mAdapter.getItems().contains(result.getDevice())) {
+                bleActivity.mAdapter.addItem(result.getDevice());
+            }
+        }
+
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+            super.onBatchScanResults(results);
+            L.d(TAG, "onBatchScanResults: " + results.toString());
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            super.onScanFailed(errorCode);
+            L.e(TAG, "onScanFailed: errorCode = " + errorCode);
+        }
+    }
+}

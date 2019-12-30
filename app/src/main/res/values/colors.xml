@@ -33,4 +33,6 @@
 
     <color name="bg_press">#ebebeb</color>
     <color name="bg_press_material">#d4d4d4</color>
+
+    <color name="common_dark_color">#FFE6E6E6</color>
 </resources>

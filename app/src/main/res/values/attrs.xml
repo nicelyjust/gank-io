@@ -36,4 +36,7 @@
 
         </attr>
     </declare-styleable>
+    <declare-styleable name="FuncItem">
+        <attr name="fi_name" format="string"/>
+    </declare-styleable>
 </resources>
