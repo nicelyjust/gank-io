@@ -1,9 +1,11 @@
 package com.eebbk.geek.module.mine;
 
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.fragment.LazyBaseFragment;
+import com.eebbk.geek.module.ble.BLEActivity;
 
 import butterknife.BindView;
 
@@ -17,8 +19,8 @@ import butterknife.BindView;
  */
 
 public class MineFragment extends LazyBaseFragment implements View.OnClickListener {
-    @BindView(R.id.fi_bluetooth)
-    FuncItem mFiBluetooth;
+    @BindView(R.id.rl_func_ble)
+    RelativeLayout mFiBluetooth;
 
     @Override
     protected void initWidget(View root) {
@@ -41,8 +43,8 @@ public class MineFragment extends LazyBaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fi_bluetooth) {
-
+        if (v.getId() == R.id.rl_func_ble) {
+            BLEActivity.start(mContext);
         }
     }
 }

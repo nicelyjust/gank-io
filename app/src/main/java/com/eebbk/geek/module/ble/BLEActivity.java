@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eebbk.geek.R;
 import com.eebbk.geek.base.AppManager;
+import com.eebbk.geek.base.BaseRvAdapter;
 import com.eebbk.geek.base.activities.BaseActivity;
 import com.eebbk.geek.utils.L;
 
@@ -68,12 +69,9 @@ public class BLEActivity extends BaseActivity implements EasyPermissions.Permiss
         super.initWidget();
         mBtScanCallback = new BtScan(this);
         mRv.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new DeviceAdapter(this, new DeviceAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int pos) {
-                BluetoothDevice device = mAdapter.getItem(pos);
-
-            }
+        mAdapter = new DeviceAdapter(this);
+        mAdapter.setOnItemClickListener((position, itemId) -> {
+            BluetoothDevice device = mAdapter.getItem(position);
         });
         mRv.setAdapter(mAdapter);
 

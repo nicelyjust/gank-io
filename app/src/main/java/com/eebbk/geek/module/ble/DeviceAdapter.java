@@ -2,10 +2,15 @@ package com.eebbk.geek.module.ble;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eebbk.geek.R;
 import com.eebbk.geek.base.BaseRvAdapter;
 
 
@@ -19,28 +24,34 @@ import com.eebbk.geek.base.BaseRvAdapter;
  */
 public class DeviceAdapter extends BaseRvAdapter<BluetoothDevice> {
 
-    private OnItemClickListener mListener;
-
-    public DeviceAdapter(Context context, OnItemClickListener listener) {
+    public DeviceAdapter(Context context) {
         super(context);
-        mListener = listener;
     }
 
     @Override
     protected RecyclerView.ViewHolder createHolderView(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_bluetooth, parent, false);
+        return new DeviceVH(view);
     }
 
     @Override
     protected void bindHolderView(RecyclerView.ViewHolder holder, BluetoothDevice bluetoothDevice, int position) {
+        if (holder instanceof DeviceVH) {
+            BluetoothDevice item = getItem(position);
+            DeviceVH vh = (DeviceVH) holder;
+            vh.tvDeviceName.setText(item.getName());
+            vh.tvDeviceMac.setText(item.getAddress());
+        }
     }
 
-    public BluetoothDevice getItem(int pos) {
-        return null;
-    }
+    class DeviceVH extends RecyclerView.ViewHolder{
+        TextView  tvDeviceName;
+        TextView  tvDeviceMac;
 
-    interface OnItemClickListener {
-        void onItemClick(int pos);
+        DeviceVH(@NonNull View itemView) {
+            super(itemView);
+            tvDeviceName = itemView.findViewById(R.id.tv_device_name);
+            tvDeviceMac = itemView.findViewById(R.id.tv_device_mac);
+        }
     }
-
 }

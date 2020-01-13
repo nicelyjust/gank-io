@@ -69,6 +69,7 @@
         <activity android:name=".module.practice.threadPool.ThreadPoolActivity" />
         <activity android:name=".module.practice.animate.AnimateActivity" />
         <activity android:name=".module.practice.handler.HandlerActivity" />
+        <activity android:name=".module.ble.BLEActivity" />
 
         <service android:name=".service.LifeCycleService" />
         <service
