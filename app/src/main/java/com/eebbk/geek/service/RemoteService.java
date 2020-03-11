@@ -79,6 +79,10 @@ public class RemoteService extends Service {
         }
         return null;
     }
+
+    /***
+     * 服务端通过此类来提供服务
+     */
     public Binder mBinder = new IBookManager.Stub() {
         @Override
         public List<Book> getBookList() throws RemoteException {

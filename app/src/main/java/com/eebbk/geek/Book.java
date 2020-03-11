@@ -9,7 +9,7 @@ import android.os.Parcelable;
  *  @文件名:   Book
  *  @创建者:   lz
  *  @创建时间:  2019/9/26 17:05
- *  @描述：    aidl自定义对象
+ *  @描述：    aidl自定义对象,Parcelable:android平台,适合内存中运输;s:Java平台会有大量IO操作,ObjectInputStream
  */
 public class Book implements Parcelable {
     private int bookId;

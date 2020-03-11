@@ -63,7 +63,14 @@
         <activity
             android:name=".ui.H5Activity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".web.WebActivity" />
+        <activity android:name=".web.WebActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.mio.sport"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="lz"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".web.FlutterMainActivity" />
         <activity android:name=".service.BasicAndroidActivity" />
         <activity android:name=".module.practice.threadPool.ThreadPoolActivity" />
