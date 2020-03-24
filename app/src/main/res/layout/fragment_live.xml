@@ -7,10 +7,10 @@
     android:background="@drawable/shape_bitch_gradient_bg">
     <com.eebbk.geek.module.viewLearn.live.LiveHRView
         android:id="@+id/hr_v"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:layout_height="271dp"
-        android:layout_width="271dp"/>
+        android:layout_width="match_parent"/>
 
     <EditText
         android:inputType="number"
@@ -31,4 +31,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:text="set value" />
+    <com.eebbk.geek.module.viewLearn.live.HorizontalRatioView
+        android:id="@+id/hrv_ratio"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="#262930"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"/>
 </LinearLayout>

@@ -19,6 +19,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.eebbk.geek.R;
@@ -30,7 +31,7 @@ import com.eebbk.geek.R;
  *  @文件名:   LiveHRView
  *  @创建者:   lz
  *  @创建时间:  2019/11/26 15:36
- *  @描述：先调用setZones() => setLiveValue()
+ *  @描述：
  */
 public class LiveHRView extends View {
     private static final String TAG = "LiveHRView";
@@ -38,21 +39,18 @@ public class LiveHRView extends View {
     private final int DEFAULT_HEIGHT = dp2px(271);
     private final Bitmap indicatorBp;
     private int width, height;
-    private static final int mStartAngle = 151, mSweepAngle = 240; // 起始角度 绘制角度
+    private final int mStartAngle = 151, mSweepAngle = 240; // 起始角度 绘制角度
     private int mMin, mMax; // 最小值 最大值
     //内环环高
     private int innerRingWidth = dp2px(21);
     //内环padding
-    private int innerRingPadding = dp2px(8);
+    private int innerRingPadding = dp2px(7);
     //内环的格数
     private int innerRingNumber = 95;
     //外环的高度
     private int outerRingHeight = dp2px(3), innerRingHeight = dp2px(3);
-    //外环的格数
-    private int outerRingNumber = 119;
     // 圆点的半径
     private int mPointRadian = dp2px(4);
-
     private float mCenterY;
     private float mCenterX;
     private static final String FIRST  = "#FF4FBFED";
@@ -95,7 +93,7 @@ public class LiveHRView extends View {
     /**
      * 内环外环一个单位对应的radian
      */
-    private float mInnerDegrees, mOutDegrees;
+    private float mInnerDegrees;
     /**
      * index 0 代表inner ring绘制的下区间,index 1 代表上区间,index 2为控制是否绘制inner ring
      */
@@ -110,6 +108,10 @@ public class LiveHRView extends View {
      * 测量文字用
      */
     private Rect mRectF;
+    /**
+     * 三区间的区间值文字画笔
+     */
+    private TextPaint mTargetPaint;
 
     public LiveHRView(Context context) {
         this(context, null);
@@ -128,12 +130,60 @@ public class LiveHRView extends View {
     }
 
     /**
-     * @param zone3 外环区间值
-     * @param zones 区间值,为null代表三区间
+     *  三区间初始化
+     * @param zone3 三区间范围
      */
-    public void setZones(int[] zone3, @Nullable int[] zones) {
+    public void setZone3(@NonNull int[] zone3) {
         this.zone3 = zone3;
-        this.zones = zones == null ? zone3 : zones;
+        this.colors = this.zone3.length == 4 ? zone3ColorResources : zone5ColorResources;
+
+        int below = zone3[1];
+        int above = zone3[2];
+        int centerZoneCount = above - below + 1;
+
+        if (centerZoneCount <= 45) {
+            //一个心率值占两格
+            int frontCount = (innerRingNumber - (centerZoneCount * 2)) / 2;
+            int endCount = frontCount + 1;
+            mMin = below - (frontCount / 2);
+            mMax = above + (endCount / 2);
+
+        } else if (centerZoneCount <= innerRingNumber) {
+            //一个心率值占一格,
+            int frontCount = (innerRingNumber - centerZoneCount) / 2;
+            int endCount;
+            if (centerZoneCount % 2 == 1) {
+                //单数,左右侧一样多.
+                endCount = frontCount;
+            } else {
+                //双数,右侧比左侧多一个.
+                endCount = frontCount + 1;
+            }
+            mMin = below - frontCount;
+            mMax = above + endCount;
+        } else {
+            //大于95
+            int frontCount = (centerZoneCount - innerRingNumber) / 2;
+            int endCount;
+            if (centerZoneCount % 2 == 1) {
+                //单数
+                endCount = frontCount;
+            } else {
+                //双数
+                endCount = frontCount + 1;
+            }
+            mMin = below + frontCount;
+            mMax = above - endCount;
+        }
+        Log.d(TAG, "setZone3: mMin == " + mMin + ":mMax == " +mMax);
+    }
+
+    /**
+     *  五区间初始化
+     * @param zone5 五区间值
+     */
+    public void setZone5(@NonNull int[] zone5) {
+        this.zones = zone5;
         this.colors = this.zones.length == 4 ? zone3ColorResources : zone5ColorResources;
         mMin = this.zones[0];
         mMax = this.zones[this.zones.length - 1];
@@ -141,7 +191,7 @@ public class LiveHRView extends View {
 
     public void setLiveValue(int value) {
         // 是否第一次渲染
-        int valuePosition = getValuePosition(mMin, mMax, value, false);
+        int valuePosition = getValuePosition(mMin, mMax, value,zone3 != null);
         if (valuePosition > innerRingNumber) {
             valuePosition = innerRingNumber;
         }
@@ -160,15 +210,6 @@ public class LiveHRView extends View {
         invalidate();
     }
 
-    public void reset() {
-        mCurValue = -1;
-        int length = mRecord.length;
-        for (int i = 0; i < length; i++) {
-            mRecord[i] = 0;
-        }
-        invalidate();
-    }
-
     private void initPaint() {
         mMBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mMBgPaint.setColor(0xFF484848);
@@ -176,14 +217,16 @@ public class LiveHRView extends View {
 
         mPointPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPointPaint.setStyle(Paint.Style.FILL);
-        mPointPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPointPaint.setStrokeWidth(dp2px(6));
 
         mBitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBitmapPaint.setDither(true);
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextSize(dp2px(80));
         mTextPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DINPro-Medium.otf"));
+
+        mTargetPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mTargetPaint.setTextSize(dp2px(18));
+        mTargetPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DINPro-Medium.otf"));
     }
 
     @Override
@@ -212,6 +255,7 @@ public class LiveHRView extends View {
         height = h;
         mCenterY = height / 2;
         mCenterX = width / 2;
+        width = height;
     }
 
     @Override
@@ -220,9 +264,15 @@ public class LiveHRView extends View {
         int degrees = mStartAngle - 180;
         canvas.rotate(degrees);
 
-        drawBgRing(canvas);
-        drawOutColorRing(canvas);
-        drawInnerColorRing(canvas);
+
+        if (zones != null){
+            drawBgRing(canvas);
+            drawInnerColorRing(canvas);
+        }
+        else{
+            drawBgRing3(canvas);
+            drawInnerColorRing3(canvas);
+        }
         drawText(canvas,degrees);
         drawArrow(canvas);
 
@@ -232,12 +282,12 @@ public class LiveHRView extends View {
         int save = canvas.save();
         canvas.rotate(-degrees);
         String value;
-        if (mCurValue == -1 || mCurValue <= 30) {
+        if (mCurValue == -1){
             value = "--";
             mTextPaint.setColor(0xFFFFFFFF);
         } else {
             value = String.valueOf(mCurValue);
-            mTextPaint.setColor(mCurValue < mMin ? 0xFFFFFFFF :getCurrentValueColor(zones, mCurValue));
+            mTextPaint.setColor(mCurValue < mMin ? 0xFFFFFFFF :getCurrentValueColor(zones == null?zone3:zones, mCurValue));
         }
         mTextPaint.getTextBounds(value,0,value.length(),mRectF);
         canvas.drawText(value, -mRectF.width()/2, mRectF.height()*0.25f, mTextPaint);
@@ -260,12 +310,32 @@ public class LiveHRView extends View {
             /*------------ 找出开始角度的颜色值 -------------*/
             int color = calculateBlockColor(zones, mRecord, i);
             mMBgPaint.setColor(color);
+            canvas.drawRect(left, innerRingHeight, right, 0, mMBgPaint);
+            canvas.rotate(mInnerDegrees, 0, 0);
+        }
+        canvas.restore();
+    }
+
+    private void drawInnerColorRing3(Canvas canvas) {
+        if (mCurValue == -1 || mRecord[2] == 0) {
+            return;
+        }
+        canvas.save();
+        float startAngle = mInnerDegrees * (mRecord[0] - 1);
+        canvas.rotate(startAngle);
+        int count = mRecord[1] - mRecord[0] + 1;
+        Log.d(TAG, "onDraw: count == " + count);
+        int left = -(width >> 1) + outerRingHeight + innerRingPadding;
+        int right = -(width >> 1) + outerRingHeight + innerRingPadding + innerRingWidth;
+        for (int i = 0; i < count; i++) {
+            /*------------ 找出开始角度的颜色值 -------------*/
+            int color = calculateBlockColor(zone3, mRecord, i);
+            mMBgPaint.setColor(color);
             canvas.drawRect(left, -innerRingHeight, right, 0, mMBgPaint);
             canvas.rotate(mInnerDegrees);
         }
         canvas.restore();
     }
-
     /**
      * 当前格子位于变色区间的位置,然后得到对应的颜色值
      *
@@ -277,8 +347,13 @@ public class LiveHRView extends View {
     @ColorInt
     private int calculateBlockColor(int[] zones, int[] record, int i) {
         // etc. {19,38,57,76,95}--> {10,28,47,66,85}
-        int[] blockPositions = calculateBlockPositions(zones);
-
+        int[] blockPositions;
+        if (zones.length == 4){
+            blockPositions = calculateBlockPositions3(zones);
+        } else{
+            blockPositions = calculateBlockPositions(zones);
+        }
+        // 五区间blockPositions.length为5,三区间为4
         int length = blockPositions.length;
         int cur = record[0] + i;
         // 找到当前区间
@@ -307,17 +382,13 @@ public class LiveHRView extends View {
             } else {
                 return Color.parseColor(FIFTH);
             }
-        } else if (length == 3) {
+        } else if (length == 4) {
             if (sectionPos == 1) {
-                return Color.parseColor(FIRST);
+                return Color.TRANSPARENT;
             } else if (sectionPos == 2) {
-                cur = cur - blockPositions[0];
-                float factor = cur * 1.0f / (blockPositions[1] - blockPositions[0] +1);
-                return ColorGradient.calculateColor(FIRST, SECOND, factor);
+                return Color.parseColor(FIRST);
             } else if (sectionPos == 3) {
-                cur = cur - blockPositions[1];
-                float factor = cur * 1.0f / (blockPositions[2] - blockPositions[1] + 1);
-                return ColorGradient.calculateColor(SECOND, FIFTH, factor);
+                return Color.parseColor(SECOND);
             } else {
                 return Color.parseColor(FIFTH);
             }
@@ -333,15 +404,22 @@ public class LiveHRView extends View {
      * @return 返回坐落的区间, 三区间1, 2, 3, 4;五区间,1,2,3,4,5,6
      */
     private int getSectionPos(int[] blockPositions, int cur, int length) {
-        if (length == 3) {
-            if (cur <= blockPositions[0]) {
+        if (length == 4) {
+            if (cur < blockPositions[0]) {
+                // 无颜色
                 return 1;
-            } else if (cur <= blockPositions[1]) {
+            } else if (cur < blockPositions[1]) {
+                //三区间第一个颜色
                 return 2;
-            } else if (cur <= blockPositions[2]) {
+            } else if (cur < blockPositions[2]) {
+                //三区间第二个颜色
                 return 3;
-            } else {
+            } else if (cur <= blockPositions[3]){
+                // 三区间第三个颜色
                 return 4;
+            } else {
+                // 无颜色
+                return 1;
             }
         } else if (length == 5) {
             if (cur <= blockPositions[0]) {
@@ -380,6 +458,17 @@ public class LiveHRView extends View {
         return blockPositions;
     }
 
+    private int[] calculateBlockPositions3(int[] zones) {
+        int length = zones.length;
+        int min = mMin;
+        int max = mMax;
+        int[] blockPositions = new int[length];
+        for (int i = 0; i < length; i++) {
+            blockPositions[i] = getValuePosition(min, max, zones[i], true);
+        }
+        return blockPositions;
+    }
+
     private void drawArrow(Canvas canvas) {
         if (mCurValue == -1 || mCurValue < mMin) {
             return;
@@ -389,39 +478,16 @@ public class LiveHRView extends View {
         if (value > mMax){
             value = mMax;
         }
-        int valuePosition = getValuePosition(mMin, mMax, value, false);
-        float curAngle = mInnerDegrees * valuePosition + mInnerDegrees;
+        int valuePosition = getValuePosition(mMin, mMax, value, zone3 != null);
+        float curAngle = mInnerDegrees * valuePosition + mInnerDegrees/2;
         canvas.rotate(curAngle);
         float fakeRad = (width >> 1) - outerRingHeight - innerRingPadding - innerRingWidth - (indicatorBp.getWidth() >> 1);
         mMatrix.reset();
         mMatrix.postRotate(30);
         mMatrix.postTranslate(-fakeRad, 0);
 
-        mBitmapPaint.setColorFilter(new PorterDuffColorFilter(getCurrentValueColor(zones, value), PorterDuff.Mode.SRC_IN));
+        mBitmapPaint.setColorFilter(new PorterDuffColorFilter(getCurrentValueColor(zones == null?zone3:zones, value), PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(indicatorBp, mMatrix, mBitmapPaint);
-        canvas.restore();
-    }
-
-    /**
-     * 画外环三区间值
-     *
-     * @param canvas canvas
-     */
-    private void drawOutColorRing(Canvas canvas) {
-        if (zone3 == null) {
-            return;
-        }
-        int valuePositionStart = getValuePosition(zone3[0], zone3[zone3.length - 1], zone3[1], true);
-        int valuePositionEnd = getValuePosition(zone3[0], zone3[zone3.length - 1], zone3[2], true);
-        canvas.save();
-        float startAngle = mOutDegrees * (valuePositionStart - 1);
-        canvas.rotate(startAngle);
-        int count = valuePositionEnd - valuePositionStart;
-        mMBgPaint.setColor(zone3ColorResources[1]);
-        for (int i = 0; i < count; i++) {
-            canvas.drawRect(-width / 2, -outerRingHeight, -width / 2 + outerRingHeight, 0, mMBgPaint);
-            canvas.rotate(mOutDegrees);
-        }
         canvas.restore();
     }
 
@@ -431,15 +497,7 @@ public class LiveHRView extends View {
      * @param canvas canvas
      */
     private void drawBgRing(Canvas canvas) {
-        canvas.save();
         mMBgPaint.setColor(0xFF484848);
-        // 外环一个单位对应的角度
-        mOutDegrees = mSweepAngle * 1.0f / outerRingNumber;
-        for (int i = 0; i < outerRingNumber; i++) {
-            canvas.drawRect(-width / 2, -outerRingHeight, -width / 2 + outerRingHeight, 0, mMBgPaint);
-            canvas.rotate(mOutDegrees);
-        }
-        canvas.restore();
         // 内环一个单位对应的角度
         mInnerDegrees = mSweepAngle * 1.0f / innerRingNumber;
         canvas.save();
@@ -456,17 +514,77 @@ public class LiveHRView extends View {
     }
 
     /**
+     * 画背景圆环以及起始标识圆点for
+     *
+     * @param canvas canvas
+     */
+    private void drawBgRing3(Canvas canvas) {
+        mMBgPaint.setColor(0xFF484848);
+        // 内环一个单位对应的角度
+        mInnerDegrees = mSweepAngle * 1.0f / innerRingNumber;
+        canvas.save();
+        int below = zone3[1];
+        int above = zone3[2];
+        int belowPosition = getValuePosition(mMin, mMax, below, true);
+        int abovePosition = getValuePosition(mMin, mMax, above, true);
+
+        int averageWidth = width >> 1;
+        for (int i = 0; i < innerRingNumber; i++) {
+            canvas.drawRect(-averageWidth + outerRingHeight + innerRingPadding, -innerRingHeight, -averageWidth + outerRingHeight + innerRingPadding + innerRingWidth, 0, mMBgPaint);
+            canvas.rotate(mInnerDegrees);
+        }
+        canvas.restore();
+        canvas.save();
+        int degrees = mStartAngle - 180;
+        canvas.rotate(-degrees);
+        if (mMin <= below) {
+            float x = (float) (averageWidth * Math.cos((mStartAngle + belowPosition * mInnerDegrees) * Math.PI / 180));
+            float y = (float) (averageWidth * Math.sin((mStartAngle + belowPosition * mInnerDegrees) * Math.PI / 180));
+            mPointPaint.setColor(zone3ColorResources[0]);
+            canvas.drawCircle(x, y, mPointRadian, mPointPaint);
+
+            String belowValue = String.valueOf(below);
+            mTargetPaint.getTextBounds(belowValue, 0, belowValue.length(), mRectF);
+            mTargetPaint.setColor(zone3ColorResources[0]);
+            canvas.drawText(belowValue, x - mRectF.width() - 2 * mPointRadian, y + (mRectF.height() >> 1), mTargetPaint);
+        }
+        if (above <= mMax) {
+            mPointPaint.setColor(zone3ColorResources[2]);
+            float x = (float) (averageWidth * Math.cos((mStartAngle + abovePosition * mInnerDegrees) * Math.PI / 180));
+            float y = (float) (averageWidth * Math.sin((mStartAngle + abovePosition * mInnerDegrees) * Math.PI / 180));
+            canvas.drawCircle(x, y, mPointRadian, mPointPaint);
+
+            String aboveValue = String.valueOf(above);
+            mTargetPaint.getTextBounds(aboveValue, 0, aboveValue.length(), mRectF);
+            mTargetPaint.setColor(zone3ColorResources[2]);
+            canvas.drawText(aboveValue, x + (3 * mPointRadian >> 1), y + (mRectF.height() >> 1), mTargetPaint);
+        }
+        canvas.restore();
+    }
+    /**
      * @param min   min value
      * @param max   max value
      * @param value 实时的value
-     * @param outer 外环与否
+     * @param isTargetSection 是否是三区间
      * @return 返回当前应该点亮的格子
      */
-    private int getValuePosition(int min, int max, int value, boolean outer) {
-        if (value == max) {
-            return outer ? outerRingNumber : innerRingNumber;
+    private int getValuePosition(int min, int max, int value, boolean isTargetSection) {
+        if (isTargetSection) {
+            int below = zone3[1];
+            int above = zone3[2];
+            int centerZoneCount = above - below + 1;
+            if (centerZoneCount <= 45) {
+                //一个心率值占两格
+                return 2 * (value - min + 1);
+            } else {
+                //一个心率值对应一格
+                return value - min + 1;
+            }
         }
-        int position = outer ? (int) ((value - min) * outerRingNumber * 1.0f / (max - min + 1) + 1 + 0.5) : (int) ((value - min) * innerRingNumber * 1.0f / (max - min + 1) + 1 + 0.5);
+        if (value == max) {
+            return innerRingNumber;
+        }
+        int position = (value - min) * innerRingNumber / (max - min + 1) + 1;
         return position <= 0 ? 1 : position;
     }
 
